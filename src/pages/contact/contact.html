@@ -3,9 +3,38 @@
     <ion-title>
       Contacts
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addContact()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-list>
+    <ion-item-group *ngFor="let group of groupedContacts">
+      <ion-item-divider light>{{group.letter}}</ion-item-divider>
+      <ion-item-sliding *ngFor="let contact of group.contacts">
+        <ion-item>
+          <ion-avatar item-start>
+            <ion-icon name="contact"></ion-icon>
+          </ion-avatar>
+          <h2>{{contact.name}}</h2>
+          <p>{{contact.number}}</p>
+        </ion-item>
+        <ion-item-options>
+          <button ion-button color="primary" (click)="editContact(contact)">
+            <ion-icon name="menu"></ion-icon>
+            Edit
+          </button>
+          <button ion-button color="danger" (click)="deleteContact(contact)">
+            <ion-icon name="trash"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-item-group>
+  </ion-list>
 </ion-content>

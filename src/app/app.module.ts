@@ -12,7 +12,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { ConfigurePage } from '../pages/configure/configure'
 import { TabsPage } from '../pages/tabs/tabs';
 import { IntroPage } from '../pages/intro/intro';
-
+import { CalendarModule } from "ion2-calendar";
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { IntroPage } from '../pages/intro/intro';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    CalendarModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

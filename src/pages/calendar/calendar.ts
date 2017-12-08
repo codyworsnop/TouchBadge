@@ -7,8 +7,14 @@ import { NavController } from 'ionic-angular';
 })
 export class CalendarPage {
 
+  date: string;
+  type: 'string';
+
   constructor(public navCtrl: NavController) {
 
   }
-
+  
+  onChange($event) {
+    console.log($event);
+  }
 }

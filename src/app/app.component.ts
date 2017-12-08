@@ -12,48 +12,36 @@ import { TabsPage } from '../pages/tabs/tabs';
 })
 export class MyApp {
 
-  rootPage:any = TabsPage;
+  rootPage: any = TabsPage;
   loader: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public storage: Storage, public loadingCtrl: LoadingController) {
-
-    this.presentLoading();
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public storage: Storage) {
 
     platform.ready().then(() => {
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
 
-      this.storage.get('introShown').then((result) => {
-
-        console.log("Result output: ");
-        console.log(result);
-        if (result){
-          this.rootPage = IntroPage;
-        }
-        else
-        {
-          this.rootPage = IntroPage;
-          this.storage.set('introShown', true);
-        }
-
-        this.loader.dismiss();
-
-      });
+      this.presentIntro();
 
       statusBar.styleDefault();
       splashScreen.hide();
- 
+
     });
   }
 
-  presentLoading() {
+  presentIntro() {
+    this.storage.get('introShown').then((result) => {
 
-    this.loader = this.loadingCtrl.create({
-      content: "Authenticating..."
+      if (result) {
+        this.rootPage = TabsPage;
+      }
+      else {
+        this.rootPage = IntroPage;
+        this.storage.set('introShown', true);
+      }    
     });
 
-    this.loader.present();
   }
 }
 
