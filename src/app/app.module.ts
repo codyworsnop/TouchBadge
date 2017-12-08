@@ -12,6 +12,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { ConfigurePage } from '../pages/configure/configure'
 import { TabsPage } from '../pages/tabs/tabs';
 import { IntroPage } from '../pages/intro/intro';
+import { LoginModal } from '../modals/login/login';
+
 import { CalendarModule } from "ion2-calendar";
 
 @NgModule({
@@ -22,7 +24,8 @@ import { CalendarModule } from "ion2-calendar";
     ContactPage,
     ConfigurePage,
     TabsPage,
-    IntroPage
+    IntroPage,
+    LoginModal,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { CalendarModule } from "ion2-calendar";
     ContactPage,
     ConfigurePage,
     TabsPage,
-    IntroPage
+    IntroPage,
+    LoginModal,
   ],
   providers: [
     StatusBar,
