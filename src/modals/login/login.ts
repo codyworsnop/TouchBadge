@@ -17,8 +17,6 @@ export class LoginModal {
 
   constructor(public navCtrl: NavController, public fb: FormBuilder, private alertCtrl: AlertController) {
 
-
-
   }
 
   public ngOnInit(): void {
@@ -38,7 +36,6 @@ export class LoginModal {
   public login() {
 
     if (!this.loginForm.valid) {
-
       return;
     }
 
@@ -76,18 +73,5 @@ export class LoginModal {
 
   public recoverPassword(): void {
     // this.navCtrl.push(...);
-  }
-
-
-  public changeLanguage(): void {
-
-    this.alertCtrl.create({
-
-      title: 'Language',
-      message: 'Intention to change the language. You could use for example the PopoverController to present a list.',
-      buttons: ['OK']
-
-    }).present();
-
   }
 }

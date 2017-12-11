@@ -1,6 +1,6 @@
 {
   "name": "TouchBadge",
-  "app_id": "",
+  "app_id": "a731c5d2",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
