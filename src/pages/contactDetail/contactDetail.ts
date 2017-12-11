@@ -1,34 +1,38 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
-import { ContactDetailPage } from '../contactDetail/contactDetail';
-import { ModalController } from 'ionic-angular/components/modal/modal-controller';
-import { newContactModal } from '../../modals/newContact/newContact';
 
 @Component({
-  selector: 'page-contact',
-  templateUrl: 'contact.html'
+  selector: 'page-contactDetail',
+  templateUrl: 'contactDetail.html'
 })
-export class ContactPage {
+export class ContactDetailPage {
 
   contacts;
   groupedContacts = [];
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {
 
     this.contacts = [
       {
-        name: "cody worsnop",
-        number: "7752247230"
+        name: "Cody Worsnop",
+        number: "(775) 224-7230"
+      },
+      {
+        name: "Evan Grill",
+        number: "(775) 684-5625"
+      },
+      {
+        name: "Jon Weatherspoon",
+        number: "(775) 293-2312"
       }
-    ]
+    ];
 
     this.groupContacts(this.contacts);
   }
 
   groupContacts(contacts){
 
-  if (contacts  != null) {
     let sortedContacts = contacts.sort();
     let currentLetter = false; 
     let currentContacts: any[];
@@ -53,12 +57,27 @@ export class ContactPage {
     });
   }
 
-  }
-
   addContact() {
 
-    let modal = this.modalCtrl.create(newContactModal);
-    modal.present();
+    let prompt = this.alertCtrl.create({
+      title: 'Add Contact',
+      inputs: [{
+        name: 'name'
+      }],
+      buttons: [{
+        text: 'Cancel'
+      },
+      {
+        text: 'Add',
+        handler: data => {
+          this.contacts.push(data);
+          this.groupContacts(this.contacts);
+        }
+      }
+      ]
+    });
+
+    prompt.present();
   }
 
   deleteContact(contact){
@@ -68,9 +87,5 @@ export class ContactPage {
     if (index > -1){
       this.contacts.splice(index, 1);
     }
-  }
-
-  contactTapped() : void {
-    this.navCtrl.push(ContactDetailPage);
   }
 }
