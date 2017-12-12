@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core'
+import { NavController, NavParams, ViewController } from 'ionic-angular'
+import { AuthService } from '../../app/auth.service'
 
 @Component({
   selector: 'modal-login',
@@ -8,70 +8,64 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 })
 export class LoginModal {
 
-  // global form group object
-  public loginForm: FormGroup;
+  page: string = 'login'
+  credentials: Credentials = {}
+  message: string
+  error: string
 
-  // input controls
-  public password: AbstractControl;
-  public email: AbstractControl;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public auth: AuthService) {}
 
-  constructor(public navCtrl: NavController, public fb: FormBuilder, private alertCtrl: AlertController) {
+  ionViewDidLoad() { }
 
+  signin () {
+    this.auth.signin(this.credentials).then((user) => {
+      this.dismiss()
+    }).catch((err) => {
+      console.log('error signing in', err)
+      this.setError(err.message)
+    })
   }
 
-  public ngOnInit(): void {
-
-    this.loginForm = this.fb.group({
-      email: [null, Validators.compose([Validators.required])],
-      password: [null, Validators.compose([Validators.required])],
-    });
-
-    // to get a direct handle to the AbstractControl, use "email" in the View
-    this.email = this.loginForm.controls['email'];
-    this.password = this.loginForm.controls['password'];
-
+  register () {
+    this.auth.register(this.credentials).then((user) => {
+      console.log('register: success', user)
+      this.page = 'confirm'
+    }).catch((err) => {
+      console.log('error registering', err)
+      this.setError(err.message)
+    })
   }
 
-
-  public login() {
-
-    if (!this.loginForm.valid) {
-      return;
-    }
-
-    this.alertCtrl.create({
-
-      title: 'Success',
-      message: 'Implement your logic here, a code snippet can be seen in the source.',
-      buttons: ['OK']
-
-    }).present();
-
-    // example login procedure...
-
-    // this
-    //   .authService
-    //   .signInWithEmailAndPassword(this.email.value, this.password.value)
-    //   .catch((error: Error) => {
-
-    //    there you have it a generic way of catching errors, for more details see:
-    //    https://www.ionicrun.com/http-error-handling-informing-the-user-in-an-ionic-2-app/
-
-    //     this
-    //       .events
-    //       .publish(ENV.EVENTS.ERROR, error);
-
-    //   });
-
+  confirm () {
+    this.auth.confirm(this.credentials).then((user) => {
+      this.page = 'login'
+      this.setMessage('You have been confirmed. Please sign in.')
+    }).catch((err) => {
+      console.log('error confirming', err)
+      this.setError(err.message)
+    })
   }
 
-
-  public signUp(): void {
-    // this.navCtrl.push(...);
+  private setMessage(msg) {
+     this.message = msg
+     this.error = null
   }
 
-
-  public recoverPassword(): void {
-    // this.navCtrl.push(...);
+  private setError(msg) {
+     this.error = msg
+     this.message = null
   }
+
+  dismiss () { this.viewCtrl.dismiss() }
+
+  reset () { this.error = null; this.message = null; }
+
+  showConfirmation () { this.page = 'confirm' }
+}
+
+interface Credentials {
+  username?: string
+  email?: string
+  password?: string
+  confcode?: string
 }

@@ -17,6 +17,11 @@ import { ContactDetailPage } from '../pages/contactDetail/contactDetail';
 
 import { CalendarModule } from "ion2-calendar";
 import { newContactModal } from '../modals/newContact/newContact';
+import { AuthService, AuthServiceProvider } from "./auth.service";
+import { ProjectStore, ProjectStoreProvider } from "./project.store";
+import { TaskStore, TaskStoreProvider } from "./task.store";
+import { Sigv4Http, Sigv4HttpProvider } from "./sigv4.service";
+import { AwsConfig } from "./app.config";
 
 @NgModule({
   declarations: [
@@ -33,7 +38,7 @@ import { newContactModal } from '../modals/newContact/newContact';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, new AwsConfig().load()),
     IonicStorageModule.forRoot(),
     CalendarModule,
   ],
@@ -53,7 +58,11 @@ import { newContactModal } from '../modals/newContact/newContact';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthService, AuthServiceProvider,
+    ProjectStore, ProjectStoreProvider,
+    TaskStore, TaskStoreProvider,
+    Sigv4Http, Sigv4HttpProvider
   ]
 })
 export class AppModule {}
