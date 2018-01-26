@@ -23,6 +23,8 @@ import { TaskStore, TaskStoreProvider } from "./task.store";
 import { Sigv4Http, Sigv4HttpProvider } from "./sigv4.service";
 import { AwsConfig } from "./app.config";
 
+import { BLE } from '@ionic-native/ble'
+
 @NgModule({
   declarations: [
     MyApp,
@@ -34,7 +36,7 @@ import { AwsConfig } from "./app.config";
     IntroPage,
     LoginModal,
     ContactDetailPage,
-    newContactModal
+    newContactModal,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ import { AwsConfig } from "./app.config";
     AuthService, AuthServiceProvider,
     ProjectStore, ProjectStoreProvider,
     TaskStore, TaskStoreProvider,
-    Sigv4Http, Sigv4HttpProvider
+    Sigv4Http, Sigv4HttpProvider,
+    BLE,
   ]
 })
 export class AppModule {}
