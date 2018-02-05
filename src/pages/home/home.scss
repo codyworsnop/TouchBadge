@@ -1,3 +1,27 @@
 page-home {
-    background-color:rgb(74, 105, 141)
+
+    ion-content 
+    {
+        background-color:rgb(74, 105, 141)
+    }
+
+    .image {
+        height: 5vw; 
+        width: 5vw; 
+       border: 5px solid #fff;
+       border-radius: 50%;
+       /*box-shadow: 0 0 5px gray; */
+       /* display: inline-block;  */
+       margin-left: auto;
+   }
+   .circle-pic{
+       /* widows: 130px; */
+       height:130px;
+       width: 130px;
+       /* -webkit-border-radius: 50%; */
+       border-radius: 50%;
+       position: fixed;
+       margin: 20px;
+   }
+    
 }
