@@ -9,7 +9,7 @@ import 'rxjs/add/observable/from'
 
 let authServiceFactory = (config: AppConfig) => { return new AuthService(config) }
 
-declare var AWS: any;
+let AWS = require('aws-sdk');
 
 @Injectable()
 export class AuthService {
