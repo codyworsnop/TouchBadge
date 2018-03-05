@@ -24,6 +24,11 @@ import { Sigv4Http, Sigv4HttpProvider } from "./sigv4.service";
 import { AwsConfig } from "./app.config";
 
 import { BLE } from '@ionic-native/ble'
+import { HTTP } from '@ionic-native/http';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { LinkedInUtilityProvider } from '../providers/linked-in-utility/linked-in-utility';
+import { UserDataUtilityProvider } from '../providers/user-data-utility/user-data-utility';
+
 
 @NgModule({
   declarations: [
@@ -66,6 +71,10 @@ import { BLE } from '@ionic-native/ble'
     TaskStore, TaskStoreProvider,
     Sigv4Http, Sigv4HttpProvider,
     BLE,
+    LinkedInUtilityProvider,
+    HTTP,
+    InAppBrowser,
+    UserDataUtilityProvider,
   ]
 })
 export class AppModule {}
