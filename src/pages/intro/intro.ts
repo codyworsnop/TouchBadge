@@ -16,10 +16,13 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class IntroPage {
 
+  title: string; 
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  goToHome(){
+  navToHome(){
+    this.title = "here";
     this.navCtrl.setRoot(TabsPage);
   }
 

@@ -3,13 +3,16 @@
      page-intro {
     
        ion-slide {
-         background-color: #003366;
+         background-color: map-get($colors, primary);
        }
     
        ion-slide img {
-         height: 70vh !important;
-         width: auto !important;
+         height: 45vh !important;
+         width: 45vh !important;
        }
     
+       h3 {
+         color: #FFFFFF;
+       }
      } 
    }
