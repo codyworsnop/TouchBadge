@@ -17,54 +17,44 @@ page-home {
             }
 
             ion-col {
-                flex: 1;
-                height: 100%;
+                margin: auto !important;
             }
-    
-            #mainContent {
-         
+ 
+            .mainContent {
                 
-                align-items: center;
+                text-align: center;
                 background-color: map-get($colors, primary);
 
-                h2 {
+                h2, h4, h6 {
                     color: #FFFFFF;
                     margin: 0.1em;
                 }
 
-                h4 {
-                    color: #FFFFFF;
-                    margin: 0.1em;
-                }
 
-                ion-img img {
-
+                ion-img, img {
+                    contain: none;
                     height: 8em;
                     width: 8em;
                     border-radius: 50%;
                 }
             }
 
-            #subContentHigh {
+            #subContentDiv {
+                background-color: #F4F7F5;
+            }
 
-                ion-img img {
+            .subContent {
 
+                ion-card {
+                    height: auto;
+                }
+
+                ion-img, img {
+                    contain: none;
                     background-color: transparent;
                     height: 50px !important;
                     width: 50px !important;
-                }
-
-           
-            }
-
-             #subContentLow {
-              
-                ion-img img {
-
-                    background-color: transparent;
-                    height: 50px;
-                    width: 50px;
-                }
+                }      
             }
         }
     }
