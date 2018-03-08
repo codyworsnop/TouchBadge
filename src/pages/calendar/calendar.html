@@ -7,9 +7,19 @@
 </ion-header>
 
 <ion-content>
-    <ion-calendar [(ngModel)]="date"
-    (onChange)="onChange($event)"
-    [type]="type"
-    [format]="'YYYY-MM-DD'">
-    </ion-calendar>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <ion-calendar [(ngModel)]="date" (onChange)="onChange($event)" [type]="type" [format]="'MM-DD-YYYY'" [options]="calendarOptions">
+        </ion-calendar>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <h3>Event Information</h3>
+      <p>{{eventTitle}}</p>
+      <p>{{eventSubtitle}}</p>
+    </ion-row>
+  </ion-grid>
 </ion-content>
