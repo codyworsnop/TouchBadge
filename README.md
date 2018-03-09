@@ -13,13 +13,14 @@ Conferences exist to cater to almost every industry, and some companies hold con
 ## Features
 
 * Real Time
-   Touchbadge is a real time device. As contacts are made, the app will automatically sync with the cloud to make sure you can access your contacts anywhere, anytime.
+    Touchbadge is a real time device. As contacts are made, the app will automatically sync with the cloud to make sure you can access your contacts anywhere, anytime.
 
 * Bluetooth LE
-   Touchbadge uses Bluetooth LE (low energy) so you never have to worry about charging your phone while making new contacts!
+   * Touchbadge uses Bluetooth LE (low energy) so you never have to worry about charging your phone while making new contacts!
 
 * Cloud-connected
-   Touchbadge uses your phone to keep connected to the internet. Even if you're away from service, Touchbadge never loses track of your new contacts!
+
+    Touchbadge uses your phone to keep connected to the internet. Even if you're away from service, Touchbadge never loses track of your new contacts!
 
 ## Frameworks
 
