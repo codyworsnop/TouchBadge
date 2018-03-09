@@ -24,7 +24,7 @@ Conferences exist to cater to almost every industry, and some companies hold con
 
      Touchbadge uses your phone to keep connected to the internet. Even if you're away from service, Touchbadge never loses track of your new contacts!
 
-## Frameworks
+## Technologies
 
 As this project scope is rather large, it will encompass many different technologies and frameworks for each different section of the project. The badge itself will use Bluetooth and Near-Field communication (NFC) to interact with other Smart Badges nearby. The firmware for the badge will be written in C but is at the discretion of Breadware while the hardware itself is still being developed. The website portion of the project shall be implemented using ASP.NET in conjunction with the Bootstrap framework to create a responsive web design that will easily be accessible on mobile platforms. For the mobile application, Xamarin was originally going to be utilized, however after development of a prototype in conjunction with Azure, Team 11 decided to switch to Ionic with AWS as the backend.
 
