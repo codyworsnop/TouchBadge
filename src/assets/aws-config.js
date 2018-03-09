@@ -28,7 +28,6 @@ const aws_user_pools_id = 'us-west-2_3obgtNclf';
 const aws_user_pools_mfa_type = 'OFF';
 const aws_user_pools_web_client_id = '3rsjdmvu4adk7n4nkskluq6bqf';
 
-var AWS = require("aws-sdk");
 AWS.config.region = aws_project_region;
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: aws_cognito_identity_pool_id
