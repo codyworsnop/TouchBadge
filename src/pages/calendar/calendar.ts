@@ -39,6 +39,12 @@ export class CalendarPage {
 
   }
 
+  public ClearEvent() {
+
+    this.eventTitle = null;
+    this.eventSubtitle = null;
+  }
+
   onChange($event) {
 
     var dateEvent = this.eventInformation[JSON.stringify($event).split('"')[1].split('T')[0]];
@@ -46,6 +52,10 @@ export class CalendarPage {
     if (dateEvent != null) {
       this.eventTitle = dateEvent.title;
       this.eventSubtitle = dateEvent.subtitle;
+    }
+    else
+    {
+      this.ClearEvent();
     }
   }
 }

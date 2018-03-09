@@ -10,14 +10,8 @@
 
   <ion-grid>
 
-    <ion-row id="calendarRow">
-      <ion-col col-12 id="calendarCol">
-
-        <ion-calendar id="inner" [(ngModel)]="date" (onChange)="onChange($event)" [type]="type" [format]="'MM-DD-YYYY'" [options]="calendarOptions">
-        </ion-calendar>
-
-      </ion-col>
-    </ion-row>
+    <ion-calendar id="calendar" [(ngModel)]="date" (onChange)="onChange($event)" [type]="type" [format]="'MM-DD-YYYY'" [options]="calendarOptions">
+    </ion-calendar>
 
     <ion-row>
       <ion-col col-12>
