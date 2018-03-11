@@ -9,7 +9,7 @@
 <ion-content>
   <ion-grid>
 
-    <div id="mainContent">
+    <section id="header">
       <ion-row>
         <ion-col col-4>
           <ion-img src="assets/img/cody.jpg"></ion-img>
@@ -22,19 +22,21 @@
           <h6>Reno, Nevada | 220 </h6>
         </ion-col>
       </ion-row>
-    </div>
+    </section>
 
-    <div id="subContent">
-
-      <ion-card>
+    <section id="notification">
+      <ion-card *ngFor="let card of cards">
         <ion-grid>
+
           <div class="topSub">
             <ion-row>
               <ion-col col-4>
                 <ion-img src="assets/img/calendar_icon.png"></ion-img>
               </ion-col>
               <ion-col col-8>
-                <h3>2 Upcoming Events</h3>
+                <h3>{{card.title}}</h3>
+                <p>{{card.subtitle}}</p>
+                <p>{{card.date}}  {{card.time}}</p>
               </ion-col>
             </ion-row>
           </div>
@@ -49,28 +51,10 @@
         </ion-grid>
       </ion-card>
 
-      <ion-card>
-        <ion-row>
-          <ion-col col-2>
-            <ion-img src="assets/img/seminar_icon.png"></ion-img>
-          </ion-col>
-          <ion-col col-10>
-            <p>3 Upcoming Seminars</p>
-          </ion-col>
-        </ion-row>
-      </ion-card>
+    </section>
 
-      <ion-card>
-        <ion-row>
-          <ion-col col-2>
-            <ion-img src="assets/img/partnership_icon.png"></ion-img>
-          </ion-col>
-          <ion-col col-10>
-            <p>52 Contacts made today!</p>
-          </ion-col>
-        </ion-row>
-      </ion-card>
+    <section id="status">
 
-    </div>
+    </section>
   </ion-grid>
 </ion-content>

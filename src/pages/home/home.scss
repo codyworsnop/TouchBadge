@@ -13,9 +13,9 @@ page-home {
 
     }
 
-    #mainContent {
+    #header {
         
-        flex: 2;
+        flex: 4;
         text-align: center;
         background-size: cover;
         display: flex; 
@@ -25,16 +25,16 @@ page-home {
                     url("../../assets/img/bg_blur.jpg");
     }
     
-    #mainContent ion-row {
+    #header ion-row {
         height: 100%;
     }
 
-    #mainContent ion-col {
+    #header ion-col {
 
         margin: auto;
     }
     
-    #mainContent ion-img {
+    #header ion-img {
 
         contain: none;
         height: 8em;
@@ -44,37 +44,41 @@ page-home {
         box-shadow: 0 0 0 3px #FFFFFF;
     }
 
-    #mainContent h2, h4, h6 {
+    #header h2, h4, h6 {
 
         color: #FFFFFF;
         margin: 0.1em;
     }
 
-    #subContent {
+    #notification {
 
         flex: 3;
         background-color: #F4F7F5;
-        overflow-y: auto;
+        overflow-x: auto;
+        display: flex;
+        flex-direction: row;
     }
 
-    #subContent ion-card {
+    #notification ion-card {
 
-       height: 20vh;
-       color: map-get($colors, secondary);
+        margin-top: 12px;
+        height: 30vw;
+        min-width: 70vw;
+        color: map-get($colors, secondary);
     } 
 
-    #subContent ion-row {
+    #notification ion-row {
 
         height: 100%;
  
     }
 
-    #subContent ion-col {
+    #notification ion-col {
 
         height: 100%;
     }
 
-    #subContent ion-img {
+    #notification ion-img {
 
         contain: none;
         background-color: transparent;
@@ -111,6 +115,11 @@ page-home {
     .buttom button { 
         color: #FFFFFF !important;
         background-color: #FFFFFF !important;
+    }
+
+    #status {
+        flex: 4;
+        background-color: #F4F7F5;
     }
 }
 

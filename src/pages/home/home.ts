@@ -11,12 +11,16 @@ import { CalendarPage } from '../calendar/calendar';
 })
 export class HomePage {
 
+  cards: any;
   firstName: string; 
   lastName: string; 
   id: string; 
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public ln: LinkedInUtilityProvider, public userData: UserDataUtilityProvider) {
 
+    this.cards = [{ "title" : "Event", "subtitle" : "pulling your hair out with ionic", "date" : "03/15/2018", "time" : "4:30 PM" },
+                { "title" : "Seminar", "subtitle" : "Breadware meeting", "date" : "03/10/2018", "time" : "8:00 AM" },
+                { "title" : "Event", "subtitle" : "Learning to write firmware", "date" : "03/11/2018", "time" : "7:00 PM" }]; 
   }
 
   login() {
