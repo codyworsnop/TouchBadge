@@ -1,57 +1,116 @@
 page-home {
 
     scroll-content {
+
         display: flex;
         flex-direction: column;
     }
 
     ion-content ion-grid {
+
         padding: 0px !important;
         height: 100%;
 
     }
 
-    ion-content ion-row {
-        flex: 1;
+    #mainContent {
+        
+        flex: 2;
+        text-align: center;
+        background-size: cover;
+        display: flex; 
+        flex-direction: column;
+        background-image:linear-gradient(0deg, rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.5), 
+                    rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.5)),
+                    url("../../assets/img/bg_blur.jpg");
+    }
+    
+    #mainContent ion-row {
         height: 100%;
     }
 
-    ion-content ion-col {
-        margin: auto !important;
-    }
+    #mainContent ion-col {
 
-    .mainContent {
-                
-        text-align: center;
-        background-color: map-get($colors, primary);
+        margin: auto;
     }
     
-    .mainContent ion-img {
+    #mainContent ion-img {
+
         contain: none;
         height: 8em;
         width: 8em;
         border-radius: 50%;
         overflow: hidden;
+        box-shadow: 0 0 0 3px #FFFFFF;
     }
 
-    .mainContent h2, h4, h6 {
+    #mainContent h2, h4, h6 {
+
         color: #FFFFFF;
         margin: 0.1em;
     }
 
-    #subContentDiv {
+    #subContent {
+
+        flex: 3;
         background-color: #F4F7F5;
+        overflow-y: auto;
     }
 
-    .subContent ion-card {
-        height: auto;
+    #subContent ion-card {
+
+       height: 20vh;
+       color: map-get($colors, secondary);
+    } 
+
+    #subContent ion-row {
+
+        height: 100%;
+ 
     }
 
-    .subContent ion-img {
+    #subContent ion-col {
+
+        height: 100%;
+    }
+
+    #subContent ion-img {
+
         contain: none;
         background-color: transparent;
-        height: 50px !important;
-        width: 50px !important;
+        height: 50px;
+        width: 50px;
     } 
+
+    .topSub {
+
+        flex: 3;
+        border-bottom: 1px solid #CCCCCC;
+
+    }
+
+    .bottomSub {
+
+        flex: 1;
+        margin: auto;
+        
+    }
+
+    .bottomSub ion-img, .bottomSub img {
+
+        height: 1em !important;
+        width: 1em !important;
+        display: inline-block;
+    }
+
+    .bottomSub p {
+
+        display: inline-block;
+    }
+
+    .buttom button { 
+        color: #FFFFFF !important;
+        background-color: #FFFFFF !important;
+    }
 }
 

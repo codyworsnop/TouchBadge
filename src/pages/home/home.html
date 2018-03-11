@@ -9,53 +9,68 @@
 <ion-content>
   <ion-grid>
 
-    <ion-row class="mainContent">
-      <ion-col col-4>
-        <ion-img src="assets/img/cody.jpg"></ion-img>
-      </ion-col>
+    <div id="mainContent">
+      <ion-row>
+        <ion-col col-4>
+          <ion-img src="assets/img/cody.jpg"></ion-img>
+        </ion-col>
 
-      <ion-col col-8>
-        <h2>Cody Worsnop</h2>
-        <h4>Software Engineer</h4>
-        <h6>General Electric | University of Nevada, Reno</h6>
-        <h6>Reno, Nevada | 220 </h6>
-      </ion-col>
-    </ion-row>
+        <ion-col col-8>
+          <h2>Cody Worsnop</h2>
+          <h4>Software Engineer</h4>
+          <h6>General Electric | University of Nevada, Reno</h6>
+          <h6>Reno, Nevada | 220 </h6>
+        </ion-col>
+      </ion-row>
+    </div>
 
-    <div id="subContentDiv">
+    <div id="subContent">
 
       <ion-card>
-        <ion-row class="subContent">
-          <ion-col col-2>
-            <ion-img src="assets/img/calendar_icon.png"></ion-img>
-          </ion-col>
-          <ion-col col-10>
-            <p>2 Upcoming Events</p>
-          </ion-col>
-        </ion-row>
+        <ion-grid>
+          <div class="topSub">
+            <ion-row>
+              <ion-col col-4>
+                <ion-img src="assets/img/calendar_icon.png"></ion-img>
+              </ion-col>
+              <ion-col col-8>
+                <h3>2 Upcoming Events</h3>
+              </ion-col>
+            </ion-row>
+          </div>
+
+          <ion-row class="bottomSub" (click)="navEvents()">
+            <ion-col col-12>
+              <ion-img src="assets/img/mag_icon.png"></ion-img>
+              <p>view</p>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
       </ion-card>
 
       <ion-card>
-      <ion-row class="subContent">
+        <ion-row>
           <ion-col col-2>
             <ion-img src="assets/img/seminar_icon.png"></ion-img>
           </ion-col>
           <ion-col col-10>
             <p>3 Upcoming Seminars</p>
           </ion-col>
-      </ion-row>
-    </ion-card>
+        </ion-row>
+      </ion-card>
 
-    <ion-card>
-      <ion-row class="subContent">
+      <ion-card>
+        <ion-row>
           <ion-col col-2>
             <ion-img src="assets/img/partnership_icon.png"></ion-img>
           </ion-col>
           <ion-col col-10>
             <p>52 Contacts made today!</p>
           </ion-col>
-      </ion-row>
-    </ion-card>
+        </ion-row>
+      </ion-card>
+
     </div>
   </ion-grid>
 </ion-content>

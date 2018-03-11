@@ -3,6 +3,7 @@ import { NavController, ModalController } from 'ionic-angular';
 import { LoginModal } from '../../modals/login/login';
 import { LinkedInUtilityProvider } from '../../providers/linked-in-utility/linked-in-utility';
 import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
+import { CalendarPage } from '../calendar/calendar';
 
 @Component({
   selector: 'page-home',
@@ -33,5 +34,9 @@ export class HomePage {
 
     //let modal = this.modalCtrl.create(LoginModal);
     //modal.present();
+  }
+
+  public navEvents() {
+    this.navCtrl.push(CalendarPage);
   }
 }
