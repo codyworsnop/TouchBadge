@@ -26,35 +26,45 @@
 
     <section id="notification">
       <ion-card *ngFor="let card of cards">
-        <ion-grid>
-
-          <div class="topSub">
-            <ion-row>
-              <ion-col col-4>
-                <ion-img src="assets/img/calendar_icon.png"></ion-img>
-              </ion-col>
-              <ion-col col-8>
-                <h3>{{card.title}}</h3>
-                <p>{{card.subtitle}}</p>
-                <p>{{card.date}}  {{card.time}}</p>
-              </ion-col>
-            </ion-row>
-          </div>
-
-          <ion-row class="bottomSub" (click)="navEvents()">
-            <ion-col col-12>
-              <ion-img src="assets/img/mag_icon.png"></ion-img>
-              <p>view</p>
+        <div class="topSub">
+          <ion-row>
+            <ion-col col-4>
+              <ion-img src="assets/img/calendar_icon.png"></ion-img>
+            </ion-col>
+            <ion-col col-8>
+              <h3>{{card.title}}</h3>
+              <p>{{card.subtitle}}</p>
+              <p>{{card.date}} {{card.time}}</p>
             </ion-col>
           </ion-row>
+        </div>
 
-        </ion-grid>
+        <ion-row class="bottomSub" (click)="navEvents()">
+          <ion-col col-12>
+            <ion-img src="assets/img/mag_icon.png"></ion-img>
+            <p>view</p>
+          </ion-col>
+        </ion-row>
       </ion-card>
-
     </section>
 
     <section id="status">
+      <ion-card id="contactStatus">
+        <ion-row>
+          <ion-col col-12>
+              <h1>23 contacts made today!</h1>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+      <ion-card id="badgeStatus">
 
+        <ion-row>
+          <ion-col col-12>
+            <h1>Badge is disconnected</h1>
+          </ion-col>
+        </ion-row>
+
+      </ion-card>
     </section>
   </ion-grid>
 </ion-content>

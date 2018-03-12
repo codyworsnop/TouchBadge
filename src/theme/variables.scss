@@ -36,8 +36,11 @@ $app-direction: ltr;
 $colors: (
   primary:    #5e70b9,
   secondary:  #307745,
-  danger:     #9c2828,
-  light:      #8fc5cc,
+  danger: #ff3232,
+  disconnected:     #ff3232,
+  connected: #32ff4d,
+  warning: #fcff32,
+  light:      #6F9CEB,
   dark:       rgb(18, 22, 73),
   white:      #fff,
   white-transparent: rgba(0, 0, 0, 0.7)
