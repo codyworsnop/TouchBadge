@@ -23,8 +23,9 @@ export class ConfigurePage {
   scan() {
     this.setStatus('Scanning for Bluetooth LE Devices');
     this.devices = [];  // clear list
-  
-    this.ble.startScanWithOptions(["2"], { reportDuplicates: false }).subscribe(
+
+
+    this.ble.startScanWithOptions(["0x02"], { reportDuplicates: false }).subscribe(
       device => this.onDeviceDiscovered(device), 
       error => this.scanError(error)
     );
