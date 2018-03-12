@@ -10,7 +10,7 @@ import { ToastController } from 'ionic-angular';
 
 export class ConfigurePage {
 
-  devices: any[] = [];
+  devices: any = {};
   statusMessage: string;
 
   constructor(public navCtrl: NavController, 
@@ -25,12 +25,11 @@ export class ConfigurePage {
     this.devices = [];  // clear list
 
 
-    this.ble.startScanWithOptions([], { reportDuplicates: false }).subscribe(
+    this.ble.scan([], 5000).subscribe(
       device => this.onDeviceDiscovered(device), 
       error => this.scanError(error)
     );
 
-    setTimeout(this.ble.stopScan, 5000);
     setTimeout(this.setStatus.bind(this), 5000, 'Scan complete');
   }
 
@@ -40,9 +39,8 @@ export class ConfigurePage {
 
       if (device.name != null)
       {
-        this.devices.push(device);
+        this.devices[device.id] = device;
       }
-
     });
   }
 
