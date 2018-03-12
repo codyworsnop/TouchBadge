@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, Tabs } from 'ionic-angular';
 import { LoginModal } from '../../modals/login/login';
 import { LinkedInUtilityProvider } from '../../providers/linked-in-utility/linked-in-utility';
 import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
@@ -11,7 +11,7 @@ import { CalendarPage } from '../calendar/calendar';
 })
 export class HomePage {
 
-  cards: any;
+  cards: any[] = [];
   firstName: string; 
   lastName: string; 
   id: string; 
@@ -20,6 +20,10 @@ export class HomePage {
 
     this.cards = [{ "title" : "Event", "subtitle" : "pulling your hair out with ionic", "date" : "03/15/2018", "time" : "4:30 PM" },
                 { "title" : "Seminar", "subtitle" : "Breadware meeting", "date" : "03/10/2018", "time" : "8:00 AM" },
+                { "title" : "Event", "subtitle" : "Learning to write firmware", "date" : "03/11/2018", "time" : "7:00 PM" },
+                { "title" : "Event", "subtitle" : "Learning to write firmware", "date" : "03/11/2018", "time" : "7:00 PM" },
+                { "title" : "Event", "subtitle" : "Learning to write firmware", "date" : "03/11/2018", "time" : "7:00 PM" },
+                { "title" : "Event", "subtitle" : "Learning to write firmware", "date" : "03/11/2018", "time" : "7:00 PM" },
                 { "title" : "Event", "subtitle" : "Learning to write firmware", "date" : "03/11/2018", "time" : "7:00 PM" }]; 
   }
 
@@ -40,7 +44,16 @@ export class HomePage {
     //modal.present();
   }
 
-  public navEvents() {
-    this.navCtrl.push(CalendarPage);
+  public navToEvent() {
+    var tabs: Tabs = this.navCtrl.parent;
+    tabs.select(2);
+  }
+
+  public dismissNotification(card: any) {
+
+    let index = this.cards.indexOf(card);
+    if (index > -1) {
+      this.cards.splice(index, 1);
+    }
   }
 }

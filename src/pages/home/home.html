@@ -5,66 +5,49 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
   <ion-grid>
+    <ion-row id="header">
+      <ion-col col-4>
+        <ion-img src="assets/img/cody.jpg"></ion-img>
+      </ion-col>
 
-    <section id="header">
-      <ion-row>
-        <ion-col col-4>
-          <ion-img src="assets/img/cody.jpg"></ion-img>
-        </ion-col>
+      <ion-col col-8>
+        <h2>Cody Worsnop</h2>
+        <h4>Software Engineer</h4>
+        <h6>General Electric | University of Nevada, Reno</h6>
+        <h6>Reno, Nevada | 220 </h6>
+      </ion-col>
+    </ion-row>
 
-        <ion-col col-8>
-          <h2>Cody Worsnop</h2>
-          <h4>Software Engineer</h4>
-          <h6>General Electric | University of Nevada, Reno</h6>
-          <h6>Reno, Nevada | 220 </h6>
-        </ion-col>
-      </ion-row>
-    </section>
-
-    <section id="notification">
-      <ion-card *ngFor="let card of cards">
-        <div class="topSub">
+    <ion-row id="notification">
+      <ion-col col-12>
+        <ion-card *ngFor="let card of cards">
           <ion-row>
-            <ion-col col-4>
+            <ion-col col-3 id="cardIcon" (click)="navToEvent()">
               <ion-img src="assets/img/calendar_icon.png"></ion-img>
             </ion-col>
-            <ion-col col-8>
-              <h3>{{card.title}}</h3>
-              <p>{{card.subtitle}}</p>
-              <p>{{card.date}} {{card.time}}</p>
+            <ion-col col-9>
+              <div id="notificationWrapper">
+                <h3>{{card.title}}</h3>
+                <p>{{card.subtitle}}</p>
+                <p>{{card.date}} {{card.time}}</p>
+              </div>
             </ion-col>
           </ion-row>
-        </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
 
-        <ion-row class="bottomSub" (click)="navEvents()">
-          <ion-col col-12>
-            <ion-img src="assets/img/mag_icon.png"></ion-img>
-            <p>view</p>
-          </ion-col>
-        </ion-row>
-      </ion-card>
-    </section>
-
-    <section id="status">
-      <ion-card id="contactStatus">
-        <ion-row>
-          <ion-col col-12>
-              <h1>23 contacts made today!</h1>
-          </ion-col>
-        </ion-row>
-      </ion-card>
-      <ion-card id="badgeStatus">
-
-        <ion-row>
-          <ion-col col-12>
-            <h1>Badge is disconnected</h1>
-          </ion-col>
-        </ion-row>
-
-      </ion-card>
-    </section>
+    <ion-row id="status">
+      <ion-col col-12>
+        <h1>53 Contacts Made Today!</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row id="contact">
+        <ion-col col-12>
+          <h1>Badge Connected</h1>
+        </ion-col>
+      </ion-row>
   </ion-grid>
 </ion-content>

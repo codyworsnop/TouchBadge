@@ -11,14 +11,13 @@ page-home {
     }
 
     #header {
-        flex: 4;
+        flex: 3;
         text-align: center;
         background-size: cover;
-        display: flex; 
-        flex-direction: column;
         background-image:linear-gradient(0deg, rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.5), 
                     rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.5)),
                     url("../../assets/img/bg_blur.jpg");
+
     }
     
     #header ion-row {
@@ -44,26 +43,18 @@ page-home {
     }
 
     #notification {
-        flex: 3;
-        background-color: #F4F7F5;
-        overflow-x: auto;
-        display: flex;
-        flex-direction: row;
+        flex: 4; 
+        height: 100%;
+        overflow-y: auto;
+
     }
 
     #notification ion-card {
-        margin-top: 12px;
         height: 30vw;
-        min-width: 70vw;
-        color: map-get($colors, secondary);
+        box-shadow: 1px 4px 10px 3px rgba(0, 0, 0, 0.3);
     } 
 
-    #notification ion-row {
-        height: 100%;
- 
-    }
-
-    #notification ion-col {
+    #notification ion-card ion-row { 
         height: 100%;
     }
 
@@ -74,84 +65,34 @@ page-home {
         width: 50px;
     } 
 
-    .topSub {
-        flex: 3;
-        border-bottom: 1px solid #CCCCCC;
-
+    #notificationWrapper { 
+        width: 100%;
+        margin: auto 10px;
     }
 
-    .bottomSub {
-        flex: 1;
+    #cardIcon {     
+       background: linear-gradient(0deg, rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.9), 
+       rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 1));
+    }
+
+    #cardIcon ion-img { 
         margin: auto;
-        
-    }
-
-    .bottomSub ion-img, .bottomSub img {
-        height: 1em !important;
-        width: 1em !important;
-        display: inline-block;
-    }
-
-    .bottomSub p {
-        display: inline-block;
-    }
-
-    .buttom button { 
-        color: #FFFFFF !important;
-        background-color: #FFFFFF !important;
     }
 
     #status {
-        display: flex;
-        flex-direction: column;
-        flex: 4;
-        background-color: #F4F7F5;
-    }
-
-    #contactStatus { 
         flex: 1;
-        background-color: #F4F7F5;
-    }
-
-    #badgeStatus {
-        flex: 1;
+        height: 100%;
+        background-color: map-get($colors, primary);
+        color: #FFFFFF;
         text-align: center;
+    }
+
+    #contact {
+        flex: 1;
+        height: 100%;
         background-color: map-get($colors, disconnected);
-        box-shadow: 1px 1px 20px 0px;
-    }
-
-    #badgeStatus ion-row {
-        height: 100%;
-    }
-
-    #badgeStatus ion-col {
-        margin: auto;
-    }
-
-    #badgeStatus h1 {
         color: #FFFFFF;
-        height: 100%;
-    }
-
-    #contactStatus { 
-        flex: 1;
-        height: 100%;
         text-align: center;
-        background:linear-gradient(150deg, rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 1), 
-        rgba(red(map-get($colors, light)), green(map-get($colors, light)), blue(map-get($colors, light)), 0.8));
-        box-shadow: 1px 1px 20px 0px;
-    }
-
-    #contactStatus ion-row {
-        height: 100%;
-    }
-
-    #contactStatus ion-col {
-        margin: auto;
-    }
-
-    #contactStatus h1 { 
-        color: #FFFFFF;
     }
 }
 
