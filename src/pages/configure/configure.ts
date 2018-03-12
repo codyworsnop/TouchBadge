@@ -13,9 +13,10 @@ export class ConfigurePage {
 
   scanSubscription: Subscription;
   devices: any[] = [];
+  devicesMap: any = {};
   statusMessage: string;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private toastCtrl: ToastController,
     private ble: BLE,
     private ngZone: NgZone) {
@@ -28,23 +29,23 @@ export class ConfigurePage {
 
 
     this.scanSubscription = this.ble.startScan([]).subscribe(
-      device => this.onDeviceDiscovered(device), 
+      device => this.onDeviceDiscovered(device),
       error => this.scanError(error)
     );
 
-    setTimeout(this.ble.stopScan, 5000);
-    setTimeout(this.unsubscribeScan, 5000);
-    setTimeout(this.setStatus.bind(this), 5000, 'Scan complete');
+    setTimeout(() => {
+      this.scanSubscription.unsubscribe();
+      this.ble.stopScan;
+      this.setStatus("Scan Complete");
+    }, 5000);
   }
 
   onDeviceDiscovered(device) {
     console.log('Discovered ' + JSON.stringify(device, null, 2));
     this.ngZone.run(() => {
 
-      console.log("index: " + this.devices.indexOf(device));
-      
-      if (device.name != null && this.devices.indexOf(device) != -1)
-      {
+      if (device.name == "TouchBadge" && this.devicesMap[device.id] == undefined) {
+        this.devicesMap[device.id] = device;
         this.devices.push(device);
       }
     });
@@ -59,11 +60,6 @@ export class ConfigurePage {
       duration: 5000
     });
     toast.present();
-  }
-
-  unsubscribeScan()
-  {
-    this.scanSubscription.unsubscribe();
   }
 
   setStatus(message) {
