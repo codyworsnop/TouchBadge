@@ -26,8 +26,8 @@ export class ConfigurePage {
   scan() {
     this.setStatus('Scanning for Bluetooth LE Devices');
     this.devices = [];  // clear list
-
-
+    this.devicesMap = {};
+    
     this.scanSubscription = this.ble.startScan([]).subscribe(
       device => this.onDeviceDiscovered(device),
       error => this.scanError(error)
@@ -44,7 +44,7 @@ export class ConfigurePage {
     console.log('Discovered ' + JSON.stringify(device, null, 2));
     this.ngZone.run(() => {
 
-      if (device.name == "TouchBadge" && this.devicesMap[device.id] == undefined) {
+      if (device.advertising.kCBAdvDataLocalName == "TouchBadge" && this.devicesMap[device.id] == null) {
         this.devicesMap[device.id] = device;
         this.devices.push(device);
       }

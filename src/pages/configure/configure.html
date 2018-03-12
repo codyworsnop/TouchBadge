@@ -10,9 +10,9 @@
     <button ion-button (click)="scan()">Scan</button>
     <ion-list> 
       <button ion-item *ngFor="let device of devices">
-        <h2>{{ device.name || 'Unnamed' }}</h2>
-        <p>{{ device.id }}</p>
-        <p>RSSI: {{ device.uuid }}</p>
+        <h2>{{device.advertising.kCBAdvDataLocalName}}</h2>
+        <p>{{device.id}}</p>
+        <p>RSSI: {{device.rssi}}</p>
       </button>  
      </ion-list> 
   </ion-content>
