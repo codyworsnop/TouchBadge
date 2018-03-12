@@ -25,7 +25,7 @@ export class ConfigurePage {
     this.devices = [];  // clear list
 
 
-    this.ble.startScanWithOptions(["0x02"], { reportDuplicates: false }).subscribe(
+    this.ble.startScanWithOptions([], { reportDuplicates: false }).subscribe(
       device => this.onDeviceDiscovered(device), 
       error => this.scanError(error)
     );
