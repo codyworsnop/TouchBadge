@@ -34,7 +34,12 @@ export class ConfigurePage {
   onDeviceDiscovered(device) {
     console.log('Discovered ' + JSON.stringify(device, null, 2));
     this.ngZone.run(() => {
-      this.devices.push(device);
+
+      if (device.id != null)
+      {
+        this.devices.push(device);
+      }
+
     });
   }
 
