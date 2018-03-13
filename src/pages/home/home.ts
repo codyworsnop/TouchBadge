@@ -14,6 +14,9 @@ export class HomePage {
   firstName: string; 
   lastName: string; 
   id: string; 
+  numConnections: number;
+  jobTitle: string;
+  location: string; 
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public ln: LinkedInUtilityProvider, public userData: UserDataUtilityProvider) {
   }
@@ -21,10 +24,13 @@ export class HomePage {
   login() {
 
     this.ln.linkedInLogin().then(response => {
-
+    
       this.firstName = this.userData.GetFirstName();
       this.lastName = this.userData.GetLastName();
       this.id = this.userData.GetId();
+      this.numConnections = this.userData.GetNumConnections();
+      this.jobTitle = this.userData.GetJobTitle();
+      this.location = this.userData.GetLocation();
     
     }).catch(error => {
 
@@ -36,4 +42,5 @@ export class HomePage {
     var tabs: Tabs = this.navCtrl.parent;
     tabs.select(2);
   }
+
 }

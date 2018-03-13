@@ -3,6 +3,11 @@
     <ion-title>
       Home
     </ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="login()">
+          <ion-icon name="log-in"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -13,16 +18,14 @@
         <ion-img src="assets/img/cody.jpg"></ion-img>
       </ion-col>
       <ion-col col-8>
-        <h2>Cody Worsnop</h2>
-        <h4>Software Engineer</h4>
-        <h6>General Electric | University of Nevada, Reno</h6>
-        <h6>Reno, Nevada | 220 </h6>
+        <h2>{{firstName}} {{lastName}}</h2>
+        <h4>{{jobTitle}}</h4>
+        <h6>{{location}} | {{numConnections}}</h6>
       </ion-col>
     </ion-row>
 
     <ion-row class="subContent">
       <ion-col col-6>
-        <ion-card id="contactCard">
           <ion-grid>
             <ion-row class="cardHeader">
               <ion-col col-12>
@@ -35,11 +38,9 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-        </ion-card>
       </ion-col>
 
       <ion-col col-6>
-        <ion-card id="statusCard">
           <ion-grid>
             <ion-row class="cardHeader">
               <ion-col col-12>
@@ -48,17 +49,15 @@
             </ion-row>
             <ion-row class="cardInformation">
               <ion-col col-12>
-                <h1>Disconnected</h1>
+                <h1>lel</h1>
               </ion-col>
             </ion-row>
           </ion-grid>
-        </ion-card>
       </ion-col>
     </ion-row>
 
     <ion-row class="subContent">
       <ion-col col-6>
-        <ion-card id="eventCard">
           <ion-grid>
             <ion-row class="cardHeader">
               <ion-col col-12>
@@ -71,10 +70,9 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-        </ion-card>
       </ion-col>
+
       <ion-col col-6>
-        <ion-card id="seminarCard">
           <ion-grid>
             <ion-row class="cardHeader">
               <ion-col col-12>
@@ -87,7 +85,6 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-        </ion-card>
       </ion-col>
     </ion-row>
 

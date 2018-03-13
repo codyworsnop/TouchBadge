@@ -59,28 +59,32 @@ export class LinkedInUtilityProvider {
                 content: "Logging in"
 
               });
+
               loader.present();
 
               this.getLinkedInUserDetails(data.access_token).then(response => {
 
                 var result = JSON.parse(response.data);
-                this.userData.SetUserData(result.firstName, result.lastName, result.id);
+                this.userData.SetUserData(result.firstName, result.lastName, result.id, result.positions.values[0].title, result.location.name, result.numConnections);
 
               }).then(() => {
 
                 console.log("LinkedIn authentication completed.");
                 loader.dismiss();
 
+                resolve();
+
               });
-
             }
-
           }, error => {
 
             console.log("error posting http request: " + JSON.stringify(error));
-
           });
+        }, error => {
+          console.log("error: " + error);
         });
+      }, error => {
+        console.log("error: " + error);
       });
     });
   }
@@ -92,7 +96,7 @@ export class LinkedInUtilityProvider {
       'Authorization': 'Bearer ' + token,
     };
 
-    return this.http.get("https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address,picture-url)?format=json", {}, headers).then(response => response, error => error);
+    return this.http.get("https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address,picture-url,positions,location,num-connections)?format=json", {}, headers).then(response => response, error => error);
   }
 
   private linkedInGetAuthCode(): Promise<any> {
@@ -133,6 +137,8 @@ export class LinkedInUtilityProvider {
           }
 
         }
+      }, error => { 
+        console.log("error: " + error);
       });
     });
   }

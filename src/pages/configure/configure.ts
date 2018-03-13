@@ -90,9 +90,9 @@ export class ConfigurePage {
     if (this.input != undefined) {
       // send 1 byte to switch a light on
       var data = new Uint8Array(1);
-      data[0] = 1;
-      this.ble.write(this.connectedDevice.id, "FF10", "FF11", )
-      this.ble.write(this.connectedDevice.id, "FF10", "FF11", data.buffer, success, failure);
+    //  data[0] = 1;
+     // this.ble.write(this.connectedDevice.id, "FF10", "FF11", )
+    //  this.ble.write(this.connectedDevice.id, "FF10", "FF11", data.buffer, success, failure);
     }
   }
 
