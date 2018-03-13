@@ -15,6 +15,8 @@ export class ConfigurePage {
   devices: any[] = [];
   devicesMap: any = {};
   statusMessage: string;
+  input: string;
+  connectedDevice: any;
 
   constructor(public navCtrl: NavController,
     private toastCtrl: ToastController,
@@ -27,7 +29,7 @@ export class ConfigurePage {
     this.setStatus('Scanning for Bluetooth LE Devices');
     this.devices = [];  // clear list
     this.devicesMap = {};
-    
+
     this.scanSubscription = this.ble.startScan([]).subscribe(
       device => this.onDeviceDiscovered(device),
       error => this.scanError(error)
@@ -38,6 +40,20 @@ export class ConfigurePage {
       this.ble.stopScan;
       this.setStatus("Scan Complete");
     }, 5000);
+  }
+
+  connect(device: any) {
+
+    this.ble.connect(device.id).subscribe(
+      success => {
+        this.setStatus("Connected to device " + device.id);
+
+        this.connectedDevice = device;
+      },
+      error => {
+        this.setStatus("Error connecting to device " + device.id);
+      }
+    )
   }
 
   onDeviceDiscovered(device) {
@@ -67,6 +83,17 @@ export class ConfigurePage {
     this.ngZone.run(() => {
       this.statusMessage = message;
     });
+  }
+
+  send() {
+
+    if (this.input != undefined) {
+      // send 1 byte to switch a light on
+      var data = new Uint8Array(1);
+      data[0] = 1;
+      this.ble.write(this.connectedDevice.id, "FF10", "FF11", )
+      this.ble.write(this.connectedDevice.id, "FF10", "FF11", data.buffer, success, failure);
+    }
   }
 
 }
