@@ -12,12 +12,12 @@ page-home {
 
     #header {
         flex: 2;
-        
         text-align: center;
         background-size: cover;
         background-image:linear-gradient(0deg, rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.5), 
                     rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.5)),
                     url("../../assets/img/bg_blur.jpg");
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     }
 
     #header ion-col {
@@ -33,18 +33,64 @@ page-home {
         box-shadow: 0 0 0 3px #FFFFFF;
     }
 
-    #header h2, h4, h6 {
+    #header h2, #header h4, #header h6 {
         color: #FFFFFF;
         margin: 0.1em;
     }
 
-    .content { 
+    .subContent { 
         flex: 1;
-
+        height: 100%;
     }
 
-    content ion-col { 
+    .subContent ion-card { 
+        height: 100%;
+        box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+        margin: 0;
+    }
+
+    .subContent ion-card-header p {
+        color: #FFFFFF;      
+        text-align: center;
+    }
+    
+    .subContent ion-card-content { 
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .cardHeader, .cardHeader p {
+        flex: 1; 
+        background-color: map-get($colors, primary);
+        color: #FFFFFF;
+        text-align: center;
+    }
+
+    .cardHeader ion-col {
         margin: auto;
     }
+
+    .cardInformation { 
+        flex: 2;
+        text-align: center;
+    }
+
+    .cardInformation ion-col {
+        margin: auto;
+    }
+
+    .cardInformation h1 {
+        color: map-get($colors, primary);
+        font-size: 3em;
+    }
+
+    #statusCard h1 {
+        color: map-get($colors, disconnected);
+        font-size: 1.5em;
+    }
+
 }
 
