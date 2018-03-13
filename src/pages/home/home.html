@@ -22,32 +22,43 @@
 
     <ion-row id="notification">
       <ion-col col-12>
-        <ion-card *ngFor="let card of cards">
-          <ion-row>
-            <ion-col col-3 id="cardIcon" (click)="navToEvent()">
-              <ion-img src="assets/img/calendar_icon.png"></ion-img>
-            </ion-col>
-            <ion-col col-9>
-              <div id="notificationWrapper">
-                <h3>{{card.title}}</h3>
-                <p>{{card.subtitle}}</p>
-                <p>{{card.date}} {{card.time}}</p>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+        <div *ngIf="cards.length == 0">
+          <h1>No New Notifications</h1>
+        </div>
+        <div *ngIf="cards.length != 0">
+          <ion-card *ngFor="let card of cards">
 
-    <ion-row id="status">
-      <ion-col col-12>
-        <h1>53 Contacts Made Today!</h1>
+            <ion-row>
+              <ion-col col-3 id="cardIcon">
+                <ion-img src="assets/img/calendar_icon.png"></ion-img>
+              </ion-col>
+              <ion-col col-9 id="cardContent">
+
+                <ion-row id="cardInfo">
+                  <ion-col col-12>
+                    <div id="notificationWrapper">
+                      <h3>{{card.title}}</h3>
+                      <p>{{card.subtitle}}</p>
+                      <p>{{card.date}} {{card.time}}</p>
+                    </div>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row id="cardSelection">
+                  <ion-col col-6 (click)="dismissNotification(card)">
+                    <p>Dismiss</p>
+                  </ion-col>
+                  <ion-col col-6 (click)="navToEvent()">
+                    <p>View</p>
+                  </ion-col>
+                </ion-row>
+
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </div>
+
       </ion-col>
     </ion-row>
-    <ion-row id="contact">
-        <ion-col col-12>
-          <h1>Badge Connected</h1>
-        </ion-col>
-      </ion-row>
   </ion-grid>
 </ion-content>
