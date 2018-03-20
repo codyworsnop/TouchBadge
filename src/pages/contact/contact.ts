@@ -19,7 +19,27 @@ export class ContactPage {
     this.contacts = [
       {
         name: "cody worsnop",
-        number: "7752247230"
+        description: "Student Worker at Unified Communication"
+      },
+      {
+        name: "Jon Weatherspoon",
+        description: "Student extraordinaire "
+      },
+      {
+        name: "Evan Grill",
+        description: "Manager at @one, MIKC UNR"
+      },
+      {
+        name: "Devrin Lee",
+        description: "Professor and Lady"
+      },
+      {
+        name: "Danny D",
+        description: "BreadWare CEO"
+      },
+      {
+        name: "Dillon sadde",
+        description: "Some Made up Name"
       }
     ]
 
@@ -30,14 +50,14 @@ export class ContactPage {
 
   if (contacts  != null) {
     let sortedContacts = contacts.sort();
-    let currentLetter = false; 
+    let currentLetter: string; 
     let currentContacts: any[];
 
     sortedContacts.forEach((value, index) => {
 
-      if (value.name.charAt(0) != currentLetter) {
+      if (value.name.charAt(0).toUpperCase() != currentLetter) {
 
-        currentLetter = value.name.charAt(0);
+        currentLetter = value.name.charAt(0).toUpperCase();
         
         let newGroup = {
           letter: currentLetter, 

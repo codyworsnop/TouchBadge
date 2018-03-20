@@ -19,10 +19,10 @@
       <ion-item-sliding *ngFor="let contact of group.contacts">
         <ion-item (click)="contactTapped()">
           <ion-avatar item-start>
-            <ion-icon name="contact"></ion-icon>
+            <ion-img src="assets/img/cody.jpg"></ion-img>
           </ion-avatar>
           <h2>{{contact.name}}</h2>
-          <p>{{contact.number}}</p>
+          <p>{{contact.description}}</p>
         </ion-item>
         <ion-item-options>
           <button ion-button color="primary" (click)="editContact(contact)">

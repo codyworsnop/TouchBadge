@@ -1,3 +1,53 @@
-page-contact {
+.ios, .md {
+    page-contactDetail {
 
+        scroll-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #content {
+            flex: 1;
+        }
+
+        ion-content ion-grid {
+            height: 100%;
+        }
+
+        ion-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin: 0 auto;
+        }
+  
+        #header {
+            flex: 1;
+            background-color: map-get($colors, primary);
+            text-align: center;
+            height: 100%;
+        }
+
+        #header ion-col { 
+            margin: auto;
+        }
+
+        #header ion-img {
+            contain: none;
+            height: 8em;
+            width: 8em;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 0 3px #FFFFFF;
+        }
+    
+        #header h2, #header h4, #header h6 {
+            color: #FFFFFF;
+            margin: 0.1em;
+        }
+
+        #body {
+            flex: 2;
+        }
+    }
 }
