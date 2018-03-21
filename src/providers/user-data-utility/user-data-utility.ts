@@ -18,6 +18,9 @@ export class UserDataUtilityProvider {
   private numConnections: number;
   private pictureUrl: string;
 
+  private AWSToken: string;
+  private AWSIdentityId: string;
+
   constructor() {
 
   }
@@ -35,8 +38,27 @@ export class UserDataUtilityProvider {
     this.id = id;
   }
 
-  public GetPictureUrl()
-  {
+  public SetAWSToken(value: string) {
+    this.AWSToken = value;
+  }
+
+  public SetAWSIdentityId(value: string) {
+    this.AWSIdentityId = value;
+  }
+
+  public GetAWSToken() {
+    if (this.AWSToken != null) {
+      return this.AWSToken;
+    }
+  }
+
+  public GetAWSIdentityId() {
+    if (this.AWSIdentityId != null) {
+      return this.AWSIdentityId;
+    }
+  }
+
+  public GetPictureUrl() {
     if (this.pictureUrl != null) {
       return this.pictureUrl;
     }

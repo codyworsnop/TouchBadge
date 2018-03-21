@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Platform, LoadingController } from 'ionic-angular';
 import { InAppBrowserOptions, InAppBrowser } from '@ionic-native/in-app-browser';
 import { UserDataUtilityProvider } from '../user-data-utility/user-data-utility';
+import { userInfo } from 'os';
 
 
 /*
@@ -15,9 +16,23 @@ import { UserDataUtilityProvider } from '../user-data-utility/user-data-utility'
 export class LinkedInUtilityProvider {
 
   linkedinAuthURL: string = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86vfexnhygt77x&redirect_uri=http%3A%2F%2Flocalhost%2Fcallback&state=987654321&scope=r_basicprofile";
+  apiGatewayURL: string = "https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin";
 
   constructor(public http: HTTP, public platform: Platform, public loadingCtrl: LoadingController, public iab: InAppBrowser, public userData: UserDataUtilityProvider) {
 
+  }
+
+  private getAWSToken(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+      this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin", "id=" + this.userData.GetId(), {}).then(response => {
+
+        var result = JSON.parse(response.data);
+
+        this.userData.SetAWSIdentityId(result.IdentityId);
+        this.userData.SetAWSToken(result.Token);
+      })
+    });
   }
 
   public linkedInLogin(): Promise<any> {
@@ -71,8 +86,15 @@ export class LinkedInUtilityProvider {
               }).then(() => {
 
                 console.log("LinkedIn authentication completed.");
-                loader.dismiss();
 
+                this.getAWSToken().then((response) => { 
+
+                  console.log("AWS Token retrieved: " + response);
+                }).catch((error) => {
+                  console.log("error loggin user to dynamo: " + error);
+                });
+
+                loader.dismiss();
                 resolve();
 
               });
@@ -138,7 +160,7 @@ export class LinkedInUtilityProvider {
           }
 
         }
-      }, error => { 
+      }, error => {
         console.log("error: " + error);
       });
     });

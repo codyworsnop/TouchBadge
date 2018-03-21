@@ -27,24 +27,6 @@ export class HomePage {
 
   login() {
 
-    /*
-    const params = {
-      'TableName': "Users",
-      'Item': { UserID: "0F87F8A6-79E2-46B7-8FEF-3930232549FD5", First_Name: "Jed", Last_Name: "Lean" },
-      'ConditionExpression': 'attribute_not_exists(id)'
-    };
-    
-    this.db.getDocumentClient()
-      .then(client => client.put(params).promise())
-      .catch(err => {
-
-        console.log(err);
-        this.alertUser(err);
-
-      });
-
-      */
-
     this.ln.linkedInLogin().then(response => {
     
       this.firstName = this.userData.GetFirstName();
@@ -54,7 +36,22 @@ export class HomePage {
       this.jobTitle = this.userData.GetJobTitle();
       this.location = this.userData.GetLocation();
       this.pictureUrl = this.userData.GetPictureUrl();    
+
+      const params = {
+        'TableName': "Users",
+        'Item': { UserID: this.userData.GetAWSIdentityId, First_Name: this.firstName, Last_Name: this.lastName},
+        'ConditionExpression': 'attribute_not_exists(id)'
+      };
       
+      this.db.getDocumentClient()
+        .then(client => client.put(params).promise())
+        .catch(err => {
+  
+          console.log(err);
+          this.alertUser(err);
+  
+        });
+
     }).catch(error => {
 
       console.log("error retrieving user");
