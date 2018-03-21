@@ -19,28 +19,32 @@ export class DynamoDB {
 
   }
 
-  private SetupAWSConfig() {
+  private SetupAWSConfig() : Promise<any> {
 
-    AWS.config.region = aws_cognito_region;
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: aws_cognito_identity_pool_id,
-      IdentityId: this.userData.GetId(),
-      Logins: {
-        'cognito-identity.amazonaws.com': this.userData.GetAWSToken()
-      }
+    return new Promise((resolve, reject) => {
+      AWS.config.region = aws_cognito_region;
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: aws_cognito_identity_pool_id,
+        IdentityId: this.userData.GetId(),
+        Logins: {
+          'cognito-identity.amazonaws.com': this.userData.GetAWSToken()
+        }
+      });
+  
+      AWS.config.credentials.refresh((error) => {
+        if (error) {
+          console.error(error);
+        } else {
+  
+          console.log("token: " + this.userData.GetAWSToken + " id: " + this.userData.GetAWSIdentityId);
+          console.log('Successfully logged!');
+        }
+      });
+  
+      this.documentClient = new AWS.DynamoDB.DocumentClient();
+
     });
 
-    AWS.config.credentials.refresh((error) => {
-      if (error) {
-        console.error(error);
-      } else {
-
-        console.log("token: " + this.userData.GetAWSToken + " id: " + this.userData.GetAWSIdentityId);
-        console.log('Successfully logged!');
-      }
-    });
-
-    this.documentClient = new AWS.DynamoDB.DocumentClient();
   }
 
   getDocumentClient(): Promise<any> {
@@ -49,10 +53,11 @@ export class DynamoDB {
 
       if (this.documentClient == null) 
       {
-        this.SetupAWSConfig();
-      }
+        this.SetupAWSConfig().then((response) => {
 
-      resolve(this.documentClient);
+          resolve(this.documentClient);
+        });
+      }
     });
   }
 
