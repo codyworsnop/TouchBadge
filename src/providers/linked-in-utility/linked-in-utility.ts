@@ -32,6 +32,7 @@ export class LinkedInUtilityProvider {
 
         this.userData.SetAWSIdentityId(result.IdentityId);
         this.userData.SetAWSToken(result.Token);
+        resolve();
       })
     });
   }

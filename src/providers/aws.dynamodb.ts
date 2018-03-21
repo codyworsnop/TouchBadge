@@ -41,6 +41,7 @@ export class DynamoDB {
       });
   
       this.documentClient = new AWS.DynamoDB.DocumentClient();
+      resolve();
 
     });
 
