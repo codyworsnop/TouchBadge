@@ -40,7 +40,7 @@ export class LinkedInUtilityProvider {
         resolve();
       }, error => {
 
-        this.alertUser("error: " + JSON.stringify(error);
+        this.alertUser("error: " + JSON.stringify(error));
         console.log("Error resolving aws token: " + error);
         reject();
       })
