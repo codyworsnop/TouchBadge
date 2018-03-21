@@ -39,7 +39,7 @@ export class HomePage {
 
       const params = {
         'TableName': "Users",
-        'Item': { UserID: this.userData.GetAWSIdentityId, First_Name: this.firstName, Last_Name: this.lastName},
+        'Item': { UserID: this.userData.GetAWSIdentityId(), First_Name: this.firstName, Last_Name: this.lastName},
         'ConditionExpression': 'attribute_not_exists(id)'
       };
       
