@@ -47,7 +47,7 @@ export class HomePage {
         .then(client => {
           
           client.put(params).promise()
-          this.alertUser("Putting to db: " + params.Item);
+          this.alertUser("Putting to db: " + JSON.stringify(params.Item));
         })
         .catch(err => {
   

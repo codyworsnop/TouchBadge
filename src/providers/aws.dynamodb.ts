@@ -35,6 +35,8 @@ export class DynamoDB {
           console.error(error);
         } else {
   
+          this.alertUser("token: " + this.userData.GetAWSToken);
+          this.alertUser(" id: " + this.userData.GetAWSIdentityId);
           console.log("token: " + this.userData.GetAWSToken + " id: " + this.userData.GetAWSIdentityId);
           console.log('Successfully logged!');
         }
