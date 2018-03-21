@@ -7,3 +7,4 @@ export {
   DynamoDB,
   User
 };
+ 

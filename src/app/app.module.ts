@@ -28,6 +28,7 @@ import { HTTP } from '@ionic-native/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { LinkedInUtilityProvider } from '../providers/linked-in-utility/linked-in-utility';
 import { UserDataUtilityProvider } from '../providers/user-data-utility/user-data-utility';
+import { DynamoDB } from '../providers/aws.dynamodb'
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { UserDataUtilityProvider } from '../providers/user-data-utility/user-dat
     HTTP,
     InAppBrowser,
     UserDataUtilityProvider,
+    DynamoDB
   ]
 })
 export class AppModule {}

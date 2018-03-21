@@ -16,13 +16,13 @@ export class UserDataUtilityProvider {
   private jobTitle: string;
   private location: string;
   private numConnections: number;
-
+  private pictureUrl: string;
 
   constructor() {
 
   }
 
-  public SetUserData(first: string, last: string, id: string, jobTitle: string, location: string, numConnections: number) {
+  public SetUserData(first: string, last: string, id: string, jobTitle: string, location: string, numConnections: number, pictureUrl: string) {
 
     // console.log("fn: " + first + ", ln: " + last + ", id: " + id + ", jobTitle: " + jobTitle + ", location: " + location + ", num: " + numConnections);
     this.firstName = first;
@@ -30,8 +30,16 @@ export class UserDataUtilityProvider {
     this.jobTitle = jobTitle;
     this.location = location;
     this.numConnections = numConnections;
+    this.pictureUrl = pictureUrl;
 
     this.id = id;
+  }
+
+  public GetPictureUrl()
+  {
+    if (this.pictureUrl != null) {
+      return this.pictureUrl;
+    }
   }
 
   public GetFirstName() {

@@ -6,7 +6,6 @@ import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-
 import { CalendarPage } from '../calendar/calendar';
 import { ToastController } from 'ionic-angular';
 import { DynamoDB } from '../../providers/providers';
-const aws_exports = require('../../aws-exports').default;
 
 @Component({
   selector: 'page-home',
@@ -14,7 +13,6 @@ const aws_exports = require('../../aws-exports').default;
 })
 export class HomePage {
 
-  private taskTable: string = aws_exports.aws_resource_name_prefix + 'Events';
 
   firstName: string; 
   lastName: string; 
@@ -22,11 +20,30 @@ export class HomePage {
   numConnections: number;
   jobTitle: string;
   location: string; 
+  pictureUrl: string;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public ln: LinkedInUtilityProvider, public userData: UserDataUtilityProvider, private toastCtrl: ToastController, private db: DynamoDB) {
   }
 
   login() {
+
+    /*
+    const params = {
+      'TableName': "Users",
+      'Item': { UserID: "0F87F8A6-79E2-46B7-8FEF-3930232549FD5", First_Name: "Jed", Last_Name: "Lean" },
+      'ConditionExpression': 'attribute_not_exists(id)'
+    };
+    
+    this.db.getDocumentClient()
+      .then(client => client.put(params).promise())
+      .catch(err => {
+
+        console.log(err);
+        this.alertUser(err);
+
+      });
+
+      */
 
     this.ln.linkedInLogin().then(response => {
     
@@ -36,24 +53,8 @@ export class HomePage {
       this.numConnections = this.userData.GetNumConnections();
       this.jobTitle = this.userData.GetJobTitle();
       this.location = this.userData.GetLocation();
-
-      const params = {
-        'TableName': this.taskTable,
-        'Item': { EventID: "0F87F8A6-79E2-46B7-8FEF-3930232549FD5", Name: "Cody's fish and supply conference", NewContacts: "32", EventDate: "1515571200000"},
-        'ConditionExpression': 'attribute_not_exists(id)'
-      };
-      this.db.getDocumentClient()
-        .then(client => client.put(params).promise())
-        .catch(err => {
-
-          console.log('add task error', err)
-          this.alertUser("error: " + err)
-
-        });
-
-
+      this.pictureUrl = this.userData.GetPictureUrl();    
       
-
     }).catch(error => {
 
       console.log("error retrieving user");
@@ -64,7 +65,7 @@ export class HomePage {
 
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 5000,
+      showCloseButton: true,
       position: 'bottom'
 
     });
