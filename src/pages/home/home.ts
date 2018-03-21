@@ -46,7 +46,10 @@ export class HomePage {
       this.db.getDocumentClient()
         .then(client => {
           
-          client.put(params).promise()
+          client.put(params).promise();
+          this.alertUser("client: " + client);
+          this.alertUser("Token: " + this.userData.GetAWSToken());
+          this.alertUser("id: " + this.userData.GetAWSIdentityId());
           this.alertUser("Putting to db: " + JSON.stringify(params.Item));
         })
         .catch(err => {
