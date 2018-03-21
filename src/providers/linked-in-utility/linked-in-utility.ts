@@ -4,6 +4,7 @@ import { Platform, LoadingController } from 'ionic-angular';
 import { InAppBrowserOptions, InAppBrowser } from '@ionic-native/in-app-browser';
 import { UserDataUtilityProvider } from '../user-data-utility/user-data-utility';
 import { userInfo } from 'os';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 
 /*
@@ -18,7 +19,7 @@ export class LinkedInUtilityProvider {
   linkedinAuthURL: string = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86vfexnhygt77x&redirect_uri=http%3A%2F%2Flocalhost%2Fcallback&state=987654321&scope=r_basicprofile";
   apiGatewayURL: string = "https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin";
 
-  constructor(public http: HTTP, public platform: Platform, public loadingCtrl: LoadingController, public iab: InAppBrowser, public userData: UserDataUtilityProvider) {
+  constructor(public http: HTTP, public platform: Platform, public loadingCtrl: LoadingController, public iab: InAppBrowser, public userData: UserDataUtilityProvider, private toastCtrl: ToastController) {
 
   }
 
@@ -86,11 +87,14 @@ export class LinkedInUtilityProvider {
               }).then(() => {
 
                 console.log("LinkedIn authentication completed.");
+                this.alertUser("Linkedin complete, getting aws token");
 
                 this.getAWSToken().then((response) => { 
 
+                  this.alertUser("Token recieved: " + response);
                   console.log("AWS Token retrieved: " + response);
                 }).catch((error) => {
+                  this.alertUser("error recieving token: " + error);
                   console.log("error loggin user to dynamo: " + error);
                 });
 
@@ -164,5 +168,17 @@ export class LinkedInUtilityProvider {
         console.log("error: " + error);
       });
     });
+  }
+
+  alertUser(message: string) { 
+
+    let toast = this.toastCtrl.create({
+      message: message,
+      showCloseButton: true,
+      position: 'bottom'
+
+    });
+
+    toast.present();
   }
 }

@@ -14,7 +14,6 @@ export class DynamoDB {
 
   private documentClient: any;
 
-
   constructor(private config: Config, private toastCtrl: ToastController, private userData: UserDataUtilityProvider) {
 
   }
@@ -51,10 +50,14 @@ export class DynamoDB {
 
     return new Promise((resolve, reject) => {
 
+      this.alertUser("Checking doc null");
+
       if (this.documentClient == null) 
       {
+        this.alertUser("Doc is null setting up doc");
         this.SetupAWSConfig().then((response) => {
 
+          this.alertUser("resolving doc client: " + this.documentClient);
           resolve(this.documentClient);
         });
       }
