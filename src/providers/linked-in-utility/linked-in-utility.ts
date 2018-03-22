@@ -183,8 +183,6 @@ export class LinkedInUtilityProvider {
       message: message,
       showCloseButton: true,
       position: 'bottom',
-      duration: 5000,
-
     });
 
     toast.present();
