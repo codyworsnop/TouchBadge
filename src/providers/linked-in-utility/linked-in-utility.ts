@@ -16,7 +16,7 @@ import { ToastController } from 'ionic-angular/components/toast/toast-controller
 @Injectable()
 export class LinkedInUtilityProvider {
 
-  linkedinAuthURL: string = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86vfexnhygt77x&redirect_uri=http%3A%2F%2Flocalhost%2Fcallback&state=987654321&scope=r_basicprofile";
+  linkedinAuthURL: string = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86vfexnhygt77x&redirect_uri=http%3A%2F%2Flocalhost%2Fcallback&state=987654321&scope=r_basicprofile%20r_emailaddress";
   apiGatewayURL: string = "https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin";
 
   constructor(public http: HTTP, public platform: Platform, public loadingCtrl: LoadingController, public iab: InAppBrowser, public userData: UserDataUtilityProvider, private toastCtrl: ToastController) {
@@ -24,8 +24,6 @@ export class LinkedInUtilityProvider {
   }
 
   public getAWSToken(): Promise<any> {
-
-    this.alertUser("Getting token with id: " + this.userData.GetId());
 
     return new Promise((resolve, reject) => {
       this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + "cody", {}, {}).then(response => {
@@ -87,16 +85,12 @@ export class LinkedInUtilityProvider {
               this.getLinkedInUserDetails(data.access_token).then(response => {
 
                 var result = JSON.parse(response.data);
-                this.userData.SetUserData(result.firstName, result.lastName, result.id, result.positions.values[0].title, result.location.name, result.numConnections, result.pictureUrl);
+                this.userData.SetUserData(result.firstName, result.lastName, result.id, result.positions.values[0].title, result.location.name, result.numConnections, result.pictureUrl, result.emailAddress);
 
               }).then(() => {
 
-                console.log("LinkedIn authentication completed.");
-                this.alertUser("Linkedin complete, getting aws token");
-
                 this.getAWSToken().then((response) => { 
 
-                  this.alertUser("got token: " + this.userData.GetAWSToken().substring(0, 5));
                   loader.dismiss();
                   resolve();
 

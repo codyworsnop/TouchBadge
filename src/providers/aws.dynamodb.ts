@@ -56,7 +56,6 @@ export class DynamoDB {
 
       if (this.documentClient == null) {
         this.SetupAWSConfig().then(response => {
-          this.alertUser("got doc client: " + this.documentClient);
           resolve(this.documentClient);
         });
       }

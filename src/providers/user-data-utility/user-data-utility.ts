@@ -17,6 +17,7 @@ export class UserDataUtilityProvider {
   private location: string;
   private numConnections: number;
   private pictureUrl: string;
+  private emailAddress: string;
 
   private AWSToken: string;
   private AWSIdentityId: string;
@@ -25,7 +26,7 @@ export class UserDataUtilityProvider {
 
   }
 
-  public SetUserData(first: string, last: string, id: string, jobTitle: string, location: string, numConnections: number, pictureUrl: string) {
+  public SetUserData(first: string, last: string, id: string, jobTitle: string, location: string, numConnections: number, pictureUrl: string, emailAddress: string) {
 
     // console.log("fn: " + first + ", ln: " + last + ", id: " + id + ", jobTitle: " + jobTitle + ", location: " + location + ", num: " + numConnections);
     this.firstName = first;
@@ -34,6 +35,7 @@ export class UserDataUtilityProvider {
     this.location = location;
     this.numConnections = numConnections;
     this.pictureUrl = pictureUrl;
+    this.emailAddress = emailAddress;
 
     this.id = id;
   }
@@ -57,6 +59,19 @@ export class UserDataUtilityProvider {
     if (this.AWSIdentityId != null) {
       return this.AWSIdentityId;
     }
+  }
+
+  public GetEmailAddress()
+  {
+    if (this.emailAddress != null)
+    {
+      return this.emailAddress;
+    }
+  }
+
+  public SetEmailAddress(value: string)
+  {
+    this.emailAddress = value;
   }
 
   public GetPictureUrl() {

@@ -39,7 +39,7 @@ export class HomePage {
 
       const params = {
         'TableName': "Users",
-        'Item': { UserID: this.userData.GetAWSIdentityId(), First_Name: this.firstName, Last_Name: this.lastName, JobTitle: this.jobTitle},
+        'Item': { UserID: this.userData.GetAWSIdentityId(), First_Name: this.firstName, Last_Name: this.lastName, JobTitle: this.jobTitle, Email: this.userData.GetEmailAddress() },
         'ConditionExpression': 'attribute_not_exists(id)'
       };
       
@@ -47,10 +47,6 @@ export class HomePage {
         .then(client => {
           
           client.put(params).promise();
-          this.alertUser("client: " + client);
-          this.alertUser("Token: " + this.userData.GetAWSToken());
-          this.alertUser("id: " + this.userData.GetAWSIdentityId());
-          this.alertUser("Putting to db: " + JSON.stringify(params.Item));
         })
         .catch(err => {
   
