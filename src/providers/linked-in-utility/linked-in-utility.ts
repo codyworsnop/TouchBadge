@@ -26,10 +26,9 @@ export class LinkedInUtilityProvider {
   public getAWSToken(): Promise<any> {
 
     this.alertUser("Getting token with id: " + this.userData.GetId());
-    console.log("Getting Token with id: " + "cody");
 
     return new Promise((resolve, reject) => {
-      this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "id=" + "cody", {}, {}).then(response => {
+      this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + "cody", {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
         this.alertUser("Token result: " + JSON.stringify(result));
@@ -185,7 +184,8 @@ export class LinkedInUtilityProvider {
     let toast = this.toastCtrl.create({
       message: message,
       showCloseButton: true,
-      position: 'bottom'
+      position: 'bottom',
+      duration: 5000,
 
     });
 
