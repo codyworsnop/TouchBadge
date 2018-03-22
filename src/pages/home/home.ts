@@ -39,7 +39,7 @@ export class HomePage {
 
       const params = {
         'TableName': "Users",
-        'Item': { UserID: this.userData.GetAWSIdentityId(), First_Name: this.firstName, Last_Name: this.lastName, JobTitle: this.jobTitle, Email: this.userData.GetEmailAddress() },
+        'Item': { UserID: this.userData.GetAWSIdentityId(), First_Name: this.firstName, Last_Name: this.lastName, JobTitle: this.jobTitle, Email: this.userData.GetEmailAddress(), PictureURL: this.pictureUrl},
         'ConditionExpression': 'attribute_not_exists(id)'
       };
       
@@ -48,13 +48,11 @@ export class HomePage {
           
           client.put(params).promise();
           this.alertUser("Pushing to database: " + params.Item.First_Name + params.Item.Last_Name)
-          
         })
         .catch(err => {
   
           console.log(err);
           this.alertUser(err);
-  
         });
 
     }).catch(error => {
