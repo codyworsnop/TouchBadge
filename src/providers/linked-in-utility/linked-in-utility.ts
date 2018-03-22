@@ -31,18 +31,16 @@ export class LinkedInUtilityProvider {
       this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + "cody", {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
-        this.alertUser("Token result: " + JSON.stringify(result));
-      console.log("Token result: " + JSON.stringify(result));
-
         this.userData.SetAWSIdentityId(result.IdentityId);
         this.userData.SetAWSToken(result.Token);
-
         resolve();
+
       }, error => {
 
         this.alertUser("error: " + JSON.stringify(error));
         console.log("Error resolving aws token: " + error);
         reject();
+
       })
     });
   }

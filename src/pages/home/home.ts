@@ -27,8 +27,6 @@ export class HomePage {
 
   login() {
 
-    this.ln.getAWSToken();
-/*
     this.ln.linkedInLogin().then(response => {
     
       this.firstName = this.userData.GetFirstName();
@@ -65,7 +63,7 @@ export class HomePage {
 
       console.log("error retrieving user");
     });
-    */
+    
   }
 
   alertUser(message: string) { 
