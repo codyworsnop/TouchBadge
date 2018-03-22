@@ -47,6 +47,8 @@ export class HomePage {
         .then(client => {
           
           client.put(params).promise();
+          this.alertUser("Pushing to database: " + params.Item.First_Name + params.Item.Last_Name)
+          
         })
         .catch(err => {
   
