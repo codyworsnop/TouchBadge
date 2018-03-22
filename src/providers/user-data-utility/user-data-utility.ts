@@ -39,6 +39,7 @@ export class UserDataUtilityProvider {
   }
 
   public SetAWSToken(value: string) {
+    
     this.AWSToken = value;
   }
 

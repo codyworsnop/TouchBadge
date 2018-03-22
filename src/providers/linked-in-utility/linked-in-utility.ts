@@ -31,6 +31,8 @@ export class LinkedInUtilityProvider {
       this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + "cody", {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
+        this.alertUser("getaws id: " + result.IdentityId);
+        this.alertUser("getaws token: " + result.Token);
         this.userData.SetAWSIdentityId(result.IdentityId);
         this.userData.SetAWSToken(result.Token);
         resolve();
