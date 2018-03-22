@@ -29,11 +29,12 @@ export class LinkedInUtilityProvider {
     console.log("Getting Token with id: " + "cody");
 
     return new Promise((resolve, reject) => {
-      this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin", "id=" + "cody", {}).then(response => {
+      this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "id=" + "cody", {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
         this.alertUser("Token result: " + JSON.stringify(result));
       console.log("Token result: " + JSON.stringify(result));
+
         this.userData.SetAWSIdentityId(result.IdentityId);
         this.userData.SetAWSToken(result.Token);
 
@@ -72,8 +73,6 @@ export class LinkedInUtilityProvider {
             "client_secret": "kIXIPJuZZLf1E64Y",
           };
 
-
-
           this.http.post("https://www.linkedin.com/oauth/v2/accessToken", body, headers).then(res => {
 
             let data = JSON.parse(res.data);
@@ -91,7 +90,6 @@ export class LinkedInUtilityProvider {
               this.getLinkedInUserDetails(data.access_token).then(response => {
 
                 var result = JSON.parse(response.data);
-
                 this.userData.SetUserData(result.firstName, result.lastName, result.id, result.positions.values[0].title, result.location.name, result.numConnections, result.pictureUrl);
 
               }).then(() => {
