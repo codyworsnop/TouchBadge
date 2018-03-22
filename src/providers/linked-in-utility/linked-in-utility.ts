@@ -31,8 +31,6 @@ export class LinkedInUtilityProvider {
       this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + "cody", {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
-        this.alertUser("getaws id: " + result.IdentityId);
-        this.alertUser("getaws token: " + result.Token);
         this.userData.SetAWSIdentityId(result.IdentityId);
         this.userData.SetAWSToken(result.Token);
         resolve();
@@ -98,18 +96,16 @@ export class LinkedInUtilityProvider {
 
                 this.getAWSToken().then((response) => { 
 
-                  this.alertUser("Token recieved: " + response);
-                  console.log("AWS Token retrieved: " + response);
+                  this.alertUser("got token: " + this.userData.GetAWSToken().substring(0, 5));
+                  loader.dismiss();
+                  resolve();
 
                 }).catch((error) => {
-                  this.alertUser("error recieving token: " + error);
-                  console.log("error loggin user to dynamo: " + error);
+
+                  loader.dismiss();
+                  reject();
 
                 });
-
-                loader.dismiss();
-                resolve();
-
               });
             }
           }, error => {
