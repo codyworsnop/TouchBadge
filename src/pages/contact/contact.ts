@@ -12,7 +12,7 @@ import { DynamoDB } from '../../providers/providers';
 })
 export class ContactPage {
 
-  contacts;
+  public contacts = [];
   groupedContacts = [];
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB) {
@@ -25,20 +25,26 @@ export class ContactPage {
       TableName: 'Users',
       //KeyConditionExpression: 'UserID = :id',
       //ExpressionAttributeValues: {
-       // ':id': '*',
+      // ':id': '*',
       //}
     };
 
     this.db.getDocumentClient()
       .then(client => {
 
-        client.scan(params, function (err, data) {
+        client.scan(params, (err, data) => {
 
           if (err) {
             console.log(err);
           }
           else {
-            console.log(JSON.stringify(data));
+
+            data.Items.forEach((item) => {
+
+              this.contacts.push(item);
+            });
+
+            this.groupContacts(this.contacts);
           }
         });
       });
@@ -47,15 +53,17 @@ export class ContactPage {
   groupContacts(contacts) {
 
     if (contacts != null) {
-      let sortedContacts = contacts.sort();
+      let sortedContacts = contacts.sort((a, b) => a.Last_Name < b.Last_Name ? -1 : a.Last_Name > b.Last_Name ? 1 : 0);
+
+      console.log(sortedContacts);
       let currentLetter: string;
       let currentContacts: any[];
 
       sortedContacts.forEach((value, index) => {
 
-        if (value.name.charAt(0).toUpperCase() != currentLetter) {
+        if (value.Last_Name.charAt(0).toUpperCase() != currentLetter) {
 
-          currentLetter = value.name.charAt(0).toUpperCase();
+          currentLetter = value.Last_Name.charAt(0).toUpperCase();
 
           let newGroup = {
             letter: currentLetter,
@@ -64,7 +72,6 @@ export class ContactPage {
 
           currentContacts = newGroup.contacts;
           this.groupedContacts.push(newGroup);
-
         }
 
         currentContacts.push(value);
