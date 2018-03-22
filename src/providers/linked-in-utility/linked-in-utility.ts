@@ -26,7 +26,7 @@ export class LinkedInUtilityProvider {
   public getAWSToken(): Promise<any> {
 
     return new Promise((resolve, reject) => {
-      this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + "cody", {}, {}).then(response => {
+      this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + this.userData.GetId(), {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
         this.userData.SetAWSIdentityId(result.IdentityId);
