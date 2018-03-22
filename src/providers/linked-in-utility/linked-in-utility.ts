@@ -72,7 +72,6 @@ export class LinkedInUtilityProvider {
             "client_secret": "kIXIPJuZZLf1E64Y",
           };
 
-          console.log("auth token: " + success.code)
 
 
           this.http.post("https://www.linkedin.com/oauth/v2/accessToken", body, headers).then(res => {
