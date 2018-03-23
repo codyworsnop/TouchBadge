@@ -164,12 +164,12 @@ export class LinkedInUtilityProvider {
       });
 
       browserRef.on('exit').subscribe((event) => {
-        this.alertUser("error: " + JSON.stringify(event));
+        this.alertUser("exit: " + JSON.stringify(event));
         reject(event);
       });
 
       browserRef.on('loaderror').subscribe((event) => { 
-        this.alertUser("error: " + JSON.stringify(event));
+        this.alertUser("load error: " + JSON.stringify(event.message));
         reject(event);
       })
     });
