@@ -9,55 +9,47 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row id="content">
+    <ion-row id="header">
+
       <ion-col col-12>
-        <ion-card>
-
-          <ion-row id="header">
-
-            <ion-col col-12>
-              <ion-img src={{contact.PictureURL}}></ion-img>
-              <h2>{{contact.First_Name}} {{contact.Last_Name}}</h2>
-              <h4>{{contact.JobTitle}}</h4>
-            </ion-col>
-          </ion-row>
-
-          <ion-row id="body">
-            <ion-col col-12>
-              <ion-row>
-                <ion-col col-3 class="information">
-                  <ion-icon name="call"></ion-icon>
-                </ion-col>
-                
-                <ion-col col-9>
-                  (775) 224-7230
-                </ion-col>
-              </ion-row>
-
-              <ion-row>
-                <ion-col col-3 class="information">
-                  <ion-icon name="mail"></ion-icon>
-                </ion-col>
-                <ion-col col-9>
-                  cody@worsnop.com
-                </ion-col>
-              </ion-row>
-
-              <ion-row>
-                <ion-col col-3 class="information">
-                  <ion-icon name="checkmark"></ion-icon>
-                </ion-col>
-                <ion-col col-9>
-                  You became friends at CES!
-                </ion-col>
-              </ion-row>
-
-
-            </ion-col>
-          </ion-row>
-        </ion-card>
+        <ion-img src={{contact.PictureURL}}></ion-img>
+        <h2>{{contact.First_Name}} {{contact.Last_Name}}</h2>
+        <h4>{{contact.JobTitle}}</h4>
       </ion-col>
     </ion-row>
 
+    <ion-row id="body">
+      <ion-col col-12>
+        <ion-row>
+          <ion-col col-3 class="information">
+            <ion-icon name="call"></ion-icon>
+          </ion-col>
+
+          <ion-col col-9>
+            (775) 224-7230
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-3 class="information">
+            <ion-icon name="mail"></ion-icon>
+          </ion-col>
+          <ion-col col-9>
+            cody@worsnop.com
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-3 class="information">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-col>
+          <ion-col col-9>
+            You became friends at CES!
+          </ion-col>
+        </ion-row>
+
+
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>ß
