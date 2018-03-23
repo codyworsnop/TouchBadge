@@ -41,6 +41,9 @@ export class ContactPage {
 
             data.Items.forEach((item) => {
 
+              if (item.PictureURL == null) {
+                item.PictureURL = "/assets/img/default-profile-pic.jpg";
+              }
               this.contacts.push(item);
             });
 
@@ -77,7 +80,6 @@ export class ContactPage {
         currentContacts.push(value);
       });
     }
-
   }
 
   addContact() {
@@ -95,7 +97,8 @@ export class ContactPage {
     }
   }
 
-  contactTapped(): void {
-    this.navCtrl.push(ContactDetailPage);
+  contactTapped(contact: any): void {
+
+    this.navCtrl.push(ContactDetailPage, { contactInfo: contact });
   }
 }
