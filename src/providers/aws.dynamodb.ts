@@ -35,6 +35,7 @@ export class DynamoDB {
 
       AWS.config.credentials.refresh((error) => {
         if (error) {
+          
           console.error(error);
         } else {
 

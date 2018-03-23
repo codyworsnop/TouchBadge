@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { ContactDetailPage } from '../contactDetail/contactDetail';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
@@ -15,7 +15,7 @@ export class ContactPage {
   public contacts = [];
   groupedContacts = [];
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB, public toastCtrl: ToastController) {
 
     const params = {
       TableName: 'Users',
@@ -25,6 +25,7 @@ export class ContactPage {
       //}
     };
 
+    this.alertUser("Pulling");
     this.db.getDocumentClient()
       .then(client => {
 
@@ -32,9 +33,11 @@ export class ContactPage {
 
           if (err) {
             console.log(err);
+            this.alertUser("Error pulling: " + JSON.stringify(err));
           }
           else {
 
+            this.alertUser("Successfully pulled data");
             data.Items.forEach((item) => {
 
               if (item.PictureURL == null) {
@@ -96,5 +99,16 @@ export class ContactPage {
   contactTapped(contact: any): void {
 
     this.navCtrl.push(ContactDetailPage, { contactInfo: contact });
+  }
+
+  alertUser(message: string) { 
+
+    let toast = this.toastCtrl.create({
+      message: message,
+      showCloseButton: true,
+      position: 'bottom',
+    });
+
+    toast.present();
   }
 }
