@@ -35,7 +35,7 @@ export class DynamoDB {
 
       AWS.config.credentials.refresh((error) => {
         if (error) {
-          
+
           console.error(error);
         } else {
 
@@ -56,10 +56,12 @@ export class DynamoDB {
     return new Promise((resolve, reject) => {
 
       if (this.documentClient == null) {
+
         this.SetupAWSConfig().then(response => {
           resolve(this.documentClient);
         });
       }
+      resolve(this.documentClient);
 
     });
   }
