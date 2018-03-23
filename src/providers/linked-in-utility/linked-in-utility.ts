@@ -138,10 +138,6 @@ export class LinkedInUtilityProvider {
       // Opening a URL and returning an InAppBrowserObject
       var browserRef = this.iab.create(this.linkedinAuthURL, '_blank', options);
 
-      browserRef.on('exit').subscribe((event) => {
-        reject("nope");
-      });
-
       browserRef.on('loadstart').subscribe((event) => {
 
         if ((event.url).indexOf("http://localhost/callback") == 0) {
@@ -166,6 +162,16 @@ export class LinkedInUtilityProvider {
       }, error => {
         console.log("error: " + error);
       });
+
+      browserRef.on('exit').subscribe((event) => {
+        this.alertUser("error: " + JSON.stringify(event));
+        reject(event);
+      });
+
+      browserRef.on('loaderror').subscribe((event) => { 
+        this.alertUser("error: " + JSON.stringify(event));
+        reject(event);
+      })
     });
   }
 
