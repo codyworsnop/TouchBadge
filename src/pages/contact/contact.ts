@@ -17,10 +17,6 @@ export class ContactPage {
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB) {
 
-  }
-
-  ionViewDidLoad() {
-
     const params = {
       TableName: 'Users',
       //KeyConditionExpression: 'UserID = :id',
