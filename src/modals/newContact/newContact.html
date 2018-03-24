@@ -4,11 +4,16 @@
             New Contact
         </ion-title>
         <ion-buttons end>
-            <button button-clear>Done</button>
+            <button ion-button icon-only (click)="AddContact()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+
         </ion-buttons>
 
         <ion-buttons start>
-            <button button-clear (click)="dismissModal()">Cancel</button>
+            <button ion-button icon-only (click)="dismissModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
         </ion-buttons>
     </ion-navbar>
 
@@ -21,16 +26,17 @@
                 <ion-img src="/assets/img/default-profile-pic.jpg"></ion-img>
             </ion-col>
         </ion-row>
+        
         <ion-row id="contactInfo">
             <ion-col col-12>
                 <ion-label>Personal Information</ion-label>
-                <ion-input placeholder="First Name"></ion-input>
-                <ion-input placeholder="Last Name"></ion-input>
+                <ion-input [(ngModel)]="FirstName" placeholder="First Name"></ion-input>
+                <ion-input [(ngModel)]="LastName" placeholder="Last Name"></ion-input>
 
                 <ion-label>Company Information</ion-label>
-                <ion-input placeholder="Company Name"></ion-input>
-                <ion-input placeholder="Job Title"></ion-input>
+                <ion-input [(ngModel)]="CompanyName" placeholder="Company Name"></ion-input>
+                <ion-input [(ngModel)]="JobTitle" placeholder="Job Title"></ion-input>
             </ion-col>
-        </ion-row>
+        </ion-row> 
     </ion-grid>
 </ion-content>

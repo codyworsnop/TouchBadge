@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { DynamoDB } from '../../providers/providers';
+import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
 
 @Component({
   selector: 'modal-newContact',
@@ -7,11 +9,30 @@ import { NavController } from 'ionic-angular';
 })
 export class newContactModal {
 
-  constructor(public navCtrl: NavController) {
+  FirstName: string;
+  LastName: string;
+  CompanyName: string;
+  JobTitle: string;
 
+  constructor(public navCtrl: NavController, private db: DynamoDB, private userData: UserDataUtilityProvider) {
+    console.log(userData.GetAWSIdentityId());
   }
 
   dismissModal() {
       this.navCtrl.pop();
+  }
+
+  AddContact() {
+    
+    var newContact = {
+      Email: "cody@worsnop.com",
+      FirstName: this.FirstName,
+      LastName: this.LastName,
+      JobTitle: this.JobTitle,
+      Company: this.CompanyName,
+    };
+
+    console.log("add contact");
+    this.db.AddContactToDynamo([newContact]);
   }
 }

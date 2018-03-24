@@ -51,6 +51,48 @@ export class DynamoDB {
 
   }
 
+  AddContactToDynamo(contact: any[]) {
+
+
+    console.log(JSON.stringify(contact));
+    const params = {
+      'TableName': "Users",
+      'Key': { UserID: "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b" },        
+      UpdateExpression: "set #contact = list_append(#contact, :contact)",
+      ExpressionAttributeNames: {
+
+        "#contact": "Contact",
+      },
+      ExpressionAttributeValues: { 
+
+        ":contact": contact
+      },
+
+      ReturnValues: "UPDATED_NEW"
+    };
+
+    this.getDocumentClient().then(client => {
+
+        client.update(params, (err, data) => { 
+
+          if (err)
+          {
+            console.log("error: " + err)
+          }
+          else 
+          {
+            console.log("data: " + JSON.stringify(data));
+          }
+        });
+
+      }).catch(err => {
+
+        console.log(err);
+        this.alertUser(err);
+      });
+
+  }
+
   getDocumentClient(): Promise<any> {
 
     return new Promise((resolve, reject) => {

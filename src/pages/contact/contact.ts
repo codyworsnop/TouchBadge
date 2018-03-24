@@ -64,7 +64,7 @@ export class ContactPage {
 
       sortedContacts.forEach((value, index) => {
 
-        if (value.Last_Name.charAt(0).toUpperCase() != currentLetter) {
+        if (value.Last_Name != undefined && value.Last_Name.charAt(0).toUpperCase() != currentLetter) {
 
           currentLetter = value.Last_Name.charAt(0).toUpperCase();
 
