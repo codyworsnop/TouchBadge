@@ -1,3 +1,39 @@
 modal-newContact {
-    
+    scroll-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    ion-content ion-grid {
+        height: 100%;
+    }
+
+    #profilePicture ion-img {
+        contain: none;
+        max-height: 200px;
+        max-width: 200px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 0 0 3px #FFFFFF;
+    }
+
+    #profilePicture {
+        flex: 1;
+        text-align: center;
+        height: 100%;
+    }
+
+    #profilePicture ion-col {
+        margin: auto;
+        height: 100%;
+    }
+
+    #contactInfo { 
+        flex: 2;
+        text-align: center;
+    }
+
+    #contactInfo ion-input { 
+       border-bottom: 1px solid #afaeae;
+    }
 }

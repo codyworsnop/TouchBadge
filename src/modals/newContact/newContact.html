@@ -14,6 +14,23 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+    <ion-grid>
+        <ion-row id="profilePicture">
+            <ion-col col-12>
+                <ion-img src="/assets/img/default-profile-pic.jpg"></ion-img>
+            </ion-col>
+        </ion-row>
+        <ion-row id="contactInfo">
+            <ion-col col-12>
+                <ion-label>Personal Information</ion-label>
+                <ion-input placeholder="First Name"></ion-input>
+                <ion-input placeholder="Last Name"></ion-input>
 
+                <ion-label>Company Information</ion-label>
+                <ion-input placeholder="Company Name"></ion-input>
+                <ion-input placeholder="Job Title"></ion-input>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
