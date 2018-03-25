@@ -22,36 +22,25 @@ export class eventMap {
   }
 
   InitMap() {
-    let latLng = { lat: 39.538057, lng: -119.812770};
+    let latLng = { lat: 39.485574, lng:-119.791234};
     let mapOptions = {
       center: latLng, 
-      zoom: 15, 
+      zoom: 17, 
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       zoomControl: false, 
       mapTypeControl: false,
       streetViewControl: false, 
       fullscreenControl: false, 
-      gestureHandling: 'none',
+      minZoom: 15,
+      maxZoom: 19,
+      draggable: false,
     };
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    var swLatLng = { lat: 39.485574, lng:-119.791234 };
+    var neLatLng = { lat: 39.485574, lng:-119.791234 };
+    var bounds = new google.maps.LatLngBounds(swLatLng, neLatLng);
 
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: this.map.getCenter()
-    });
-   
-    let content = "<h4>CS426 Presentation</h4>";         
-   
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
-    });
-   
-    google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
-    });
-    
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);    
 
   }
 
