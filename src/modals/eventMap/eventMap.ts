@@ -22,7 +22,7 @@ export class eventMap {
   }
 
   InitMap() {
-    let latLng = { lat: -34.9290, lng: 138.6010 };
+    let latLng = { lat: 39.538057, lng: -119.812770};
     let mapOptions = {
       center: latLng, 
       zoom: 15, 
@@ -42,7 +42,7 @@ export class eventMap {
       position: this.map.getCenter()
     });
    
-    let content = "<h4>Information!</h4>";         
+    let content = "<h4>CS426 Presentation</h4>";         
    
     let infoWindow = new google.maps.InfoWindow({
       content: content
