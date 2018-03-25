@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Event Map
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button icon-only (click)="dismissModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-12>
+                <div #map id="map"></div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

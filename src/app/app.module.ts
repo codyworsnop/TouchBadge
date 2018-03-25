@@ -17,6 +17,7 @@ import { ContactDetailPage } from '../pages/contactDetail/contactDetail';
 
 import { CalendarModule } from "ion2-calendar";
 import { newContactModal } from '../modals/newContact/newContact';
+import { eventMap } from '../modals/eventMap/eventMap';
 import { AuthService, AuthServiceProvider } from "./auth.service";
 import { ProjectStore, ProjectStoreProvider } from "./project.store";
 import { TaskStore, TaskStoreProvider } from "./task.store";
@@ -44,6 +45,7 @@ import { LoggingUtilityProvider } from '../providers/logging-utility/logging-uti
     LoginModal,
     ContactDetailPage,
     newContactModal,
+    eventMap,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +65,7 @@ import { LoggingUtilityProvider } from '../providers/logging-utility/logging-uti
     LoginModal,
     ContactDetailPage,
     newContactModal,
+    eventMap,
   ],
   providers: [
     StatusBar,

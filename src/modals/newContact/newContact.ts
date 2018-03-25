@@ -25,14 +25,13 @@ export class newContactModal {
   AddContact() {
     
     var newContact = {
-      Email: "cody@worsnop.com",
       FirstName: this.FirstName,
       LastName: this.LastName,
       JobTitle: this.JobTitle,
       Company: this.CompanyName,
     };
 
-    console.log("add contact");
     this.db.AddContactToDynamo([newContact]);
+    this.navCtrl.pop();
   }
 }
