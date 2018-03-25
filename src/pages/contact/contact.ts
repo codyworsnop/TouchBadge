@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { ContactDetailPage } from '../contactDetail/contactDetail';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
@@ -26,19 +26,18 @@ export class ContactPage {
       //}
     };
 
-    this.loggingUtil.alertUser("Pulling");
+
     this.db.getDocumentClient()
       .then(client => {
-        this.loggingUtil.alertUser("got doc client");
+
         client.scan(params, (err, data) => {
 
           if (err) {
             console.log(err);
-            this.loggingUtil.alertUser("Error pulling: " + JSON.stringify(err));
+            this.loggingUtil.alertUser("Error pulling: " + err.message);
           }
           else {
 
-            this.loggingUtil.alertUser("Successfully pulled data");
             data.Items.forEach((item) => {
 
               if (item.PictureURL == null) {

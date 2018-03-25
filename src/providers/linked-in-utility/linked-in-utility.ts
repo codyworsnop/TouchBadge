@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Platform, LoadingController } from 'ionic-angular';
 import { InAppBrowserOptions, InAppBrowser } from '@ionic-native/in-app-browser';
 import { UserDataUtilityProvider } from '../user-data-utility/user-data-utility';
-import { userInfo } from 'os';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 
@@ -44,9 +43,6 @@ export class LinkedInUtilityProvider {
   }
  
   public linkedInLogin(): Promise<any> {
-
-    var loader = null;
-    var data: Object = {};
 
     return new Promise((resolve, reject) => {
 

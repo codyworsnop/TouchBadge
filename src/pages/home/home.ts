@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, Tabs } from 'ionic-angular';
-import { LoginModal } from '../../modals/login/login';
 import { LinkedInUtilityProvider } from '../../providers/linked-in-utility/linked-in-utility';
 import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
-import { CalendarPage } from '../calendar/calendar';
-import { ToastController } from 'ionic-angular';
 import { DynamoDB } from '../../providers/providers';
+import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-utility';
 
 @Component({
   selector: 'page-home',
@@ -22,7 +20,7 @@ export class HomePage {
   location: string; 
   pictureUrl: string;
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public ln: LinkedInUtilityProvider, public userData: UserDataUtilityProvider, private toastCtrl: ToastController, private db: DynamoDB) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public ln: LinkedInUtilityProvider, public userData: UserDataUtilityProvider, private db: DynamoDB, private loggingUtil: LoggingUtilityProvider) {
   }
 
   login() {
@@ -47,12 +45,11 @@ export class HomePage {
         .then(client => {
           
           client.put(params).promise();
-          this.alertUser("Pushing to database: " + params.Item.First_Name + params.Item.Last_Name)
         })
         .catch(err => {
   
           console.log(err);
-          this.alertUser(err);
+          this.loggingUtil.alertUser(err);
         });
 
     }).catch(error => {
@@ -60,18 +57,6 @@ export class HomePage {
       console.log("error retrieving user");
     });
     
-  }
-
-  alertUser(message: string) { 
-
-    let toast = this.toastCtrl.create({
-      message: message,
-      showCloseButton: true,
-      position: 'bottom'
-
-    });
-
-    toast.present();
   }
 
   public navToEvent() {

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { CalendarComponentOptions, DayConfig } from "ion2-calendar";
-import { stringify } from 'querystring';
-import { Moment } from 'moment';
 import { eventMap } from '../../modals/eventMap/eventMap';
 
 @Component({
