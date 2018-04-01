@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { CalendarComponentOptions, DayConfig } from "ion2-calendar";
 import { eventMap } from '../../modals/eventMap/eventMap';
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-calendar',
@@ -17,6 +18,7 @@ export class CalendarPage {
   info: any;
   eventTitle: string;
   eventSubtitle: string;
+  daySelected: string;
 
   calendarOptions: CalendarComponentOptions = {
     daysConfig: this.calendarConfig
@@ -26,12 +28,12 @@ export class CalendarPage {
 
     //load events from dynamo
     this.calendarConfig.push({
-      date: new Date(2018, 2, 15),
+      date: new Date(2018, 2, 31),
       subTitle: "EVENT",
       marked: true,
     })
 
-    this.eventInformation["2018-03-15"] = {
+    this.eventInformation["2018-03-31"] = {
       title: "TouchBadge Progress Demo",
       subtitle: "Failure is always an option",
     }
@@ -47,6 +49,8 @@ export class CalendarPage {
   onChange($event) {
 
     var dateEvent = this.eventInformation[JSON.stringify($event).split('"')[1].split('T')[0]];
+
+    this.daySelected = moment($event).format("LL");
 
     if (dateEvent != null) {
       this.eventTitle = dateEvent.title;

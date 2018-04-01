@@ -52,7 +52,7 @@
     "lodash.keyby": "^4.6.0",
     "lodash.orderby": "^4.6.0",
     "lodash.values": "^4.3.0",
-    "moment": "^2.19.3",
+    "moment": "^2.22.0",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
