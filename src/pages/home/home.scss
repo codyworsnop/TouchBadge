@@ -14,8 +14,8 @@ page-home {
         flex: 2;
         text-align: center;
         background-size: cover;
-        background-image:linear-gradient(0deg, rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.5), 
-                    rgba(red(map-get($colors, primary)), green(map-get($colors, primary)), blue(map-get($colors, primary)), 0.5)),
+        background-image:linear-gradient(0deg, rgba(red(map-get($colors, homeOverlay)), green(map-get($colors, homeOverlay)), blue(map-get($colors, homeOverlay)), 0.2), 
+                    rgba(red(map-get($colors, homeOverlay)), green(map-get($colors, homeOverlay)), blue(map-get($colors, homeOverlay)), 0.2)),
                     url("../../assets/img/bg_blur.jpg");
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     }
@@ -66,13 +66,14 @@ page-home {
         margin: auto;
     }
 
-    .cardInformation h1 {
+    .cardHeader h1 {
         color: map-get($colors, primary);
-        font-size: 3em;
+        font-size: 2em;
     }
 
-    #statusCard h1 {
-        color: map-get($colors, disconnected);
+    .cardInformation h2 {
+
+        color: map-get($colors, primary);
         font-size: 1.5em;
     }
 
