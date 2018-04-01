@@ -30,5 +30,13 @@
         ion-label h2 {
             margin-bottom: 5px;
         }
+
+        .toolbar-background {
+            background-color: map-get($colors, primary);
+        }
+
+        .toolbarButton {
+            color: white;
+        }
     }
 }

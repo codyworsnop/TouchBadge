@@ -76,5 +76,8 @@ page-home {
         font-size: 1.5em;
     }
 
+    .toolbar-background {
+        background-color: map-get($colors, primary);
+    }
 }
 
