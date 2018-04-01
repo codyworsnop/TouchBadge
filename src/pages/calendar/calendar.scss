@@ -24,10 +24,6 @@ page-calendar {
     ion-content ion-row ion-col ion-calendar {
         padding: 0px;
     }
-    
-    #navbar { 
-        background-color: #FFFFFF;
-    }
 
     #calendar {
         padding: 0;
@@ -37,18 +33,26 @@ page-calendar {
         flex: 1;
         display: flex;
         flex-direction: column;
-        background-color: map-get($colors, primary);
         box-shadow: inset 0 15px 10px -5px rgba(0,0,0,0.4);
     }
 
     #infoHeading { 
-        color: #FFFFFF;
+        color: map-get($colors, primary);
         font-size: 1.5em;
         margin-left: 2vh;
     }
 
     #infoContent { 
-        color:#FFFFFF;
+        color: map-get($colors, primary);
         margin-left: 2vh;
     }
+/*
+    #calendar .days-btn p {
+        color: #FFFFFF;
+    }
+
+    #calendar .switch-btn {
+        color: white !important;
+    }
+    */
 }

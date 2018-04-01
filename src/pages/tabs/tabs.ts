@@ -6,7 +6,8 @@ import { HomePage } from '../home/home';
 import { ConfigurePage } from '../configure/configure';
 
 @Component({
-  templateUrl: 'tabs.html'
+  templateUrl: 'tabs.html',
+  selector: 'tabs-controller',
 })
 export class TabsPage {
 

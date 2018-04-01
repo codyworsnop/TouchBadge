@@ -4,7 +4,7 @@
 
     <ion-row id="header">
       <ion-col col-4>
-        <ion-img src={{pictureUrl}}></ion-img>
+        <ion-img src={{pictureUrl}} (click)="login()"></ion-img>
       </ion-col>
       <ion-col col-8>
         <h2>{{firstName}} {{lastName}}</h2>
