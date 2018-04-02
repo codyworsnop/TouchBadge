@@ -8,6 +8,7 @@ page-home {
     scroll-content {
         display: flex;
         flex-direction: column;
+        overflow: hidden;
     }
 
     ion-content ion-grid {
