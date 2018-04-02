@@ -97,9 +97,16 @@ page-home {
         text-align: center;
     }
 
-    .iconContainer img, .iconContainer h1 {
+    .iconContainer h1 {
         display: inline-block;
         margin: 2px;
     }
+
+    .iconContainer ion-icon {
+        display: inline-block;
+        margin: 2px;
+        font-size: 30px;
+    }
+
 }
 
