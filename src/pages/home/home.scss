@@ -1,4 +1,9 @@
 page-home {
+    ion-navbar {
+        min-height: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+    }
 
     scroll-content {
         display: flex;
@@ -64,10 +69,6 @@ page-home {
 
     .cardHeader h2 {
         font-size: 1.2em;
-    }
-
-    .toolbar-background {
-        background-color: map-get($colors, primary);
     }
 
     .subContent > ion-col:first-child {

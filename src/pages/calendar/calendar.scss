@@ -1,5 +1,11 @@
 page-calendar {
 
+    ion-navbar {
+        min-height: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+    }
+
     scroll-content {
         display: flex;
         flex-direction: column;
