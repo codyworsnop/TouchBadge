@@ -96,5 +96,10 @@ page-home {
         flex: 1;
         text-align: center;
     }
+
+    .iconContainer img, .iconContainer h1 {
+        display: inline-block;
+        margin: 2px;
+    }
 }
 
