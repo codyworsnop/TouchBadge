@@ -55,7 +55,7 @@ page-home {
 
     .cardHeader, .cardHeader p {
         flex: 1; 
-        color: map-get($colors, primary);;
+        color: #FFFFFF;
         text-align: center;
     }
 
@@ -64,7 +64,7 @@ page-home {
     }
 
     .cardHeader h1 {
-        color: map-get($colors, primary);
+     //   color: map-get($colors, primary);
         font-size: 2em;
     }
 
@@ -73,11 +73,11 @@ page-home {
     }
 
     .subContent > ion-col:first-child {
-        border-right: solid 2px rgba(0, 0, 0, 0.1);
+      //  border-right: solid 2px rgba(0, 0, 0, 0.1);
     }
 
     .subContent > ion-col { //first-child isn't working for some reason on subcontent
-        border-bottom: solid 2px rgba(0, 0, 0, 0.1);
+      //  border-bottom: solid 2px rgba(0, 0, 0, 0.1);
     //    box-shadow: inset 0px 2px 10px -2px rgba(0, 0, 0, 0.1);
     }
 
@@ -106,8 +106,27 @@ page-home {
     .iconContainer ion-icon {
         display: inline-block;
         margin: 2px;
-        font-size: 30px;
+        font-size: 2em;
     }
 
+    #badgeStatus h1 { 
+        font-size: 1.2em;
+    }
+
+    #contactsCol {
+        background-color: #31d0a0;
+    }
+
+    #badgeCol {
+        background-color: #e43b4a; 
+    }
+
+    #eventsCol {
+        background-color: #154b5e;
+    }
+
+    #seminarsCol {
+        background-color: #2B2D42;
+    }
 }
 

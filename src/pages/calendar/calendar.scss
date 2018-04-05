@@ -32,7 +32,10 @@ page-calendar {
     }
 
     #calendar {
-        padding: 0;
+        padding: 0px;
+        background-image:linear-gradient(0deg, rgba(red(map-get($colors, calendarOverlay)), green(map-get($colors, calendarOverlay)), blue(map-get($colors, calendarOverlay)), 0.8), 
+                    rgba(red(map-get($colors, calendarOverlay)), green(map-get($colors, calendarOverlay)), blue(map-get($colors, calendarOverlay)), 0.8)),
+                    url("../../assets/img/bg_blur.jpg");
     }
 
     #info {
@@ -53,13 +56,13 @@ page-calendar {
         color: map-get($colors, primary);
         margin-left: 2vh;
     }
-/*
+
     #calendar .days-btn p {
-        color: #FFFFFF;
+        color: #FFFFFF
     }
 
     #calendar .switch-btn {
-        color: white !important;
+        color: #FFFFFF !important;
     }
-    */
+
 }
