@@ -71,6 +71,7 @@ export class IntroPage {
   }
 
   ScanDevices() { 
+    
     this.bluetoothUtility.scan(this.devices);
   }
 }

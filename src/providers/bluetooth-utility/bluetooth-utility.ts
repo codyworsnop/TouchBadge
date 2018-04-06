@@ -26,7 +26,14 @@ export class BluetoothUtilityProvider {
   }
 
   scan(devices: any) {
-    this.setStatus('Scanning for Bluetooth LE Devices');
+    //this.setStatus('Scanning for Bluetooth LE Devices');
+    let toast = this.toastCtrl.create({
+      message: 'Starting Scan',
+      position: 'middle',
+      duration: 5000
+    });
+    toast.present();
+
     devices = [];  // clear list
     this.devicesMap = {};
 
@@ -38,7 +45,15 @@ export class BluetoothUtilityProvider {
     setTimeout(() => {
       this.scanSubscription.unsubscribe();
       this.ble.stopScan;
+
       this.setStatus("Scan Complete");
+
+      let toast = this.toastCtrl.create({
+        message: 'Scan Complete' + devices,
+        position: 'middle',
+        duration: 5000
+      });
+      toast.present();
     }, 5000);
   }
 
