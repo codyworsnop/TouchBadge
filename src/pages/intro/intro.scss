@@ -1,70 +1,72 @@
 .ios, .md {
-    
-     page-intro {
-    
-       ion-slide {
-         background-color: map-get($colors, dark);
-       }
 
-       .slide-zoom { 
-         display: flex;
-         flex-direction: column;
-         height: 100%;
-       }
+  page-intro {
 
-       .title { 
-        flex: 2;
-        align-items: center;
-       }
+      ion-slide {
+          // background-color: map-get($colors, dark);
+          background-image:linear-gradient(0deg, rgba(red(map-get($colors, dark)), green(map-get($colors, dark)), blue(map-get($colors, dark)), 0.7), rgba(red(map-get($colors, dark)), green(map-get($colors, dark)), blue(map-get($colors, dark)), 0.9)), url("../../assets/img/bg_blur.jpg");
+     }
 
-       .info {
-        flex: 1;
-        align-items: center;
-       }
-    
-       ion-slide img {
-         height: 45vh !important;
-         width: 45vh !important;
-       }
-    
-       h1, h2 {
-        color: #FFFFFF;
-        font-weight: 300;
-        animation: breathing 12s ease-out infinite normal;      
-       }
-
-       h2 { 
-         font-size: 1.1em;
-       }
-
-       h3 { 
-        color: #FFFFFF;
-        font-weight: 300;  
-        margin-top: 20px;
-        margin-bottom: 20px;
-       }
-
-       #getStartedButton { 
-         border: solid 1px #FFFFFF;
-         border-radius: 10px;
-       }
-
-        @keyframes breathing {
-         0% {
-           transform: scale(0.95);
-          }
-    
-          25% {
-           transform: scale(1);
-          }
-    
-          60% {
-           transform: scale(0.95);
-          }
-    
-          100% {
-            transform: scale(0.95);
-          }
+      .slide-zoom {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
       }
-     } 
-   }
+
+      .title {
+          flex: 2;
+          align-items: center;
+      }
+
+      .info {
+          flex: 1;
+          align-items: center;
+      }
+
+      ion-slide img {
+          height: 45vh !important;
+          width: 45vh !important;
+      }
+
+      h1, h2 {
+          color: #FFFFFF;
+          font-weight: 300;
+          animation: breathing 12s infinite normal;
+      }
+
+      h2 {
+          font-size: 1.1em;
+      }
+
+      h3 {
+          color: #FFFFFF;
+          font-weight: 300;
+          margin-top: 20px;
+          margin-bottom: 20px;
+      }
+
+      .introButton {
+          border: solid 1px #FFFFFF;
+          border-radius: 10px;
+      }
+
+     #bluetoothScan {
+      flex: 1;
+     }
+
+      @keyframes breathing {
+          0% {
+              transform: scale(0.98);
+         }
+          25% {
+              transform: scale(1);
+         }
+          60% {
+              transform: scale(0.95);
+         }
+          100% {
+              transform: scale(0.98);
+         }
+     }
+ }
+}

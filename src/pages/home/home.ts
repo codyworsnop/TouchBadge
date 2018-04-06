@@ -11,7 +11,6 @@ import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-
 })
 export class HomePage {
 
-
   firstName: string; 
   lastName: string; 
   id: string; 
@@ -20,43 +19,12 @@ export class HomePage {
   location: string; 
   pictureUrl: string;
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public ln: LinkedInUtilityProvider, public userData: UserDataUtilityProvider, private db: DynamoDB, private loggingUtil: LoggingUtilityProvider) {
-  }
-
-  login() {
-
-    this.ln.linkedInLogin().then(response => {
-    
-      this.firstName = this.userData.GetFirstName();
-      this.lastName = this.userData.GetLastName();
-      this.id = this.userData.GetId();
-      this.numConnections = this.userData.GetNumConnections();
-      this.jobTitle = this.userData.GetJobTitle();
-      this.location = this.userData.GetLocation();
-      this.pictureUrl = this.userData.GetPictureUrl();    
-
-      const params = {
-        'TableName': "Users",
-        'Item': { UserID: this.userData.GetAWSIdentityId(), First_Name: this.firstName, Last_Name: this.lastName, JobTitle: this.jobTitle, Email: this.userData.GetEmailAddress(), PictureURL: this.pictureUrl},
-        'ConditionExpression': 'attribute_not_exists(id)'
-      };
-      
-      this.db.getDocumentClient()
-        .then(client => {
-          
-          client.put(params).promise();
-        })
-        .catch(err => {
-  
-          console.log(err);
-          this.loggingUtil.alertUser(err);
-        });
-
-    }).catch(error => {
-
-      console.log("error retrieving user");
-    });
-    
+  constructor(public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    public ln: LinkedInUtilityProvider,
+    public userData: UserDataUtilityProvider,
+    private db: DynamoDB,
+    private loggingUtil: LoggingUtilityProvider) {
   }
 
   public navToEvent() {
@@ -64,4 +32,17 @@ export class HomePage {
     tabs.select(2);
   }
 
+  ionViewDidLoad() { 
+    this.SetUserData();
+  }
+
+  SetUserData() { 
+    this.firstName = this.userData.GetFirstName();
+    this.lastName = this.userData.GetLastName();
+    this.id = this.userData.GetId();
+    this.numConnections = this.userData.GetNumConnections();
+    this.jobTitle = this.userData.GetJobTitle();
+    this.location = this.userData.GetLocation();
+    this.pictureUrl = this.userData.GetPictureUrl();  
+  }
 }

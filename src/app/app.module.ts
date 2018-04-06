@@ -31,6 +31,7 @@ import { LinkedInUtilityProvider } from '../providers/linked-in-utility/linked-i
 import { UserDataUtilityProvider } from '../providers/user-data-utility/user-data-utility';
 import { DynamoDB } from '../providers/aws.dynamodb'
 import { LoggingUtilityProvider } from '../providers/logging-utility/logging-utility';
+import { BluetoothUtilityProvider } from '../providers/bluetooth-utility/bluetooth-utility';
 
 
 @NgModule({
@@ -70,7 +71,7 @@ import { LoggingUtilityProvider } from '../providers/logging-utility/logging-uti
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthService, AuthServiceProvider,
     ProjectStore, ProjectStoreProvider,
     TaskStore, TaskStoreProvider,
@@ -81,7 +82,8 @@ import { LoggingUtilityProvider } from '../providers/logging-utility/logging-uti
     InAppBrowser,
     UserDataUtilityProvider,
     DynamoDB,
-    LoggingUtilityProvider
+    LoggingUtilityProvider,
+    BluetoothUtilityProvider
   ]
 })
 export class AppModule {}
