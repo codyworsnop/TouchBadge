@@ -10,9 +10,9 @@
 
     <ion-row class="info">
       <ion-col col-3>
-        </ion-col>
-        <ion-col col-6>
-        <div class="introButton" (click)="NavToNext(1)">
+      </ion-col>
+      <ion-col col-6>
+        <div class="introButton" (click)="NavToIndex(1)">
           <h3>Let's get started</h3>
         </div>
       </ion-col>
@@ -22,24 +22,25 @@
   </ion-slide>
 
   <ion-slide>
-      <ion-row class="title">
-          <ion-col col-12>
-            <h1>Signing In</h1>
-            <h2>TouchBadge authenticates against LinkedIn so your information is always up to date. Share your position, contact information, and even your resume!</h2>
-          </ion-col>
-        </ion-row>
-    
-        <ion-row class="info">
-          <ion-col col-3>
-            </ion-col>
-            <ion-col col-6>
-            <div class="introButton" (click)="LinkedInLogin()">
-              <h3>Sign into LinkedIn</h3>
-            </div>
-          </ion-col>
-          <ion-col col-3>
-          </ion-col>
-        </ion-row>
+    <ion-row class="title">
+      <ion-col col-12>
+        <h1>Signing In</h1>
+        <h2>TouchBadge authenticates against LinkedIn so your information is always up to date. Share your position, contact
+          information, and even your resume!</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="info">
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-6>
+        <div class="introButton" (click)="LinkedInLogin()">
+          <h3>Sign into LinkedIn</h3>
+        </div>
+      </ion-col>
+      <ion-col col-3>
+      </ion-col>
+    </ion-row>
   </ion-slide>
 
   <ion-slide>
@@ -51,22 +52,25 @@
     </ion-row>
     <ion-row id="bluetoothScan">
       <ion-col col-12>
-        <ion-list> 
+        <ion-list>
           <button ion-item *ngFor="let device of devices" (click)="connect(device)">
             <h2>{{device.advertising.kCBAdvDataLocalName}}</h2>
             <p>{{device.id}}</p>
             <p>RSSI: {{device.rssi}}</p>
-          </button>  
-         </ion-list> 
+          </button>
+        </ion-list>
       </ion-col>
     </ion-row>
 
     <ion-row class="info">
       <ion-col col-3>
-        </ion-col>
-        <ion-col col-6>
+      </ion-col>
+      <ion-col col-6>
         <div class="introButton" (click)="ScanDevices()">
           <h3>Scan</h3>
+        </div>
+        <div (click)="NavToIndex(3)">
+          <p>Don't have your badge yet? ></p>
         </div>
       </ion-col>
       <ion-col col-3>
@@ -77,15 +81,15 @@
   <ion-slide>
     <ion-row class="title">
       <ion-col col-12>
-        <h1>You're all set</h1>
+        <h1>You're All Set</h1>
         <h2>Are you ready to expand your network?</h2>
       </ion-col>
     </ion-row>
 
     <ion-row class="info">
       <ion-col col-3>
-        </ion-col>
-        <ion-col col-6>
+      </ion-col>
+      <ion-col col-6>
         <div class="introButton" (click)="NavToHome()">
           <h3>Experience TouchBadge</h3>
         </div>

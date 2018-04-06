@@ -40,7 +40,7 @@ export class IntroPage {
     this.navCtrl.setRoot(TabsPage);
   }
 
-  NavToNext(slideIndex: number) {
+  NavToIndex(slideIndex: number) {
     this.slides.slideTo(slideIndex, 500);
   }
 
@@ -61,7 +61,7 @@ export class IntroPage {
           console.log(err);
         });
 
-        this.slides.slideTo(2, 500);
+        this.NavToIndex(2);
 
     }).catch(error => {
 
@@ -74,5 +74,10 @@ export class IntroPage {
     this.bluetoothUtility.scan().then(data => {
       this.devices = data;
     });
+  }
+
+  ConnectToDevice() { 
+
+    this.NavToIndex(3);
   }
 }

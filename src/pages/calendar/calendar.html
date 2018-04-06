@@ -6,36 +6,35 @@
 <ion-content>
 
   <ion-grid>
-
     <ion-calendar id="calendar" [(ngModel)]="date" (onChange)="onChange($event)" [type]="type" [format]="'MM-DD-YYYY'" [options]="calendarOptions">
     </ion-calendar>
 
     <div id="info">
-    <ion-row>
-      <ion-col col-12>
-        <div id="infoHeading">
+      <ion-row>
+        <ion-col col-12>
+          <div id="infoHeading">
             <p>{{daySelected}}</p>
-        </div>
-      </ion-col>
-    </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col col-12>
-        <div id="infoContent">
+      <ion-row>
+        <ion-col col-12>
+          <div id="infoContent">
             <p>{{eventTitle}}</p>
             <p>{{eventSubtitle}}</p>
-        </div>
-      </ion-col>
-    </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col col-12>
-        <button ion-button (click)="ViewOnMap()">
-          View on Map
-        </button>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <button ion-button (click)="ViewOnMap()">
+            View on Map
+          </button>
+        </ion-col>
+      </ion-row>
 
-  </div>
+    </div>
   </ion-grid>
 </ion-content>

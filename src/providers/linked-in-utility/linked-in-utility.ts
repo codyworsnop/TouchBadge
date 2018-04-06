@@ -167,7 +167,13 @@ export class LinkedInUtilityProvider {
       browserRef.on('loaderror').subscribe((event) => { 
         this.alertUser("load error: " + JSON.stringify(event.message));
         browserRef.close();
-        //reject(event);
+        reject(event);
+      })
+
+      browserRef.on('loadstop').subscribe((event) => { 
+        this.alertUser("load stop: " + JSON.stringify(event.message));
+        browserRef.close();
+        reject(event);
       })
     });
   }

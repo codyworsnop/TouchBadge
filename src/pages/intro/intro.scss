@@ -4,7 +4,9 @@
 
       ion-slide {
           // background-color: map-get($colors, dark);
-          background-image:linear-gradient(0deg, rgba(red(map-get($colors, dark)), green(map-get($colors, dark)), blue(map-get($colors, dark)), 0.7), rgba(red(map-get($colors, dark)), green(map-get($colors, dark)), blue(map-get($colors, dark)), 0.9)), url("../../assets/img/bg_blur.jpg");
+          background-image:linear-gradient(0deg, rgba(red(map-get($colors, dark)), green(map-get($colors, dark)), blue(map-get($colors, dark)), 0.5),
+           rgba(red(map-get($colors, dark)), green(map-get($colors, dark)), blue(map-get($colors, dark)), 0.7)),
+        url("../../assets/img/bg_blur.jpg");
      }
 
       .slide-zoom {
@@ -21,6 +23,11 @@
       .info {
           flex: 1;
           align-items: center;
+      }
+
+      .info p {
+          color: #FFFFFF;
+          font-size: 1em;
       }
 
       ion-slide img {
@@ -50,8 +57,13 @@
           border-radius: 10px;
       }
 
-     #bluetoothScan {
-      flex: 1;
+      #bluetoothScan {
+        flex: 1;
+      }
+
+     #bluetoothScan ion-list ion-item { 
+        background-color: transparent;
+        color: #FFFFFF;
      }
 
       @keyframes breathing {
