@@ -15,6 +15,11 @@ export class ConfigurePage {
   constructor() {
   }
 
-
+  setStatus(message) {
+    console.log(message);
+    this.ngZone.run(() => {
+      this.statusMessage = message;
+    });
+  }
 
 }

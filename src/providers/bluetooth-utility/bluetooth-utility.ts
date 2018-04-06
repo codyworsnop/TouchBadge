@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class BluetoothUtilityProvider {
 
   scanSubscription: Subscription;
-//  devices: any[] = [];
+  devices: any[] = [];
   devicesMap: any = {};
   statusMessage: string;
   input: string;
@@ -25,89 +25,70 @@ export class BluetoothUtilityProvider {
     private ngZone: NgZone) {
   }
 
-  scan(devices: any) {
-    //this.setStatus('Scanning for Bluetooth LE Devices');
-    let toast = this.toastCtrl.create({
-      message: 'Starting Scan',
-      position: 'middle',
-      duration: 5000
+  scan(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+
+      //this.setStatus('Scanning for Bluetooth LE Devices');
+
+      this.devices = [];  // clear list
+      this.devicesMap = {};
+
+      this.scanSubscription = this.ble.startScan([]).subscribe(
+        device => this.onDeviceDiscovered(device),
+        error => this.scanError(error)
+      );
+
+      setTimeout(() => {
+        this.scanSubscription.unsubscribe();
+        this.ble.stopScan;
+
+        //   this.setStatus("Scan Complete");
+
+        resolve(this.devices);
+
+      }, 5000);
     });
-    toast.present();
-
-    devices = [];  // clear list
-    this.devicesMap = {};
-
-    this.scanSubscription = this.ble.startScan([]).subscribe(
-      device => this.onDeviceDiscovered(device, devices),
-      error => this.scanError(error)
-    );
-
-    setTimeout(() => {
-      this.scanSubscription.unsubscribe();
-      this.ble.stopScan;
-
-      this.setStatus("Scan Complete");
-
-      let toast = this.toastCtrl.create({
-        message: 'Scan Complete' + devices,
-        position: 'middle',
-        duration: 5000
-      });
-      toast.present();
-    }, 5000);
   }
 
   connect(device: any) {
 
     this.ble.connect(device.id).subscribe(
       success => {
-        this.setStatus("Connected to device " + device.id);
+        //  this.setStatus("Connected to device " + device.id);
 
         this.connectedDevice = device;
       },
       error => {
-        this.setStatus("Error connecting to device " + device.id);
+        // this.setStatus("Error connecting to device " + device.id);
       }
     )
   }
 
-  onDeviceDiscovered(device, devices: any) {
+  onDeviceDiscovered(device) {
     console.log('Discovered ' + JSON.stringify(device, null, 2));
     this.ngZone.run(() => {
 
-     // if (device.advertising.kCBAdvDataLocalName == "TouchBadge" && this.devicesMap[device.id] == null) {
-        this.devicesMap[device.id] = device;
-        devices.push(device);
-     // }
+      // if (device.advertising.kCBAdvDataLocalName == "TouchBadge" && this.devicesMap[device.id] == null) {
+      this.devicesMap[device.id] = device;
+      this.devices.push(device);
+      // }
     });
   }
 
   // If location permission is denied, you'll end up here
   scanError(error) {
-    this.setStatus('Error ' + error);
-    let toast = this.toastCtrl.create({
-      message: 'Error scanning for Bluetooth low energy devices',
-      position: 'middle',
-      duration: 5000
-    });
-    toast.present();
-  }
-
-  setStatus(message) {
-    console.log(message);
-    this.ngZone.run(() => {
-      this.statusMessage = message;
-    });
+    console.log("error bluetooth: " + error);
   }
 
   send() {
 
     if (this.input != undefined) {
       // send 1 byte to switch a light on
-     // var data = new Uint8Array(1);
-    //  data[0] = 1;
-     // this.ble.write(this.connectedDevice.id, "FF10", "FF11", )
-    //  this.ble.write(this.connectedDevice.id, "FF10", "FF11", data.buffer, success, failure);
+      // var data = new Uint8Array(1);
+      //  data[0] = 1;
+      // this.ble.write(this.connectedDevice.id, "FF10", "FF11", )
+      //  this.ble.write(this.connectedDevice.id, "FF10", "FF11", data.buffer, success, failure);
     }
   }
 
