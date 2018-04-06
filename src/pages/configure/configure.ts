@@ -10,9 +10,11 @@ import { ToastController } from 'ionic-angular';
 })
 
 export class ConfigurePage {
+  
+  statusMessage: string;
 
-
-  constructor() {
+  constructor(
+    private ngZone: NgZone) {
   }
 
   setStatus(message) {

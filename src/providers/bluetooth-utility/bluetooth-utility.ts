@@ -16,7 +16,6 @@ export class BluetoothUtilityProvider {
   scanSubscription: Subscription;
   devices: any[] = [];
   devicesMap: any = {};
-  statusMessage: string;
   input: string;
   connectedDevice: any;
 
