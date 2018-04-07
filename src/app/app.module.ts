@@ -32,7 +32,7 @@ import { UserDataUtilityProvider } from '../providers/user-data-utility/user-dat
 import { DynamoDB } from '../providers/aws.dynamodb'
 import { LoggingUtilityProvider } from '../providers/logging-utility/logging-utility';
 import { BluetoothUtilityProvider } from '../providers/bluetooth-utility/bluetooth-utility';
-
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
@@ -83,7 +83,8 @@ import { BluetoothUtilityProvider } from '../providers/bluetooth-utility/bluetoo
     UserDataUtilityProvider,
     DynamoDB,
     LoggingUtilityProvider,
-    BluetoothUtilityProvider
+    BluetoothUtilityProvider,
+    Geolocation
   ]
 })
 export class AppModule {}

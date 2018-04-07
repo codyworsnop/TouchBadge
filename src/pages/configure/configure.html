@@ -1,5 +1,8 @@
 
   <ion-content padding>
+    <button ion-button (click)="GetLocation()">GetLocation</button>
+    <p>lat: {{lat}}</p>
+    <p>long: {{long}}</p>
     <button ion-button (click)="scan()">Scan</button>
     
     <button ion-button (click)="send()">Send</button>
