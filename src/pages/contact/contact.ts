@@ -6,6 +6,7 @@ import { ModalController } from 'ionic-angular/components/modal/modal-controller
 import { newContactModal } from '../../modals/newContact/newContact';
 import { DynamoDB } from '../../providers/providers';
 import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-utility';
+import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
 
 @Component({
   selector: 'page-contact',
@@ -16,21 +17,22 @@ export class ContactPage {
   public contacts = [];
   groupedContacts = [];
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB, private loggingUtil: LoggingUtilityProvider) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB, private loggingUtil: LoggingUtilityProvider, private userData: UserDataUtilityProvider) {
 
     const params = {
       TableName: 'Users',
-      //KeyConditionExpression: 'UserID = :id',
-      //ExpressionAttributeValues: {
-      // ':id': '*',
-      //}
+      KeyConditionExpression: 'UserID = :id',
+      ExpressionAttributeValues: {
+       ':id': this.userData.GetAWSIdentityId(),
+      },
+      ProjectExpression: "Contacts",
     };
 
 
     this.db.getDocumentClient()
       .then(client => {
-
-        client.scan(params, (err, data) => {
+        
+        client.query(params, (err, data) => {
 
           if (err) {
             console.log(err);
@@ -38,6 +40,7 @@ export class ContactPage {
           }
           else {
 
+            this.loggingUtil.alertUser("pulled: " + JSON.stringify(data));
             data.Items.forEach((item) => {
 
               if (item.PictureURL == null) {
