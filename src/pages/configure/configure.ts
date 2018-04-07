@@ -10,8 +10,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 })
 
 export class ConfigurePage {
-  lat: string;
-  long: string;
+  lat: number;
+  long: number;
   statusMessage: string;
 
   constructor(
@@ -22,6 +22,8 @@ export class ConfigurePage {
   GetLocation() {
     this.geolocation.getCurrentPosition().then((resp) => {
       console.log("Lat: " + resp.coords.latitude + " Long: " + resp.coords.longitude);
+      this.lat = resp.coords.latitude;
+      this.long = resp.coords.longitude;
       // resp.coords.latitude
       // resp.coords.longitude
      }).catch((error) => {
