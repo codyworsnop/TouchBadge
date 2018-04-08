@@ -103,8 +103,8 @@
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To Find Nearby Contacts" />
     </plugin>
     <allow-navigation href="http://192.168.1.149:8100" />
-    <engine name="ios" spec="4.5.4" />
     <plugin name="cordova-plugin-shake" spec="^0.6.0">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="TouchBadge uses your location to find nearby contacts" />
     </plugin>
+    <engine name="ios" spec="4.5.4" />
 </widget>

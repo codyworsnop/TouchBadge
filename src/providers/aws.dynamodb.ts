@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
 import { UserDataUtilityProvider } from './user-data-utility/user-data-utility';
 import { String } from 'aws-sdk/clients/rekognition';
+import { CATCH_ERROR_VAR } from '@angular/compiler/src/output/output_ast';
 
 declare var AWS: any;
 declare const aws_cognito_region;
@@ -22,14 +23,25 @@ export class DynamoDB {
 
   private SetupAWSConfig(): Promise<any> {
 
+    var awsIdentity: any;
+    var awsToken: any;
+
     return new Promise((resolve, reject) => {
+
+      this.userData.GetAWSIdentityId().then((response) => {
+        awsIdentity = response;
+      });
+
+      this.userData.GetAWSToken().then((response) => {
+        awsToken = response;
+      });
 
       AWS.config.region = aws_cognito_region;
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
         IdentityPoolId: aws_cognito_identity_pool_id,
-        IdentityId: this.userData.GetAWSIdentityId(),
+        IdentityId: awsIdentity,
         Logins: {
-          'cognito-identity.amazonaws.com': this.userData.GetAWSToken()
+          'cognito-identity.amazonaws.com': awsToken
         }
       });
 
@@ -54,32 +66,37 @@ export class DynamoDB {
   AddContactToDynamo(contact: any[]) {
 
     console.log(JSON.stringify(contact));
-    const params = {
-      'TableName': "Users",
-      'Key': { UserID: "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b" },        
-      UpdateExpression: "set #contact = list_append(#contact, :contact)",
-      ExpressionAttributeNames: {
+    var awsToken: any;
 
-        "#contact": "Contacts",
-      },
-      ExpressionAttributeValues: { 
+    this.userData.GetAWSIdentityId().then((response) => {
+      awsToken = response;
 
-        ":contact": contact
-      },
+      this.alertUser("AWSTOK: " + awsToken);
+      
+      const params = {
+        'TableName': "Users",
+        'Key': { UserID: awsToken },
+        UpdateExpression: "set #contact = list_append(#contact, :contact)",
+        ExpressionAttributeNames: {
 
-      ReturnValues: "UPDATED_NEW"
-    };
+          "#contact": "Contacts",
+        },
+        ExpressionAttributeValues: {
 
-    this.getDocumentClient().then(client => {
+          ":contact": contact
+        },
 
-        client.update(params, (err, data) => { 
+        ReturnValues: "UPDATED_NEW"
+      };
 
-          if (err)
-          {
+      this.getDocumentClient().then(client => {
+
+        client.update(params, (err, data) => {
+
+          if (err) {
             console.log("error: " + err)
           }
-          else 
-          {
+          else {
             console.log("data: " + JSON.stringify(data));
           }
         });
@@ -89,7 +106,7 @@ export class DynamoDB {
         console.log(err);
         this.alertUser(err);
       });
-
+    });
   }
 
   getDocumentClient(): Promise<any> {

@@ -40,46 +40,51 @@ export class UserDataUtilityProvider {
     this.emailAddress = emailAddress;
 
     this.id = id;
-
-    this.saveUserData();
   }
 
-  private saveUserData() {
-    var userData = {
-      'FirstName': this.firstName,
-      'LastName': this.lastName,
-      'JobTitle': this.jobTitle,
-      'Location': this.location,
-      'numConnections': this.numConnections,
-      'pictureURL': this.pictureUrl,
-      'emailAddress': this.emailAddress,
-      'id': this.id,
-      'awsID': this.AWSIdentityId,
-    };
-
-    this.storage.set('userProfile', userData);
-  }
-
-  private retrieveUserData() {
-
-    this.logging.alertUser("outside: " + this.firstName);
-    this.storage.get('userProfile').then((result) => {
-      this.firstName = result.FirstName;
-      this.lastName = result.LastName;
-      this.jobTitle = result.JobTitle;
-      this.location = result.Location;
-      this.numConnections = result.numConnections;
-      this.pictureUrl = result.pictureURL;
-      this.emailAddress = result.emailAddress;
-
-      this.logging.alertUser("inside: " + this.firstName);
-    }).catch((error) => {
-
-      console.log("Error retrieving data: " + error);
-
+  public saveUserData() : Promise<any> {
+    return new Promise((resolve, reject) => { 
+      var userData = {
+        'FirstName': this.firstName,
+        'LastName': this.lastName,
+        'JobTitle': this.jobTitle,
+        'Location': this.location,
+        'numConnections': this.numConnections,
+        'pictureURL': this.pictureUrl,
+        'emailAddress': this.emailAddress,
+        'id': this.id,
+        'awsID': this.AWSIdentityId,
+        'awsToken': this.AWSToken
+      };
+  
+      this.storage.set('userProfile', userData).then(() => {
+        resolve();
+      });
     });
+  }
 
-    this.logging.alertUser("back out: " + this.firstName);
+  private retrieveUserData(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+      this.storage.get('userProfile').then((result) => {
+        this.firstName = result.FirstName;
+        this.lastName = result.LastName;
+        this.jobTitle = result.JobTitle;
+        this.location = result.Location;
+        this.numConnections = result.numConnections;
+        this.pictureUrl = result.pictureURL;
+        this.emailAddress = result.emailAddress;
+
+        this.AWSIdentityId = result.awsID;
+        this.id = result.id;
+
+        resolve();
+      }).catch((error) => {
+
+        console.log("Error retrieving data: " + error);
+        reject(error);
+      });
+    });
   }
 
   public SetAWSToken(value: string) {
@@ -90,86 +95,127 @@ export class UserDataUtilityProvider {
     this.AWSIdentityId = value;
   }
 
-  public GetAWSToken(): string {
-    if (this.AWSToken != null) {
-      return this.AWSToken;
-    }
+  public GetAWSToken(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.AWSToken == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.AWSToken);
+        });
+      }
+
+      resolve(this.AWSToken);
+    });
   }
 
-  public GetAWSIdentityId(): string {
-    if (this.AWSIdentityId != null) {
-      return this.AWSIdentityId;
-    }
+  public GetAWSIdentityId(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.AWSIdentityId == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.AWSIdentityId);
+        });
+      }
+
+      resolve(this.AWSIdentityId);
+    });
   }
 
-  public GetEmailAddress(): string {
-    if (this.emailAddress == undefined) {
-      //    this.retrieveUserData();
-    }
+  public GetEmailAddress(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.emailAddress == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.emailAddress);
+        });
+      }
 
-    return this.emailAddress;
+      resolve(this.emailAddress);
+    });
   }
 
   public SetEmailAddress(value: string) {
     this.emailAddress = value;
   }
 
-  public GetPictureUrl(): string {
-    if (this.pictureUrl == undefined) {
-      //  this.retrieveUserData();
-    }
+  public GetPictureUrl(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.pictureUrl == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.pictureUrl);
+        });
+      }
 
-    return this.pictureUrl;
+      resolve(this.pictureUrl);
+    });
   }
 
-  public GetFirstName(): string {
-    if (this.firstName == undefined) {
-      this.retrieveUserData().then(() => {
-        this.logging.alertUser("This worked?: " + this.firstName);
-      });
-    }
-    this.logging.alertUser("This worked?adwawdw: " + this.firstName);
-    return this.firstName;
+  public GetFirstName(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (this.firstName == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.firstName);
+        });
+      }
+
+      resolve(this.firstName);
+    });
   }
 
-  public GetLastName(): string {
-    if (this.lastName == undefined) {
-      // this.retrieveUserData();
-    }
+  public GetLastName(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.lastName == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.lastName);
+        });
+      }
 
-    return this.lastName;
+      resolve(this.lastName);
+    });
   }
 
-  public GetId(): string {
-    if (this.id == undefined) {
-      //this.retrieveUserData();
-    }
+  public GetId(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.id == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.id);
+        });
+      }
 
-    return this.id;
+      resolve(this.id);
+    });
   }
 
-  public GetJobTitle(): string {
-    if (this.jobTitle == undefined) {
-      // this.retrieveUserData();
-    }
+  public GetJobTitle(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.jobTitle == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.jobTitle);
+        });
+      }
 
-    return this.jobTitle;
+      resolve(this.jobTitle);
+    });
   }
 
-  public GetLocation(): string {
-    if (this.location == undefined) {
-      //this.retrieveUserData();
-    }
+  public GetLocation(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.location == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.location);
+        });
+      }
 
-    return this.location;
+      resolve(this.location);
+    });
   }
 
-  public GetNumConnections(): number {
+  public GetNumConnections(): Promise<any>  {
+    return new Promise((resolve, reject) => {
+      if (this.numConnections == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.numConnections);
+        });
+      }
 
-    if (this.numConnections == undefined) {
-      // this.retrieveUserData();
-    }
-
-    return this.numConnections;
+      resolve(this.numConnections);
+    });
   }
 }

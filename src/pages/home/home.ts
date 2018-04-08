@@ -33,17 +33,37 @@ export class HomePage {
   }
 
   ionViewDidLoad() { 
-    console.log("HOME DID LOAD!?!?");
     this.SetUserData();
   }
 
   SetUserData() { 
-    this.firstName = this.userData.GetFirstName();
-    this.lastName = this.userData.GetLastName();
-    this.id = this.userData.GetId();
-    this.numConnections = this.userData.GetNumConnections();
-    this.jobTitle = this.userData.GetJobTitle();
-    this.location = this.userData.GetLocation();
-    this.pictureUrl = this.userData.GetPictureUrl();  
+    this.userData.GetFirstName().then((response) => 
+    {
+      this.firstName = response;
+    });
+
+    this.userData.GetLastName().then((response) => {
+      this.lastName = response;
+    });
+
+    this.userData.GetId().then((response) => { 
+      this.id = response;
+    });
+
+    this.userData.GetNumConnections().then((response) => {
+      this.numConnections = response;
+    });
+
+    this.userData.GetJobTitle().then((response) => {
+      this.jobTitle = response;
+    });
+
+    this.userData.GetLocation().then((response) => {
+      this.location = response;
+    });
+
+    this.userData.GetPictureUrl().then((response) => { 
+      this.pictureUrl = response;
+    });
   }
 }

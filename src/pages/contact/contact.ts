@@ -29,17 +29,22 @@ export class ContactPage {
     this.contacts = [];
     this.groupedContacts = [];
 
-    const params = {
-      TableName: 'Users',
-      KeyConditionExpression: 'UserID = :id',
-      ExpressionAttributeValues: {
-        ':id': this.userData.GetAWSIdentityId(),
-      },
-      ProjectionExpression: 'Contacts',
-    };
+    var awsIdentity: any;
 
-    this.db.getDocumentClient()
-      .then(client => {
+    this.userData.GetAWSIdentityId().then((response) => {
+      awsIdentity = response;
+
+      this.loggingUtil.alertUser("AGAINAWD: " + awsIdentity);
+      const params = {
+        TableName: 'Users',
+        KeyConditionExpression: 'UserID = :id',
+        ExpressionAttributeValues: {
+          ':id': awsIdentity,
+        },
+        ProjectionExpression: 'Contacts',
+      };
+
+      this.db.getDocumentClient().then(client => {
 
         client.query(params, (err, data) => {
 
@@ -52,20 +57,21 @@ export class ContactPage {
             //this.loggingUtil.alertUser("pulled: " + JSON.stringify(data.Items[0].Contacts));
             data.Items[0].Contacts.forEach((contact) => {
 
-                console.log("CONTACT: " + JSON.stringify(contact));
+              console.log("CONTACT: " + JSON.stringify(contact));
 
-                if (contact.PictureURL == 'null') {
-                  contact.PictureURL = "../assets/img/default-profile-pic.jpg";
-                }
-  
-                this.contacts.push(contact);
-              
+              if (contact.PictureURL == 'null') {
+                contact.PictureURL = "../assets/img/default-profile-pic.jpg";
+              }
+
+              this.contacts.push(contact);
+
             });
 
             this.groupContacts(this.contacts);
           }
         });
       });
+    });
   }
 
   groupContacts(contacts) {
@@ -121,7 +127,7 @@ export class ContactPage {
     console.log('Begin async operation', refresher);
 
     this.retrieveContacts();
-    
+
     setTimeout(() => {
       console.log('Async operation has ended');
       refresher.complete();

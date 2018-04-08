@@ -25,23 +25,33 @@ export class LinkedInUtilityProvider {
   public getAWSToken(): Promise<any> {
 
     return new Promise((resolve, reject) => {
-      this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + this.userData.GetId(), {}, {}).then(response => {
 
-        var result = JSON.parse(response.data);
-        this.userData.SetAWSIdentityId(result.IdentityId);
-        this.userData.SetAWSToken(result.Token);
-        resolve();
+      var id: any;
 
-      }, error => {
+      this.userData.GetId().then((IDResponse) => {
+        id = IDResponse;
 
-        this.alertUser("error: " + JSON.stringify(error));
-        console.log("Error resolving aws token: " + error);
-        reject();
+        this.alertUser("id: " + id);
 
-      })
+        this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + id, {}, {}).then(response => {
+
+          this.alertUser("response: " + JSON.stringify(response.data));
+          var result = JSON.parse(response.data);
+          this.userData.SetAWSIdentityId(result.IdentityId);
+          this.userData.SetAWSToken(result.Token);
+          resolve();
+
+        }, error => {
+
+          this.alertUser("error: " + JSON.stringify(error));
+          console.log("Error resolving aws token: " + error);
+          reject();
+
+        })
+      });
     });
   }
- 
+
   public linkedInLogin(): Promise<any> {
 
     return new Promise((resolve, reject) => {
@@ -78,17 +88,21 @@ export class LinkedInUtilityProvider {
 
               loader.present();
 
+              this.alertUser("Getting user details");
               this.getLinkedInUserDetails(data.access_token).then(response => {
 
                 var result = JSON.parse(response.data);
                 this.userData.SetUserData(result.firstName, result.lastName, result.id, result.positions.values[0].title, result.location.name, result.numConnections, result.pictureUrl, result.emailAddress);
 
               }).then(() => {
+                this.alertUser("Geting aws token");
 
-                this.getAWSToken().then((response) => { 
+                this.getAWSToken().then((response) => {
 
-                  loader.dismiss();
-                  resolve();
+                  this.userData.saveUserData().then(() => {
+                    loader.dismiss();
+                    resolve();
+                  });
 
                 }).catch((error) => {
 
@@ -164,22 +178,15 @@ export class LinkedInUtilityProvider {
         reject(event);
       });
 
-      browserRef.on('loaderror').subscribe((event) => { 
+      browserRef.on('loaderror').subscribe((event) => {
         console.log("load error: " + JSON.stringify(event.message));
         browserRef.close();
-       // reject(event);
+        // reject(event);
       })
-/*
-      browserRef.on('loadstop').subscribe((event) => { 
-        console.log("load stop: " + JSON.stringify(event.message));
-        browserRef.close();
-      //  reject(event);
-      })
-      */
     });
   }
 
-  alertUser(message: string) { 
+  alertUser(message: string) {
 
     let toast = this.toastCtrl.create({
       message: message,

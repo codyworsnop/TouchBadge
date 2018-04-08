@@ -36,7 +36,7 @@ export class MyApp {
 
       console.log("Has seen intro?: " + result);
       if (result) {
-        this.rootPage = TabsPage;
+        this.rootPage = IntroPage;
       }
       else {
         this.rootPage = IntroPage;
