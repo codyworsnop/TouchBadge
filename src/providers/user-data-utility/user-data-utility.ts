@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { String } from 'aws-sdk/clients/cloudwatchevents';
+import { LoggingUtilityProvider } from '../logging-utility/logging-utility';
 
 /*
   Generated class for the UserDataUtilityProvider provider.
@@ -22,7 +24,7 @@ export class UserDataUtilityProvider {
   private AWSToken: string;
   private AWSIdentityId: string;
 
-  constructor(public storage: Storage) {
+  constructor(public storage: Storage, public logging: LoggingUtilityProvider) {
 
   }
 
@@ -55,22 +57,27 @@ export class UserDataUtilityProvider {
       'awsID': this.AWSIdentityId,
     };
 
-    this.storage.set('userprofile', userData);
+    this.storage.set('userProfile', userData);
   }
 
-  private retrieveUserData() {
-    this.storage.get('userProfile').then((result) => {
-      this.firstName = result.FirstName;
-      this.lastName = result.LastName;
-      this.jobTitle = result.JobTitle;
-      this.location = result.Location;
-      this.numConnections = result.numConnections;
-      this.pictureUrl = result.pictureURL;
-      this.emailAddress = result.emailAddress;
-    }).catch((error) => {
+  private retrieveUserData() : Promise<any> {
 
-      console.log("Error retrieving data: " + error);
-
+    return new Promise((resolve, reject) => { 
+      this.storage.get('userProfile').then((result) => {
+        this.firstName = result.FirstName;
+        this.lastName = result.LastName;
+        this.jobTitle = result.JobTitle;
+        this.location = result.Location;
+        this.numConnections = result.numConnections;
+        this.pictureUrl = result.pictureURL;
+        this.emailAddress = result.emailAddress;
+        
+        resolve();
+      }).catch((error) => {
+  
+        console.log("Error retrieving data: " + error);
+        reject(error);
+      });
     });
   }
 
@@ -82,21 +89,21 @@ export class UserDataUtilityProvider {
     this.AWSIdentityId = value;
   }
 
-  public GetAWSToken() {
-    if (this.AWSToken == null) {
+  public GetAWSToken() : string {
+    if (this.AWSToken != null) {
       return this.AWSToken;
     }
   }
 
-  public GetAWSIdentityId() {
+  public GetAWSIdentityId() : string {
     if (this.AWSIdentityId != null) {
       return this.AWSIdentityId;
     }
   }
 
-  public GetEmailAddress() {
-    if (this.emailAddress == null) {
-      this.retrieveUserData();
+  public GetEmailAddress() : string {
+    if (this.emailAddress == undefined) {
+  //    this.retrieveUserData();
     }
 
     return this.emailAddress;
@@ -106,58 +113,60 @@ export class UserDataUtilityProvider {
     this.emailAddress = value;
   }
 
-  public GetPictureUrl() {
-    if (this.pictureUrl == null) {
-      this.retrieveUserData();
+  public GetPictureUrl() : string{
+    if (this.pictureUrl == undefined) {
+    //  this.retrieveUserData();
     }
 
     return this.pictureUrl;
   }
 
-  public GetFirstName() {
-    if (this.firstName == null) {
-      this.retrieveUserData();
+  public GetFirstName() : string {
+    if (this.firstName == undefined) {
+      this.retrieveUserData().then(() => {
+        this.logging.alertUser("This worked?: " + this.firstName);
+      });
     }
-
+    this.logging.alertUser("This worked?adwawdw: " + this.firstName);
     return this.firstName;
   }
 
-  public GetLastName() {
-    if (this.lastName == null) {
-      this.retrieveUserData();
+  public GetLastName() : string {
+    if (this.lastName == undefined) {
+     // this.retrieveUserData();
     }
 
     return this.lastName;
   }
 
-  public GetId() {
-    if (this.id == null) {
-      this.retrieveUserData();
+  public GetId() : string {
+    if (this.id == undefined) {
+//this.retrieveUserData();
     }
 
     return this.id;
   }
 
-  public GetJobTitle() {
-    if (this.jobTitle == null) {
-      this.retrieveUserData();
+  public GetJobTitle() : string {
+    if (this.jobTitle == undefined) {
+     // this.retrieveUserData();
     }
 
     return this.jobTitle;
   }
 
-  public GetLocation() {
-    if (this.location == null) {
-      this.retrieveUserData();
+  public GetLocation() : string {
+    if (this.location == undefined) {
+      //this.retrieveUserData();
     }
 
     return this.location;
   }
 
-  public GetNumConnections() {
+  public GetNumConnections() : number {
 
-    if (this.numConnections == null) {
-      this.retrieveUserData();
+    if (this.numConnections == undefined) {
+     // this.retrieveUserData();
     }
 
     return this.numConnections;

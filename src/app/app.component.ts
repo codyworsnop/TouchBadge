@@ -34,6 +34,7 @@ export class MyApp {
   presentIntro() {
     this.storage.get('introShown').then((result) => {
 
+      console.log("Has seen intro?: " + result);
       if (result) {
         this.rootPage = TabsPage;
       }

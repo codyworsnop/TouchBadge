@@ -33,6 +33,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() { 
+    console.log("HOME DID LOAD!?!?");
     this.SetUserData();
   }
 

@@ -19,19 +19,28 @@ export class ContactPage {
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB, private loggingUtil: LoggingUtilityProvider, private userData: UserDataUtilityProvider) {
 
+    console.log("looking for: " + this.userData.GetAWSIdentityId());
+    this.retrieveContacts();
+
+  }
+
+  retrieveContacts() {
+
+    this.contacts = [];
+    this.groupedContacts = [];
+
     const params = {
       TableName: 'Users',
       KeyConditionExpression: 'UserID = :id',
       ExpressionAttributeValues: {
-       ':id': this.userData.GetAWSIdentityId(),
+        ':id': this.userData.GetAWSIdentityId(),
       },
       ProjectionExpression: 'Contacts',
     };
 
-    console.log("looking for: " + this.userData.GetAWSIdentityId());
     this.db.getDocumentClient()
       .then(client => {
-        
+
         client.query(params, (err, data) => {
 
           if (err) {
@@ -43,16 +52,16 @@ export class ContactPage {
             //this.loggingUtil.alertUser("pulled: " + JSON.stringify(data.Items[0].Contacts));
             data.Items[0].Contacts.forEach((contact) => {
 
-              console.log("CONTACT: " + JSON.stringify(contact));
+                console.log("CONTACT: " + JSON.stringify(contact));
 
-              if (contact.PictureURL == 'null') {
-                contact.PictureURL = "../assets/img/default-profile-pic.jpg";
-              }
-              
-              this.contacts.push(contact);
+                if (contact.PictureURL == 'null') {
+                  contact.PictureURL = "../assets/img/default-profile-pic.jpg";
+                }
+  
+                this.contacts.push(contact);
               
             });
-            
+
             this.groupContacts(this.contacts);
           }
         });
@@ -84,7 +93,7 @@ export class ContactPage {
         }
 
         currentContacts.push(value);
-      }); 
+      });
     }
   }
 
@@ -106,5 +115,16 @@ export class ContactPage {
   contactTapped(contact: any): void {
 
     this.navCtrl.push(ContactDetailPage, { contactInfo: contact });
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    this.retrieveContacts();
+    
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
   }
 }
