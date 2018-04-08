@@ -34,6 +34,7 @@ import { LoggingUtilityProvider } from '../providers/logging-utility/logging-uti
 import { BluetoothUtilityProvider } from '../providers/bluetooth-utility/bluetooth-utility';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Shake } from '@ionic-native/shake';
+import { Vibration } from '@ionic-native/vibration';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { Shake } from '@ionic-native/shake';
     BluetoothUtilityProvider,
     Geolocation,
     Shake,
+    Vibration
   ]
 })
 export class AppModule {}
