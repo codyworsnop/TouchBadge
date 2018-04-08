@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { IntroPage } from '../pages/intro/intro';
 import { TabsPage } from '../pages/tabs/tabs';
+import { Shake } from '@ionic-native/shake';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,18 +15,19 @@ export class MyApp {
   rootPage: any = TabsPage;
   loader: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public storage: Storage) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public storage: Storage, public shake: Shake) {
 
     platform.ready().then(() => {
-
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
 
       this.presentIntro();
 
       statusBar.styleDefault();
       splashScreen.hide();
 
+      //setup shake gesture
+      const watch = this.shake.startWatch().subscribe(() => {
+        this.shakeGestureHandler();
+      });
     });
   }
 
@@ -38,9 +40,12 @@ export class MyApp {
       else {
         this.rootPage = IntroPage;
         this.storage.set('introShown', true);
-      }    
+      }
     });
+  }
 
+  shakeGestureHandler() {
+    console.log("shaked! :D");
   }
 }
 

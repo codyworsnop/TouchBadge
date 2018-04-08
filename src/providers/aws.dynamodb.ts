@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
 import { UserDataUtilityProvider } from './user-data-utility/user-data-utility';
+import { String } from 'aws-sdk/clients/rekognition';
 
 declare var AWS: any;
 declare const aws_cognito_region;
@@ -52,7 +53,6 @@ export class DynamoDB {
 
   AddContactToDynamo(contact: any[]) {
 
-
     console.log(JSON.stringify(contact));
     const params = {
       'TableName': "Users",
@@ -60,7 +60,7 @@ export class DynamoDB {
       UpdateExpression: "set #contact = list_append(#contact, :contact)",
       ExpressionAttributeNames: {
 
-        "#contact": "Contact",
+        "#contact": "Contacts",
       },
       ExpressionAttributeValues: { 
 

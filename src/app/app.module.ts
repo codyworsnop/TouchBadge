@@ -33,6 +33,7 @@ import { DynamoDB } from '../providers/aws.dynamodb'
 import { LoggingUtilityProvider } from '../providers/logging-utility/logging-utility';
 import { BluetoothUtilityProvider } from '../providers/bluetooth-utility/bluetooth-utility';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Shake } from '@ionic-native/shake';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     DynamoDB,
     LoggingUtilityProvider,
     BluetoothUtilityProvider,
-    Geolocation
+    Geolocation,
+    Shake
   ]
 })
 export class AppModule {}

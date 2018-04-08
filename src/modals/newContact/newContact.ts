@@ -24,10 +24,11 @@ export class newContactModal {
   AddContact() {
     
     var newContact = {
-      FirstName: this.FirstName,
-      LastName: this.LastName,
+      First_Name: this.FirstName,
+      Last_Name: this.LastName,
       JobTitle: this.JobTitle,
       Company: this.CompanyName,
+      PictureURL: 'null',
     };
 
     this.db.AddContactToDynamo([newContact]);
