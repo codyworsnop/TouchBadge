@@ -1,5 +1,5 @@
-
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the UserDataUtilityProvider provider.
@@ -22,7 +22,7 @@ export class UserDataUtilityProvider {
   private AWSToken: string;
   private AWSIdentityId: string;
 
-  constructor() {
+  constructor(public storage: Storage) {
 
   }
 
@@ -38,10 +38,43 @@ export class UserDataUtilityProvider {
     this.emailAddress = emailAddress;
 
     this.id = id;
+
+    this.saveUserData();
+  }
+
+  private saveUserData() {
+    var userData = {
+      'FirstName': this.firstName,
+      'LastName': this.lastName,
+      'JobTitle': this.jobTitle,
+      'Location': this.location,
+      'numConnections': this.numConnections,
+      'pictureURL': this.pictureUrl,
+      'emailAddress': this.emailAddress,
+      'id': this.id,
+      'awsID': this.AWSIdentityId,
+    };
+
+    this.storage.set('userprofile', userData);
+  }
+
+  private retrieveUserData() {
+    this.storage.get('userProfile').then((result) => {
+      this.firstName = result.FirstName;
+      this.lastName = result.LastName;
+      this.jobTitle = result.JobTitle;
+      this.location = result.Location;
+      this.numConnections = result.numConnections;
+      this.pictureUrl = result.pictureURL;
+      this.emailAddress = result.emailAddress;
+    }).catch((error) => {
+
+      console.log("Error retrieving data: " + error);
+
+    });
   }
 
   public SetAWSToken(value: string) {
-    
     this.AWSToken = value;
   }
 
@@ -50,7 +83,7 @@ export class UserDataUtilityProvider {
   }
 
   public GetAWSToken() {
-    if (this.AWSToken != null) {
+    if (this.AWSToken == null) {
       return this.AWSToken;
     }
   }
@@ -61,59 +94,72 @@ export class UserDataUtilityProvider {
     }
   }
 
-  public GetEmailAddress()
-  {
-    if (this.emailAddress != null)
-    {
-      return this.emailAddress;
+  public GetEmailAddress() {
+    if (this.emailAddress == null) {
+      this.retrieveUserData();
     }
+
+    return this.emailAddress;
   }
 
-  public SetEmailAddress(value: string)
-  {
+  public SetEmailAddress(value: string) {
     this.emailAddress = value;
   }
 
   public GetPictureUrl() {
-    if (this.pictureUrl != null) {
-      return this.pictureUrl;
+    if (this.pictureUrl == null) {
+      this.retrieveUserData();
     }
+
+    return this.pictureUrl;
   }
 
   public GetFirstName() {
-    if (this.firstName != null) {
-      return this.firstName;
+    if (this.firstName == null) {
+      this.retrieveUserData();
     }
+
+    return this.firstName;
   }
 
   public GetLastName() {
-    if (this.lastName != null) {
-      return this.lastName;
+    if (this.lastName == null) {
+      this.retrieveUserData();
     }
+
+    return this.lastName;
   }
 
   public GetId() {
-    if (this.id != null) {
-      return this.id;
+    if (this.id == null) {
+      this.retrieveUserData();
     }
+
+    return this.id;
   }
 
   public GetJobTitle() {
-    if (this.jobTitle != null) {
-      return this.jobTitle;
+    if (this.jobTitle == null) {
+      this.retrieveUserData();
     }
+
+    return this.jobTitle;
   }
 
   public GetLocation() {
-    if (this.location != null) {
-      return this.location;
+    if (this.location == null) {
+      this.retrieveUserData();
     }
+
+    return this.location;
   }
 
   public GetNumConnections() {
 
-    if (this.numConnections != null) {
-      return this.numConnections;
+    if (this.numConnections == null) {
+      this.retrieveUserData();
     }
+
+    return this.numConnections;
   }
 }

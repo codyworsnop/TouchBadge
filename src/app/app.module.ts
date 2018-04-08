@@ -86,7 +86,7 @@ import { Shake } from '@ionic-native/shake';
     LoggingUtilityProvider,
     BluetoothUtilityProvider,
     Geolocation,
-    Shake
+    Shake,
   ]
 })
 export class AppModule {}

@@ -23,12 +23,12 @@ export class ContactPage {
       TableName: 'Users',
       KeyConditionExpression: 'UserID = :id',
       ExpressionAttributeValues: {
-       ':id': "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b",
+       ':id': this.userData.GetAWSIdentityId(),
       },
       ProjectionExpression: 'Contacts',
     };
 
-
+    console.log("looking for: " + this.userData.GetAWSIdentityId());
     this.db.getDocumentClient()
       .then(client => {
         
@@ -46,7 +46,7 @@ export class ContactPage {
               console.log("CONTACT: " + JSON.stringify(contact));
 
               if (contact.PictureURL == 'null') {
-                contact.PictureURL = "/assets/img/default-profile-pic.jpg";
+                contact.PictureURL = "../assets/img/default-profile-pic.jpg";
               }
               
               this.contacts.push(contact);

@@ -22,7 +22,7 @@ page-home {
         background-size: cover;
         background-image:linear-gradient(0deg, rgba(red(map-get($colors, homeOverlay)), green(map-get($colors, homeOverlay)), blue(map-get($colors, homeOverlay)), 0.2), 
                     rgba(red(map-get($colors, homeOverlay)), green(map-get($colors, homeOverlay)), blue(map-get($colors, homeOverlay)), 0.2)),
-                    url("../../assets/img/bg_blur2.jpg");
+                    url("../assets/img/bg_blur2.jpg");
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     }
 

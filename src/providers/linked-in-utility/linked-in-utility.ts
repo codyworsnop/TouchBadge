@@ -160,21 +160,22 @@ export class LinkedInUtilityProvider {
       });
 
       browserRef.on('exit').subscribe((event) => {
-        this.alertUser("exit: " + JSON.stringify(event));
+        console.log("exit: " + JSON.stringify(event));
         reject(event);
       });
 
       browserRef.on('loaderror').subscribe((event) => { 
-        this.alertUser("load error: " + JSON.stringify(event.message));
+        console.log("load error: " + JSON.stringify(event.message));
         browserRef.close();
-        reject(event);
+       // reject(event);
       })
-
+/*
       browserRef.on('loadstop').subscribe((event) => { 
-        this.alertUser("load stop: " + JSON.stringify(event.message));
+        console.log("load stop: " + JSON.stringify(event.message));
         browserRef.close();
-        reject(event);
+      //  reject(event);
       })
+      */
     });
   }
 

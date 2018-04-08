@@ -35,7 +35,7 @@ export class MyApp {
     this.storage.get('introShown').then((result) => {
 
       if (result) {
-        this.rootPage = IntroPage;
+        this.rootPage = TabsPage;
       }
       else {
         this.rootPage = IntroPage;

@@ -35,7 +35,7 @@ page-calendar {
         padding: 0px;
         background-image:linear-gradient(0deg, rgba(red(map-get($colors, calendarOverlay)), green(map-get($colors, calendarOverlay)), blue(map-get($colors, calendarOverlay)), 0), 
                     rgba(red(map-get($colors, calendarOverlay)), green(map-get($colors, calendarOverlay)), blue(map-get($colors, calendarOverlay)), 0)),
-                    url("../../assets/img/bg_blur.jpg");
+                    url("../assets/img/bg_blur.jpg");
     }
 
     #info {
