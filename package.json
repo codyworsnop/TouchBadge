@@ -91,7 +91,9 @@
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To Find Nearby Contacts"
       },
-      "cordova-plugin-shake": {}
+      "cordova-plugin-shake": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "TouchBadge uses your location to find nearby contacts"
+      }
     },
     "platforms": [
       "ios"

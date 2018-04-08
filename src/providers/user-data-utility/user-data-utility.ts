@@ -60,25 +60,26 @@ export class UserDataUtilityProvider {
     this.storage.set('userProfile', userData);
   }
 
-  private retrieveUserData() : Promise<any> {
+  private retrieveUserData() {
 
-    return new Promise((resolve, reject) => { 
-      this.storage.get('userProfile').then((result) => {
-        this.firstName = result.FirstName;
-        this.lastName = result.LastName;
-        this.jobTitle = result.JobTitle;
-        this.location = result.Location;
-        this.numConnections = result.numConnections;
-        this.pictureUrl = result.pictureURL;
-        this.emailAddress = result.emailAddress;
-        
-        resolve();
-      }).catch((error) => {
-  
-        console.log("Error retrieving data: " + error);
-        reject(error);
-      });
+    this.logging.alertUser("outside: " + this.firstName);
+    this.storage.get('userProfile').then((result) => {
+      this.firstName = result.FirstName;
+      this.lastName = result.LastName;
+      this.jobTitle = result.JobTitle;
+      this.location = result.Location;
+      this.numConnections = result.numConnections;
+      this.pictureUrl = result.pictureURL;
+      this.emailAddress = result.emailAddress;
+
+      this.logging.alertUser("inside: " + this.firstName);
+    }).catch((error) => {
+
+      console.log("Error retrieving data: " + error);
+
     });
+
+    this.logging.alertUser("back out: " + this.firstName);
   }
 
   public SetAWSToken(value: string) {
@@ -89,21 +90,21 @@ export class UserDataUtilityProvider {
     this.AWSIdentityId = value;
   }
 
-  public GetAWSToken() : string {
+  public GetAWSToken(): string {
     if (this.AWSToken != null) {
       return this.AWSToken;
     }
   }
 
-  public GetAWSIdentityId() : string {
+  public GetAWSIdentityId(): string {
     if (this.AWSIdentityId != null) {
       return this.AWSIdentityId;
     }
   }
 
-  public GetEmailAddress() : string {
+  public GetEmailAddress(): string {
     if (this.emailAddress == undefined) {
-  //    this.retrieveUserData();
+      //    this.retrieveUserData();
     }
 
     return this.emailAddress;
@@ -113,15 +114,15 @@ export class UserDataUtilityProvider {
     this.emailAddress = value;
   }
 
-  public GetPictureUrl() : string{
+  public GetPictureUrl(): string {
     if (this.pictureUrl == undefined) {
-    //  this.retrieveUserData();
+      //  this.retrieveUserData();
     }
 
     return this.pictureUrl;
   }
 
-  public GetFirstName() : string {
+  public GetFirstName(): string {
     if (this.firstName == undefined) {
       this.retrieveUserData().then(() => {
         this.logging.alertUser("This worked?: " + this.firstName);
@@ -131,31 +132,31 @@ export class UserDataUtilityProvider {
     return this.firstName;
   }
 
-  public GetLastName() : string {
+  public GetLastName(): string {
     if (this.lastName == undefined) {
-     // this.retrieveUserData();
+      // this.retrieveUserData();
     }
 
     return this.lastName;
   }
 
-  public GetId() : string {
+  public GetId(): string {
     if (this.id == undefined) {
-//this.retrieveUserData();
+      //this.retrieveUserData();
     }
 
     return this.id;
   }
 
-  public GetJobTitle() : string {
+  public GetJobTitle(): string {
     if (this.jobTitle == undefined) {
-     // this.retrieveUserData();
+      // this.retrieveUserData();
     }
 
     return this.jobTitle;
   }
 
-  public GetLocation() : string {
+  public GetLocation(): string {
     if (this.location == undefined) {
       //this.retrieveUserData();
     }
@@ -163,10 +164,10 @@ export class UserDataUtilityProvider {
     return this.location;
   }
 
-  public GetNumConnections() : number {
+  public GetNumConnections(): number {
 
     if (this.numConnections == undefined) {
-     // this.retrieveUserData();
+      // this.retrieveUserData();
     }
 
     return this.numConnections;
