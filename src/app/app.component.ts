@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { IntroPage } from '../pages/intro/intro';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Shake } from '@ionic-native/shake';
+import { Vibration } from '@ionic-native/vibration';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,7 @@ export class MyApp {
   rootPage: any = TabsPage;
   loader: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public storage: Storage, public shake: Shake) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private storage: Storage, private shake: Shake, private vibration: Vibration) {
 
     platform.ready().then(() => {
 
@@ -47,6 +48,7 @@ export class MyApp {
 
   shakeGestureHandler() {
     console.log("shaked! :D");
+    this.vibration.vibrate(1000);
   }
 }
 
