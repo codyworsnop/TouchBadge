@@ -60,7 +60,7 @@ export class ContactPage {
             console.log("contacts to pull: " + JSON.stringify(data.Items.length));
             data.Items[0].Contacts.forEach((contact) => {
 
-              if (contact.id != null && this.contains(this.contactsToPull, contact.id, "")) {
+              if (contact.id != null) {
                 console.log("pushing contact with id: " + contact.id);
                 this.contactsToPull.push(contact.id);
               }
