@@ -29,6 +29,7 @@ export class ContactPage {
 
     this.contacts = [];
     this.groupedContacts = [];
+    this.contactsToPull = [];
 
     var awsIdentity: any;
 
