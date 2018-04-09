@@ -31,11 +31,8 @@ export class LinkedInUtilityProvider {
       this.userData.GetId().then((IDResponse) => {
         id = IDResponse;
 
-        this.alertUser("id: " + id);
-
         this.http.get("https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin" + "?id=" + id, {}, {}).then(response => {
 
-          this.alertUser("response: " + JSON.stringify(response.data));
           var result = JSON.parse(response.data);
           this.userData.SetAWSIdentityId(result.IdentityId);
           this.userData.SetAWSToken(result.Token);
@@ -43,7 +40,6 @@ export class LinkedInUtilityProvider {
 
         }, error => {
 
-          this.alertUser("error: " + JSON.stringify(error));
           console.log("Error resolving aws token: " + error);
           reject();
 
@@ -88,14 +84,13 @@ export class LinkedInUtilityProvider {
 
               loader.present();
 
-              this.alertUser("Getting user details");
+              
               this.getLinkedInUserDetails(data.access_token).then(response => {
 
                 var result = JSON.parse(response.data);
                 this.userData.SetUserData(result.firstName, result.lastName, result.id, result.positions.values[0].title, result.location.name, result.numConnections, result.pictureUrl, result.emailAddress);
 
               }).then(() => {
-                this.alertUser("Geting aws token");
 
                 this.getAWSToken().then((response) => {
 
@@ -184,16 +179,5 @@ export class LinkedInUtilityProvider {
         // reject(event);
       })
     });
-  }
-
-  alertUser(message: string) {
-
-    let toast = this.toastCtrl.create({
-      message: message,
-      showCloseButton: true,
-      position: 'bottom',
-    });
-
-    toast.present();
   }
 }

@@ -36,6 +36,7 @@ export class HomePage {
     this.SetUserData();
   }
 
+
   SetUserData() { 
     this.userData.GetFirstName().then((response) => 
     {

@@ -7,6 +7,7 @@ import { newContactModal } from '../../modals/newContact/newContact';
 import { DynamoDB } from '../../providers/providers';
 import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-utility';
 import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
+import { listeners } from 'cluster';
 
 @Component({
   selector: 'page-contact',
@@ -27,8 +28,8 @@ export class ContactPage {
 
   retrieveContacts() {
 
-    this.contacts = [];
-    this.groupedContacts = [];
+    //this.contacts = [];
+    //this.groupedContacts = [];
     this.contactsToPull = [];
 
     var awsIdentity: any;
@@ -45,8 +46,10 @@ export class ContactPage {
         ProjectionExpression: 'Contacts',
       };
 
+      console.log("getting client for response: " + response);
       this.db.getDocumentClient().then(client => {
 
+        console.log("running query for client: " + client)
         client.query(params, (err, data) => {
 
           if (err) {
@@ -55,12 +58,11 @@ export class ContactPage {
           }
           else {
 
-            console.log("pulled: " + JSON.stringify(data.Items[0].Contacts));
+            console.log("contacts to pull: " + JSON.stringify(data.Items.length));
             data.Items[0].Contacts.forEach((contact) => {
 
-              if (contact.id != null) {
-
-                console.log(JSON.stringify(contact))
+              if (contact.id != null && this.contains(this.contactsToPull, contact.id, "")) {
+                console.log("pushing contact with id: " + contact.id);
                 this.contactsToPull.push(contact.id);
               }
               else {
@@ -69,14 +71,20 @@ export class ContactPage {
                   contact.PictureURL = "assets/img/default-profile-pic.jpg";
                 }
 
+                console.log("pushing contact " + contact.Last_Name);
                 this.contacts.push(contact);
-                console.log("pushed contact: " + JSON.stringify(contact));
+
               }
             });
 
-            this.retrieveAllContacts().then(() => {
+            if (this.contactsToPull.length == 0) {
               this.groupContacts(this.contacts);
-            });
+            }
+            else {
+              this.retrieveAllContacts().then(() => {
+                this.groupContacts(this.contacts);
+              });
+            }
           }
         });
       });
@@ -86,13 +94,11 @@ export class ContactPage {
   retrieveAllContacts(): Promise<any> {
 
     var returnedContacts = 0;
-    console.log("length of contacts: " + this.contactsToPull.length);
     return new Promise((resolve, reject) => {
       this.contactsToPull.forEach((id) => {
         this.db.RetrieveContactFromDynamo(id).then((response) => {
 
-          console.log("response from Db: " + JSON.stringify(response.Items[0]));
-
+          console.log("recieved response: " + response.Last_Name);
           this.contacts.push(response.Items[0])
           returnedContacts++;
 
@@ -100,7 +106,6 @@ export class ContactPage {
           if (this.contactsToPull.length == returnedContacts) {
             resolve();
           }
-
         });
       });
     })
@@ -134,6 +139,17 @@ export class ContactPage {
         currentContacts.push(value);
       });
     }
+  }
+
+  contains(list: any[], item: any, property: any) : Boolean {
+    var found = false;
+    for (var i = 0; i < listeners.length; i++) {
+      if (list[i].property == item) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   addContact() {
