@@ -7,7 +7,6 @@ import { newContactModal } from '../../modals/newContact/newContact';
 import { DynamoDB } from '../../providers/providers';
 import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-utility';
 import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
-import { listeners } from 'cluster';
 
 @Component({
   selector: 'page-contact',
@@ -141,6 +140,7 @@ export class ContactPage {
     }
   }
 
+  /*
   contains(list: any[], item: any, property: any) : Boolean {
     var found = false;
     for (var i = 0; i < listeners.length; i++) {
@@ -151,6 +151,7 @@ export class ContactPage {
 
     return false;
   }
+  */
 
   addContact() {
 
