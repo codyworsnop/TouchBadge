@@ -28,8 +28,8 @@ export class ContactPage {
 
   retrieveContacts() {
 
-    //this.contacts = [];
-    //this.groupedContacts = [];
+    this.contacts = [];
+    this.groupedContacts = [];
     this.contactsToPull = [];
 
     var awsIdentity: any;
