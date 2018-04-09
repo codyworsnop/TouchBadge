@@ -3,6 +3,7 @@ import { ToastController } from 'ionic-angular';
 import { UserDataUtilityProvider } from './user-data-utility/user-data-utility';
 import { String } from 'aws-sdk/clients/rekognition';
 import { CATCH_ERROR_VAR } from '@angular/compiler/src/output/output_ast';
+import { StringAttributeValue } from 'aws-sdk/clients/dynamodbstreams';
 
 declare var AWS: any;
 declare const aws_cognito_region;
@@ -63,6 +64,39 @@ export class DynamoDB {
 
   }
 
+  RetrieveContactFromDynamo(userAWSID: string): Promise<any> {
+
+
+    return new Promise((resolve, reject) => {
+
+      this.getDocumentClient().then(client => {
+
+        console.log("got client");
+
+        const params = {
+          TableName: 'Users',
+          FilterExpression: "#id = :awsid",
+          ExpressionAttributeNames: {
+            '#id': 'UserID'
+          },
+          ExpressionAttributeValues: {
+            ':awsid': userAWSID
+          }
+        };
+
+
+        client.scan(params, (err, data) => {
+          if (err) {
+            console.log("Error retrieving user id data from db: " + err);
+          }
+          else {
+            resolve(data);
+          }
+        });
+      });
+    });
+  }
+
   AddContactToDynamo(contact: any[]) {
 
     console.log(JSON.stringify(contact));
@@ -72,7 +106,7 @@ export class DynamoDB {
       awsToken = response;
 
       this.alertUser("AWSTOK: " + awsToken);
-      
+
       const params = {
         'TableName': "Users",
         'Key': { UserID: awsToken },

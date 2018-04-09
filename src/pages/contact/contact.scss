@@ -32,11 +32,11 @@
         }
 
         .toolbar-background {
-            background-color: map-get($colors, primary);
+            background-color: map-get($colors, dark);
         }
 
         .toolbarButton {
-            color: white;
+            color: #FFFFFF;
         }
     }
 }

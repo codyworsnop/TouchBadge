@@ -16,6 +16,7 @@ export class ContactPage {
 
   public contacts = [];
   groupedContacts = [];
+  private contactsToPull = [];
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB, private loggingUtil: LoggingUtilityProvider, private userData: UserDataUtilityProvider) {
 
@@ -34,7 +35,6 @@ export class ContactPage {
     this.userData.GetAWSIdentityId().then((response) => {
       awsIdentity = response;
 
-      this.loggingUtil.alertUser("AGAINAWD: " + awsIdentity);
       const params = {
         TableName: 'Users',
         KeyConditionExpression: 'UserID = :id',
@@ -54,24 +54,55 @@ export class ContactPage {
           }
           else {
 
-            //this.loggingUtil.alertUser("pulled: " + JSON.stringify(data.Items[0].Contacts));
+            console.log("pulled: " + JSON.stringify(data.Items[0].Contacts));
             data.Items[0].Contacts.forEach((contact) => {
 
-              console.log("CONTACT: " + JSON.stringify(contact));
+              if (contact.id != null) {
 
-              if (contact.PictureURL == 'null') {
-                contact.PictureURL = "../assets/img/default-profile-pic.jpg";
+                console.log(JSON.stringify(contact))
+                this.contactsToPull.push(contact.id);
               }
+              else {
 
-              this.contacts.push(contact);
+                if (contact.PictureURL == 'null') {
+                  contact.PictureURL = "assets/img/default-profile-pic.jpg";
+                }
 
+                this.contacts.push(contact);
+                console.log("pushed contact: " + JSON.stringify(contact));
+              }
             });
 
-            this.groupContacts(this.contacts);
+            this.retrieveAllContacts().then(() => {
+              this.groupContacts(this.contacts);
+            });
           }
         });
       });
     });
+  }
+
+  retrieveAllContacts(): Promise<any> {
+
+    var returnedContacts = 0;
+    console.log("length of contacts: " + this.contactsToPull.length);
+    return new Promise((resolve, reject) => {
+      this.contactsToPull.forEach((id) => {
+        this.db.RetrieveContactFromDynamo(id).then((response) => {
+
+          console.log("response from Db: " + JSON.stringify(response.Items[0]));
+
+          this.contacts.push(response.Items[0])
+          returnedContacts++;
+
+          console.log("returnedContacts: " + returnedContacts);
+          if (this.contactsToPull.length == returnedContacts) {
+            resolve();
+          }
+
+        });
+      });
+    })
   }
 
   groupContacts(contacts) {
@@ -79,12 +110,13 @@ export class ContactPage {
     if (contacts != null) {
       let sortedContacts = contacts.sort((a, b) => a.Last_Name < b.Last_Name ? -1 : a.Last_Name > b.Last_Name ? 1 : 0);
 
-      console.log(sortedContacts);
+      console.log("sorted: " + sortedContacts);
       let currentLetter: string;
       let currentContacts: any[];
 
       sortedContacts.forEach((value, index) => {
 
+        console.log("LAST NAME: " + value.Last_Name);
         if (value.Last_Name != undefined && value.Last_Name.charAt(0).toUpperCase() != currentLetter) {
 
           currentLetter = value.Last_Name.charAt(0).toUpperCase();
