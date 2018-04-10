@@ -52,7 +52,33 @@
     </ion-row>
     <ion-row id="bluetoothScan">
       <ion-col col-12>
+        <div *ngIf="findingVis">
+          <h2>Finding Devices</h2>
+          <ion-spinner></ion-spinner>
+        </div>
         <ion-list>
+          <ion-item>
+            lols
+          </ion-item>
+          <ion-item>
+              lols
+            </ion-item>
+            <ion-item>
+                lols
+              </ion-item>
+              <ion-item>
+                  lols
+                </ion-item>
+                <ion-item>
+                    lols
+                  </ion-item>
+                  <ion-item>
+                      lols
+                    </ion-item>
+                    <ion-item>
+                        lols
+                      </ion-item>
+          
           <button ion-item *ngFor="let device of devices" (click)="connect(device)">
             <h2>{{device.advertising.kCBAdvDataLocalName}}</h2>
             <p>{{device.id}}</p>

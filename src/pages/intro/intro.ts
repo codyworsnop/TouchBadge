@@ -25,6 +25,7 @@ export class IntroPage {
   @ViewChild(Slides) slides: Slides;
   devices: any[] = [];
   title: string;
+  findingVis = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -71,7 +72,10 @@ export class IntroPage {
   }
 
   ScanDevices() { 
+    this.findingVis = true;
+
     this.bluetoothUtility.scan().then(data => {
+      this.findingVis = false;
       this.devices = data;
     });
   }

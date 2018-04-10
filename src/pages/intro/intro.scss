@@ -59,12 +59,24 @@
 
       #bluetoothScan {
         flex: 1;
+        overflow: auto;
       }
 
      #bluetoothScan ion-list ion-item { 
-        background-color: transparent;
+        background-color: map-get($colors, dark);
         color: #FFFFFF;
      }
+
+     #findingDevices { 
+        flex: 1;
+     }
+
+     ion-spinner * {
+        width: 20px;
+        height: 20px;
+        stroke: #FFF;
+        fill: #FFF
+      }
 
       @keyframes breathing {
           0% {
