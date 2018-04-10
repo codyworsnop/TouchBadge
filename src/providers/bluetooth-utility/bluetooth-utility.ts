@@ -50,28 +50,31 @@ export class BluetoothUtilityProvider {
     });
   }
 
-  connect(device: any) {
+  connect(device: any): Promise<any> {
 
-    this.ble.connect(device.id).subscribe(
-      success => {
-        //  this.setStatus("Connected to device " + device.id);
+    return new Promise((resolve, reject) => {
+      this.ble.connect(device.id).subscribe(
+        success => {
+          //  this.setStatus("Connected to device " + device.id);
 
-        this.connectedDevice = device;
-      },
-      error => {
-        // this.setStatus("Error connecting to device " + device.id);
-      }
-    )
+          this.connectedDevice = device;
+          resolve();
+        },
+        error => {
+          // this.setStatus("Error connecting to device " + device.id);
+        }
+      )
+    });
   }
 
   onDeviceDiscovered(device) {
     console.log('Discovered ' + JSON.stringify(device, null, 2));
     this.ngZone.run(() => {
 
-      // if (device.advertising.kCBAdvDataLocalName == "TouchBadge" && this.devicesMap[device.id] == null) {
-      this.devicesMap[device.id] = device;
-      this.devices.push(device);
-      // }
+      if (device.advertising.kCBAdvDataLocalName == "TouchBadge" && this.devicesMap[device.id] == null) {
+        this.devicesMap[device.id] = device;
+        this.devices.push(device);
+      }
     });
   }
 

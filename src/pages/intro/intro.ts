@@ -26,6 +26,8 @@ export class IntroPage {
   devices: any[] = [];
   title: string;
   findingVis = false;
+  deviceConnected = false;
+  searchingVis = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -62,7 +64,7 @@ export class IntroPage {
           console.log(err);
         });
 
-        this.NavToIndex(2);
+      this.NavToIndex(2);
 
     }).catch(error => {
 
@@ -71,17 +73,26 @@ export class IntroPage {
 
   }
 
-  ScanDevices() { 
+  ScanDevices() {
     this.findingVis = true;
 
     this.bluetoothUtility.scan().then(data => {
       this.findingVis = false;
+      this.searchingVis = true; 
       this.devices = data;
     });
   }
 
-  ConnectToDevice() { 
+  ConnectToDevice(device) {
 
-    this.NavToIndex(3);
+    this.bluetoothUtility.connect(device).then(() => {
+
+      this.searchingVis = false;
+      this.deviceConnected = true;
+
+      setTimeout(() => {
+        this.NavToIndex(3);
+      }, 1000);
+    });
   }
 }

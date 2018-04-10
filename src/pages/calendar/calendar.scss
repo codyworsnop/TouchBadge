@@ -5,7 +5,7 @@ page-calendar {
         height: 0 !important;
         padding: 0 !important;
     }
-
+    
     scroll-content {
         display: flex;
         flex-direction: column;
@@ -33,9 +33,10 @@ page-calendar {
 
     #calendar {
         padding: 0px;
-        background-image:linear-gradient(0deg, rgba(red(map-get($colors, calendarOverlay)), green(map-get($colors, calendarOverlay)), blue(map-get($colors, calendarOverlay)), 0), 
-                    rgba(red(map-get($colors, calendarOverlay)), green(map-get($colors, calendarOverlay)), blue(map-get($colors, calendarOverlay)), 0)),
-                    url("../assets/img/bg_blur.jpg");
+        background-color: map-get($colors, dark);
+      //  background-image:linear-gradient(0deg, rgba(red(map-get($colors, calendarOverlay)), green(map-get($colors, calendarOverlay)), blue(map-get($colors, calendarOverlay)), 0), 
+        //            rgba(red(map-get($colors, calendarOverlay)), green(map-get($colors, calendarOverlay)), blue(map-get($colors, calendarOverlay)), 0)),
+          //          url("../assets/img/bg_blur.jpg");
     }
 
     #info {
@@ -43,6 +44,9 @@ page-calendar {
         display: flex;
         flex-direction: column;
         box-shadow: inset 0 15px 10px -5px rgba(0,0,0,0.4);
+    }
+
+    #info ion-col {
         overflow: auto;
     }
 
@@ -52,7 +56,7 @@ page-calendar {
         margin-left: 2vh;
     }
 
-    #infoContent { 
+    .id { 
         color: map-get($colors, primary);
         margin-left: 2vh;
     }
@@ -63,6 +67,32 @@ page-calendar {
 
     #calendar .switch-btn {
         color: #FFFFFF !important;
+    }
+
+    #iconSection { 
+        background-color: map-get($colors, primary);
+        color: #FFFFFF;
+        font-size: 3.4em;
+
+    }
+
+    #iconSection ion-icon { 
+        margin-left: 15px;
+    }
+
+    .event ion-card {
+        height: 75px;
+    }
+
+    #cardInfo h2 {
+        margin-left: 5px;
+    }
+
+    #cardInfo h3 {
+        font-weight: normal;
+        font-size: 0.9em;
+        margin-left: 5px;
+        margin-top: 10px
     }
 
 }

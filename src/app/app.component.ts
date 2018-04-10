@@ -82,7 +82,7 @@ export class MyApp {
 
       console.log("Has seen intro?: " + result);
       if (result) {
-        this.rootPage = IntroPage;
+        this.rootPage = TabsPage;
       }
       else {
         this.rootPage = IntroPage;

@@ -62,14 +62,15 @@
         overflow: auto;
       }
 
-     #bluetoothScan ion-list ion-item { 
-        background-color: map-get($colors, dark);
+      .item-ios {
+        background-color: transparent !important;
         color: #FFFFFF;
-     }
+      }
 
-     #findingDevices { 
-        flex: 1;
-     }
+      .item-md { 
+        background-color: transparent !important;
+        color: #FFFFFF;
+      }
 
      ion-spinner * {
         width: 20px;

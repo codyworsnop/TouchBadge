@@ -56,13 +56,18 @@
           <h2>Finding Devices</h2>
           <ion-spinner></ion-spinner>
         </div>
-        <ion-list>          
-          <button ion-item *ngFor="let device of devices" (click)="connect(device)">
-            <h2>{{device.advertising.kCBAdvDataLocalName}}</h2>
-            <p>{{device.id}}</p>
-            <p>RSSI: {{device.rssi}}</p>
-          </button>
-        </ion-list>
+        <div *ngIf="deviceConnected">
+          <h2>Device Connected!</h2>
+        </div>
+        <div *ngIf="searchingVis">
+          <ion-list>
+            <button ion-item *ngFor="let device of devices" (click)="ConnectToDevice(device)">
+              <h2>{{device.advertising.kCBAdvDataLocalName}}</h2>
+              <p>{{device.id}}</p>
+              <p>RSSI: {{device.rssi}}</p>
+            </button>
+          </ion-list>
+        </div>
       </ion-col>
     </ion-row>
 

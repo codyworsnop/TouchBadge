@@ -13,8 +13,9 @@ export class CalendarPage {
   date: string;
   type: 'string';
   calendarConfig: DayConfig[] = [];
-  eventInformation: any = {};
+  eventsInformation: any = {};
 
+  displayedEvents: any[];
   info: any;
   eventTitle: string;
   eventSubtitle: string;
@@ -31,13 +32,36 @@ export class CalendarPage {
       date: new Date(2018, 2, 31),
       subTitle: "EVENT",
       marked: true,
-    })
+    })  
 
-    this.eventInformation["2018-03-31"] = {
-      title: "TouchBadge Progress Demo",
-      subtitle: "Failure is always an option",
+    this.eventsInformation["2018-04-10"] = {
+      dateEvents: [
+        {
+          title: "Team #14",
+          subtitle: "Data Visualization for SAN planner OR Data Visualization",
+        },
+        {
+          title: "Team #36",
+          subtitle: "GE: State-Based Plot Coloring",
+        },
+        {
+          title: "Team #11",
+          subtitle: "BreadWare - TouchBadge: An Internet Connected Lanyard for Conferences",
+        },
+        {
+          title: "Team #18",
+          subtitle: "Nevada Challenger Center: Interactive Visitor App for the Nevada Space Center",
+        },
+        {
+          title: "Team #02",
+          subtitle: "Let's VR - Multiplayer VR Game",
+        },
+        {
+          title: "Team #34",
+          subtitle: "Mobile Application for Weightlifting Tracking",
+        }
+      ]
     }
-
   }
 
   public ClearEvent() {
@@ -48,13 +72,23 @@ export class CalendarPage {
 
   onChange($event) {
 
-    var dateEvent = this.eventInformation[JSON.stringify($event).split('"')[1].split('T')[0]];
+    console.log("CHANGED");
+    this.displayedEvents = [];
 
+
+    var dateEvent = this.eventsInformation[JSON.stringify($event).split('"')[1].split('T')[0]];
     this.daySelected = moment($event).format("LL");
 
+    console.log("date event: " + dateEvent);
+
     if (dateEvent != null) {
-      this.eventTitle = dateEvent.title;
-      this.eventSubtitle = dateEvent.subtitle;
+
+      for (var i = 0; i < this.eventsInformation["2018-04-10"].dateEvents.length; i++) { 
+
+        this.displayedEvents.push(this.eventsInformation["2018-04-10"].dateEvents[i])
+      }
+
+      console.log("de: " + JSON.stringify(this.displayedEvents));
     }
     else
     {
