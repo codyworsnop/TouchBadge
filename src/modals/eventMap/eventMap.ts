@@ -32,8 +32,7 @@ export class eventMap {
       streetViewControl: false, 
       fullscreenControl: false, 
       minZoom: 15,
-      maxZoom: 19,
-      draggable: false,
+      maxZoom: 19
     };
 
     var swLatLng = { lat: 39.485574, lng:-119.791234 };

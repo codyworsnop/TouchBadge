@@ -10,7 +10,7 @@
     <ion-row id="info">
       <ion-col col-12>
         <div *ngFor="let event of displayedEvents" class="event">
-          <ion-card>
+          <ion-card (click)="ViewOnMap()">
             <ion-row>
               <ion-col col-3 id="iconSection">
                 <ion-icon name="calendar"></ion-icon>
