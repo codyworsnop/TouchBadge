@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, List } from 'ionic-angular';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { ContactDetailPage } from '../contactDetail/contactDetail';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
@@ -45,9 +45,9 @@ export class ContactPage {
 
     this.http.get(this.userContactAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
-      var contacts = JSON.parse(response.data);
+      var result = JSON.parse(response.data);
 
-      contacts.forEach(element => {
+      result.Contacts.forEach(element => {
         this.loggingUtil.alertUser("element: " + element);
       });
 
