@@ -75,9 +75,10 @@ export class CalendarPage {
     this.displayedEvents = [];
     this.daySelected = moment($event).format("LL");
 
-    this.loggingUtil.alertUser("looking for user events");
+    this.loggingUtil.alertUser("looking for user events: " + this.userEvents.length);
     //collect events for the day
     this.userEvents.forEach(event => {
+      this.loggingUtil.alertUser("dah heck");
       this.loggingUtil.alertUser("date: " + event.EventDate.Start.split(' ')[0]);
       if (event.EventDate.Start.split(' ')[0] == JSON.stringify($event).split('"')[1].split('T')[0]) {
         this.displayedEvents.push(event);
