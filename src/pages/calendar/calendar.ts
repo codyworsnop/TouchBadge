@@ -24,6 +24,7 @@ export class CalendarPage {
   eventSubtitle: string;
   daySelected: string;
 
+  userEvents: any[];
   fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
 
   calendarOptions: CalendarComponentOptions = {
@@ -41,38 +42,7 @@ export class CalendarPage {
       date: new Date(2018, 2, 31),
       subTitle: "EVENT",
       marked: true,
-    })
-
-
-
-    this.eventsInformation["2018-04-10"] = {
-      dateEvents: [
-        {
-          title: "Team #14",
-          subtitle: "Data Visualization for SAN planner OR Data Visualization",
-        },
-        {
-          title: "Team #36",
-          subtitle: "GE: State-Based Plot Coloring",
-        },
-        {
-          title: "Team #11",
-          subtitle: "BreadWare - TouchBadge: An Internet Connected Lanyard for Conferences",
-        },
-        {
-          title: "Team #18",
-          subtitle: "Nevada Challenger Center: Interactive Visitor App for the Nevada Space Center",
-        },
-        {
-          title: "Team #02",
-          subtitle: "Let's VR - Multiplayer VR Game",
-        },
-        {
-          title: "Team #34",
-          subtitle: "Mobile Application for Weightlifting Tracking",
-        }
-      ]
-    }
+    });
   }
 
   ionViewDidLoad() {
@@ -81,11 +51,8 @@ export class CalendarPage {
       this.http.get(this.fetchEventsAPI + "?userID=" + id, {}, {}).then(response => {
         var result = JSON.parse(response.data);
 
-        result.Events.forEach(element => {
-          this.loggingUtil.alertUser("event: " + JSON.stringify(element))
-          this.loggingUtil.alertUser("start date: " + JSON.stringify(element.EventDate.Start))
-
-
+        result.Events.forEach(event => {
+          this.userEvents.push(event);
         });
 
       }, error => {
@@ -102,25 +69,20 @@ export class CalendarPage {
 
   onChange($event) {
 
-    console.log("CHANGED");
     this.displayedEvents = [];
-
-
-    var dateEvent = this.eventsInformation[JSON.stringify($event).split('"')[1].split('T')[0]];
     this.daySelected = moment($event).format("LL");
 
-    console.log("date event: " + dateEvent);
-
-    if (dateEvent != null) {
-
-      for (var i = 0; i < this.eventsInformation["2018-04-10"].dateEvents.length; i++) {
-
-        this.displayedEvents.push(this.eventsInformation["2018-04-10"].dateEvents[i])
+    
+    //collect events for the day
+    this.userEvents.forEach(event => {
+      this.loggingUtil.alertUser("date: " + event.EventDate.Start.split(' ')[0]);
+      if (event.EventDate.Start.split(' ')[0] == JSON.stringify($event).split('"')[1].split('T')[0]) {
+        this.displayedEvents.push(event);
       }
+    });
 
-      console.log("de: " + JSON.stringify(this.displayedEvents));
-    }
-    else {
+    if (this.displayedEvents.length == 0) {
+
       this.ClearEvent();
     }
   }
