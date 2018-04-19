@@ -30,6 +30,7 @@ export class ContactPage {
     private http: HTTP) {
 
     // console.log("looking for: " + this.userData.GetAWSIdentityId());
+    
     this.retrieveContacts();
 
   }
@@ -39,10 +40,9 @@ export class ContactPage {
     this.contacts = [];
     this.groupedContacts = [];
 
-    var awsIdentity: any;
-
     this.userData.GetAWSIdentityId().then((id) => {
-      this.http.get(this.userContactAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
+      this.loggingUtil.alertUser("aws: " + id)
+      this.http.get(this.userContactAPI + "?userID=" + id, {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
   
@@ -60,7 +60,7 @@ export class ContactPage {
         this.groupContacts(this.contacts);
         
       }, error => {
-        this.loggingUtil.alertUser("Error pulling: " + error);
+        this.loggingUtil.alertUser("Error pulling: " + JSON.stringify(error));
       });
   
     });
