@@ -24,7 +24,7 @@ export class CalendarPage {
   eventSubtitle: string;
   daySelected: string;
 
-  userEvents: any[];
+  userEvents: any[] = [];
   fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
 
   calendarOptions: CalendarComponentOptions = {
@@ -76,7 +76,7 @@ export class CalendarPage {
     this.displayedEvents = [];
     this.daySelected = moment($event).format("LL");
 
-    this.loggingUtil.alertUser("looking for user events: " + this.userEvents.length);
+    this.loggingUtil.alertUser("looking for user events: " + this.userEvents);
     //collect events for the day
     this.userEvents.forEach(event => {
       
