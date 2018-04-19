@@ -56,6 +56,9 @@ export class ContactPage {
           this.contacts.push(contact);
   
         });
+
+        this.groupContacts(this.contacts);
+        
       }, error => {
         this.loggingUtil.alertUser("Error pulling: " + error);
       });
