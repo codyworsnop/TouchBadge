@@ -36,13 +36,6 @@ export class CalendarPage {
     private http: HTTP,
     private userData: UserDataUtilityProvider,
     private loggingUtil: LoggingUtilityProvider) {
-
-    //load events from dynamo
-    this.calendarConfig.push({
-      date: new Date(2018, 2, 31),
-      subTitle: "EVENT",
-      marked: true,
-    });
   }
 
   ionViewDidLoad() {
@@ -51,11 +44,14 @@ export class CalendarPage {
       this.http.get(this.fetchEventsAPI + "?userID=" + id, {}, {}).then(response => {
         var result = JSON.parse(response.data);
 
-        this.loggingUtil.alertUser("got events: " + JSON.stringify(result.Events));
         result.Events.forEach(event => {
-
-          this.loggingUtil.alertUser("pushing event: " + event);
           this.userEvents.push(event);
+
+          this.calendarConfig.push({
+            date: new Date(event.EventDate.Start.split('-')[0], event.EventDate.Start.split('-')[1], event.EventDate.Start.split('-')[2]),
+            subTitle: "EVENT",
+            marked: true,
+          });
         });
 
       }, error => {
@@ -72,15 +68,11 @@ export class CalendarPage {
 
   onChange($event) {
 
-    this.loggingUtil.alertUser("dah heck");
     this.displayedEvents = [];
     this.daySelected = moment($event).format("LL");
 
-    this.loggingUtil.alertUser("looking for user events: " + this.userEvents);
     //collect events for the day
     this.userEvents.forEach(event => {
-      
-      this.loggingUtil.alertUser("date: " + event.EventDate.Start.split(' ')[0]);
       if (event.EventDate.Start.split(' ')[0] == JSON.stringify($event).split('"')[1].split('T')[0]) {
         this.displayedEvents.push(event);
       }
