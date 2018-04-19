@@ -16,10 +16,8 @@ export class CalendarPage {
   date: string;
   type: 'string';
   calendarConfig: DayConfig[] = [];
-  eventsInformation: any = {};
 
   displayedEvents: any[];
-  info: any;
   eventTitle: string;
   eventSubtitle: string;
   daySelected: string;
@@ -36,6 +34,12 @@ export class CalendarPage {
     private http: HTTP,
     private userData: UserDataUtilityProvider,
     private loggingUtil: LoggingUtilityProvider) {
+
+      this.calendarConfig.push({
+        date: new Date(2018, 4, 20),
+        subTitle: "EVENT",
+        marked: true,
+      });
   }
 
   ionViewDidLoad() {
@@ -46,6 +50,10 @@ export class CalendarPage {
 
         result.Events.forEach(event => {
           this.userEvents.push(event);
+
+          this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0]);
+          this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[1]);
+          this.loggingUtil.alertUser("days: " + event.EventDate.Start.split('-')[2]);
 
           this.calendarConfig.push({
             date: new Date(event.EventDate.Start.split('-')[0], event.EventDate.Start.split('-')[1], event.EventDate.Start.split('-')[2]),
@@ -60,12 +68,6 @@ export class CalendarPage {
     });
   }
 
-  public ClearEvent() {
-
-    this.eventTitle = null;
-    this.eventSubtitle = null;
-  }
-
   onChange($event) {
 
     this.displayedEvents = [];
@@ -77,11 +79,6 @@ export class CalendarPage {
         this.displayedEvents.push(event);
       }
     });
-
-    if (this.displayedEvents.length == 0) {
-
-      this.ClearEvent();
-    }
   }
 
   ViewOnMap() {
