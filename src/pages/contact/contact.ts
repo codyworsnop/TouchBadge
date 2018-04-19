@@ -7,6 +7,7 @@ import { newContactModal } from '../../modals/newContact/newContact';
 import { DynamoDB } from '../../providers/providers';
 import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-utility';
 import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
+import { HTTP } from '@ionic-native/http';
 
 @Component({
   selector: 'page-contact',
@@ -18,9 +19,17 @@ export class ContactPage {
   groupedContacts = [];
   private contactsToPull = [];
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public modalCtrl: ModalController, public db: DynamoDB, private loggingUtil: LoggingUtilityProvider, private userData: UserDataUtilityProvider) {
+  private userContactAPI = "https://n04wjzhe44.execute-api.us-west-2.amazonaws.com/Release/fetchusers";
 
-    console.log("looking for: " + this.userData.GetAWSIdentityId());
+  constructor(public navCtrl: NavController,
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController,
+    public db: DynamoDB,
+    private loggingUtil: LoggingUtilityProvider,
+    private userData: UserDataUtilityProvider,
+    private http: HTTP) {
+
+    // console.log("looking for: " + this.userData.GetAWSIdentityId());
     this.retrieveContacts();
 
   }
@@ -32,9 +41,17 @@ export class ContactPage {
     this.contactsToPull = [];
 
     var awsIdentity: any;
+    awsIdentity = "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b";
+
+    this.http.get(this.userContactAPI + "?userID=" + awsIdentity, null, null).then(response => {
+      this.loggingUtil.alertUser("contacts:" + JSON.stringify(response));
+    }, error => {
+      this.loggingUtil.alertUser("Error pulling: " + error);
+    });
+    /*
 
     this.userData.GetAWSIdentityId().then((response) => {
-      awsIdentity = response;
+      awsIdentity = "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b";
 
       const params = {
         TableName: 'Users',
@@ -88,6 +105,8 @@ export class ContactPage {
         });
       });
     });
+
+    */
   }
 
   retrieveAllContacts(): Promise<any> {
