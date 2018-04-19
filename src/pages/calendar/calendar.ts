@@ -3,6 +3,9 @@ import { NavController, ModalController } from 'ionic-angular';
 import { CalendarComponentOptions, DayConfig } from "ion2-calendar";
 import { eventMap } from '../../modals/eventMap/eventMap';
 import * as moment from 'moment';
+import { HTTP } from '@ionic-native/http';
+import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
+import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-utility';
 
 @Component({
   selector: 'page-calendar',
@@ -21,18 +24,26 @@ export class CalendarPage {
   eventSubtitle: string;
   daySelected: string;
 
+  fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
+
   calendarOptions: CalendarComponentOptions = {
     daysConfig: this.calendarConfig
   };
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    private http: HTTP,
+    private userData: UserDataUtilityProvider,
+    private loggingUtil: LoggingUtilityProvider) {
 
     //load events from dynamo
     this.calendarConfig.push({
       date: new Date(2018, 2, 31),
       subTitle: "EVENT",
       marked: true,
-    })  
+    })
+
+
 
     this.eventsInformation["2018-04-10"] = {
       dateEvents: [
@@ -64,6 +75,22 @@ export class CalendarPage {
     }
   }
 
+  ionViewDidLoad() {
+
+    this.userData.GetAWSIdentityId().then((id) => {
+      this.http.get(this.fetchEventsAPI + "?userID=" + id, {}, {}).then(response => {
+        var result = JSON.parse(response.data);
+
+        result.Events.forEach(element => {
+          this.loggingUtil.alertUser("event: " + JSON.stringify(element))
+        });
+
+      }, error => {
+        this.loggingUtil.alertUser("error getting events: " + JSON.stringify(error))
+      });
+    });
+  }
+
   public ClearEvent() {
 
     this.eventTitle = null;
@@ -83,20 +110,19 @@ export class CalendarPage {
 
     if (dateEvent != null) {
 
-      for (var i = 0; i < this.eventsInformation["2018-04-10"].dateEvents.length; i++) { 
+      for (var i = 0; i < this.eventsInformation["2018-04-10"].dateEvents.length; i++) {
 
         this.displayedEvents.push(this.eventsInformation["2018-04-10"].dateEvents[i])
       }
 
       console.log("de: " + JSON.stringify(this.displayedEvents));
     }
-    else
-    {
+    else {
       this.ClearEvent();
     }
   }
 
-  ViewOnMap() { 
+  ViewOnMap() {
     let modal = this.modalCtrl.create(eventMap);
     modal.present();
   }

@@ -30,9 +30,14 @@ export class ContactPage {
     private http: HTTP) {
 
     // console.log("looking for: " + this.userData.GetAWSIdentityId());
-    
-    this.retrieveContacts();
 
+
+  }
+
+  ionViewDidLoad()
+  {
+    this.loggingUtil.alertUser("getting contacts");
+    this.retrieveContacts();
   }
 
   retrieveContacts() {
