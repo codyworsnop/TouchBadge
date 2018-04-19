@@ -17,7 +17,7 @@ export class CalendarPage {
   type: 'string';
   calendarConfig: DayConfig[] = [];
 
-  displayedEvents: any[];
+  displayedEvents: any[] = [];
   eventTitle: string;
   eventSubtitle: string;
   daySelected: string;
@@ -35,11 +35,12 @@ export class CalendarPage {
     private userData: UserDataUtilityProvider,
     private loggingUtil: LoggingUtilityProvider) {
 
-      this.calendarConfig.push({
-        date: new Date(2018, 4, 20),
-        subTitle: "EVENT",
-        marked: true,
-      });
+    this.calendarConfig.push({
+      date: new Date(2018, 3, 20),
+      subTitle: "EVENT",
+      marked: true,
+    });
+
   }
 
   ionViewDidLoad() {
@@ -51,15 +52,22 @@ export class CalendarPage {
         result.Events.forEach(event => {
           this.userEvents.push(event);
 
+          var a = event.EventDate.Start.split('-')[1] as number;
           this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0]);
-          this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[1]);
-          this.loggingUtil.alertUser("days: " + event.EventDate.Start.split('-')[2]);
+          this.loggingUtil.alertUser("month: " + (a - 1));
+          this.loggingUtil.alertUser("days: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
 
           this.calendarConfig.push({
-            date: new Date(event.EventDate.Start.split('-')[0], event.EventDate.Start.split('-')[1], event.EventDate.Start.split('-')[2]),
+            date: new Date(event.EventDate.Start.split('-')[0], event.EventDate.Start.split('-')[1], event.EventDate.Start.split('-')[2].split(' ')[0]),
             subTitle: "EVENT",
             marked: true,
           });
+        });
+
+        this.calendarConfig.push({
+          date: new Date(2018, 3, 21),
+          subTitle: "PLSWRK",
+          marked: true,
         });
 
       }, error => {
