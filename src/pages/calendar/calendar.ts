@@ -51,7 +51,10 @@ export class CalendarPage {
       this.http.get(this.fetchEventsAPI + "?userID=" + id, {}, {}).then(response => {
         var result = JSON.parse(response.data);
 
+        this.loggingUtil.alertUser("got events");
         result.Events.forEach(event => {
+
+          this.loggingUtil.alertUser("pushing event: " + event);
           this.userEvents.push(event);
         });
 
@@ -72,7 +75,7 @@ export class CalendarPage {
     this.displayedEvents = [];
     this.daySelected = moment($event).format("LL");
 
-    
+    this.loggingUtil.alertUser("looking for user events");
     //collect events for the day
     this.userEvents.forEach(event => {
       this.loggingUtil.alertUser("date: " + event.EventDate.Start.split(' ')[0]);
