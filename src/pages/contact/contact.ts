@@ -38,101 +38,29 @@ export class ContactPage {
 
     this.contacts = [];
     this.groupedContacts = [];
-    this.contactsToPull = [];
 
     var awsIdentity: any;
-    awsIdentity = "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b";
 
-    this.http.get(this.userContactAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
+    this.userData.GetAWSIdentityId().then((id) => {
+      this.http.get(this.userContactAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
-      var result = JSON.parse(response.data);
-
-      result.Contacts.forEach(element => {
-        this.loggingUtil.alertUser("element: " + element);
-      });
-
-    }, error => {
-      this.loggingUtil.alertUser("Error pulling: " + error);
-    });
-    /*
-
-    this.userData.GetAWSIdentityId().then((response) => {
-      awsIdentity = "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b";
-
-      const params = {
-        TableName: 'Users',
-        KeyConditionExpression: 'UserID = :id',
-        ExpressionAttributeValues: {
-          ':id': awsIdentity,
-        },
-        ProjectionExpression: 'Contacts',
-      };
-
-      console.log("getting client for response: " + response);
-      this.db.getDocumentClient().then(client => {
-
-        console.log("running query for client: " + client)
-        client.query(params, (err, data) => {
-
-          if (err) {
-            console.log(err);
-            this.loggingUtil.alertUser("Error pulling: " + err.message);
+        var result = JSON.parse(response.data);
+  
+        result.Contacts.forEach(contact => {
+  
+          if (contact.PictureURL == 'null') {
+            contact.PictureURL = "assets/img/default-profile-pic.jpg";
           }
-          else {
-
-            console.log("contacts to pull: " + JSON.stringify(data.Items.length));
-            data.Items[0].Contacts.forEach((contact) => {
-
-              if (contact.id != null) {
-                console.log("pushing contact with id: " + contact.id);
-                this.contactsToPull.push(contact.id);
-              }
-              else {
-
-                if (contact.PictureURL == 'null') {
-                  contact.PictureURL = "assets/img/default-profile-pic.jpg";
-                }
-
-                console.log("pushing contact " + contact.Last_Name);
-                this.contacts.push(contact);
-
-              }
-            });
-
-            if (this.contactsToPull.length == 0) {
-              this.groupContacts(this.contacts);
-            }
-            else {
-              this.retrieveAllContacts().then(() => {
-                this.groupContacts(this.contacts);
-              });
-            }
-          }
+  
+          console.log("pushing contact " + contact.Last_Name);
+          this.contacts.push(contact);
+  
         });
+      }, error => {
+        this.loggingUtil.alertUser("Error pulling: " + error);
       });
+  
     });
-
-    */
-  }
-
-  retrieveAllContacts(): Promise<any> {
-
-    var returnedContacts = 0;
-    return new Promise((resolve, reject) => {
-      this.contactsToPull.forEach((id) => {
-        this.db.RetrieveContactFromDynamo(id).then((response) => {
-
-          console.log("recieved response: " + response.Last_Name);
-          this.contacts.push(response.Items[0])
-          returnedContacts++;
-
-          console.log("returnedContacts: " + returnedContacts);
-          if (this.contactsToPull.length == returnedContacts) {
-            resolve();
-          }
-        });
-      });
-    })
   }
 
   groupContacts(contacts) {
