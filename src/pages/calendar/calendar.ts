@@ -51,7 +51,7 @@ export class CalendarPage {
       this.http.get(this.fetchEventsAPI + "?userID=" + id, {}, {}).then(response => {
         var result = JSON.parse(response.data);
 
-        this.loggingUtil.alertUser("got events");
+        this.loggingUtil.alertUser("got events: " + JSON.stringify(result.Events));
         result.Events.forEach(event => {
 
           this.loggingUtil.alertUser("pushing event: " + event);
