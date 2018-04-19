@@ -83,6 +83,9 @@ export class CalendarPage {
 
         result.Events.forEach(element => {
           this.loggingUtil.alertUser("event: " + JSON.stringify(element))
+          this.loggingUtil.alertUser("start date: " + JSON.stringify(element.EventDate.Start))
+
+
         });
 
       }, error => {
