@@ -44,7 +44,7 @@ export class ContactPage {
     awsIdentity = "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b";
 
     this.http.get(this.userContactAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
-      this.loggingUtil.alertUser("contacts:" + JSON.stringify(response.data));
+
       var contacts = JSON.parse(response.data);
 
       contacts.forEach(element => {
