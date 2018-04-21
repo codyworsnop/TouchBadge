@@ -20,8 +20,6 @@ export class LinkedInUtilityProvider {
   linkedinAuthURL: string = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86vfexnhygt77x&redirect_uri=http%3A%2F%2Flocalhost%2Fcallback&state=987654321&scope=r_basicprofile%20r_emailaddress";
   apiGatewayURL: string = "https://eg7i5c3b4a.execute-api.us-west-2.amazonaws.com/LinkedinLoginAPIDeployStage/LinkedInLogin";
   fetchEventsAPI: string = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
-  userEvents: any[] = [];
-  calendarConfig: DayConfig[] = [];
 
   constructor(public http: HTTP,
     public platform: Platform,
@@ -105,14 +103,11 @@ export class LinkedInUtilityProvider {
 
                 this.getAWSToken().then((response) => {
 
-                  this.loggingUtil.alertUser("Calling events");
-                  this.GetUserEvents(response).then(() => {
-                    this.loggingUtil.alertUser("finished get user");
-                    this.userData.saveUserData(this.calendarConfig, this.userEvents).then(() => {
-                      loader.dismiss();
-                      resolve();
-                    });
+                  this.userData.saveUserData().then(() => {
+                    loader.dismiss();
+                    resolve();
                   });
+
                 }).catch((error) => {
 
                   loader.dismiss();
@@ -142,39 +137,6 @@ export class LinkedInUtilityProvider {
     };
 
     return this.http.get("https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address,picture-url,positions,location,num-connections)?format=json", {}, headers).then(response => response, error => error);
-  }
-
-  private GetUserEvents(awsIdentity: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.loggingUtil.alertUser("starting");
-      this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
-        this.loggingUtil.alertUser("got usersevents: " + JSON.stringify(response));
-        var result = JSON.parse(response.data);
-
-        this.loggingUtil.alertUser("for each");
-        result.Events.forEach(event => {
-
-          this.loggingUtil.alertUser("event: " + JSON.stringify(event));
-          this.userEvents.push(event);
-
-          //var date = event.EventDate.Start.split('-')[1] as number;
-          this.calendarConfig.push({
-            date: new Date(2018, 4, 20),
-            //event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]
-            subTitle: "EVENT",
-            marked: true,
-          });
-
-          this.loggingUtil.alertUser("Pushing event config: " + event);
-
-        });
-
-        resolve();
-      }, error => {
-        this.loggingUtil.alertUser("error getting events: " + JSON.stringify(error))
-        reject();
-      });
-    });
   }
 
   private linkedInGetAuthCode(): Promise<any> {

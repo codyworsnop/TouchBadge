@@ -38,17 +38,13 @@ export class CalendarPage {
 
     this.loggingUtil.alertUser("In constructor");
 
-    this.userData.GetUserEvents().then(events => {
-      this.userData.GetCalendarConfig().then(config => {
+    this.userData.GetUserEvents().then(result => {
 
-        this.loggingUtil.alertUser("Setting events");
-        this.calendarConfig = config;
-        this.userEvents = events;
-      }, error => {
-
-      this.loggingUtil.alertUser("Error has occured: " + error);
-      });
+      this.loggingUtil.alertUser("Setting events: " + JSON.stringify(result));
+      this.calendarConfig = result.calendarConfig;
+      this.userEvents = result.userEvents;
     }, error => {
+
       this.loggingUtil.alertUser("Error has occured: " + error);
     });
 

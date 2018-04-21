@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { String } from 'aws-sdk/clients/cloudwatchevents';
 import { LoggingUtilityProvider } from '../logging-utility/logging-utility';
+import { HTTP } from '@ionic-native/http';
 
 /*
   Generated class for the UserDataUtilityProvider provider.
@@ -27,7 +28,13 @@ export class UserDataUtilityProvider {
   private calendarConfig: any;
   private userEvents: any;
 
-  constructor(public storage: Storage, public logging: LoggingUtilityProvider) {
+  fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
+
+
+  constructor(public storage: Storage,
+    public logging: LoggingUtilityProvider,
+    private http: HTTP,
+    private loggingUtil: LoggingUtilityProvider) {
 
   }
 
@@ -45,7 +52,7 @@ export class UserDataUtilityProvider {
     this.id = id;
   }
 
-  public saveUserData(calendarConfig: any, userEvents: any): Promise<any> {
+  public saveUserData(): Promise<any> {
     return new Promise((resolve, reject) => {
       var userData = {
         'FirstName': this.firstName,
@@ -58,12 +65,37 @@ export class UserDataUtilityProvider {
         'id': this.id,
         'awsID': this.AWSIdentityId,
         'awsToken': this.AWSToken,
-        'calendarConfig': calendarConfig,
-        'userEvents': userEvents
       };
 
       this.storage.set('userProfile', userData).then(() => {
         resolve();
+      });
+    });
+  }
+
+  private GetUserEventInfo(awsIdentity: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+
+      this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
+
+        var result = JSON.parse(response.data);
+
+        result.Events.forEach(event => {
+          this.loggingUtil.alertUser("Pushing event: " + event)
+          this.userEvents.push(event);
+
+          var date = event.EventDate.Start.split('-')[1] as number;
+          this.calendarConfig.push({
+            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),       
+            subTitle: "EVENT",
+            marked: true,
+          });
+        });
+
+        resolve();
+      }, error => {
+        console.log("error: " + error);
+        reject();
       });
     });
   }
@@ -119,26 +151,18 @@ export class UserDataUtilityProvider {
 
   public GetUserEvents(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (this.userEvents == undefined) {
-        this.retrieveUserData().then(() => {
-          resolve(this.userEvents);
+      if (this.userEvents == undefined || this.calendarConfig == undefined) {
+        this.GetAWSIdentityId().then(id => {
+          this.GetUserEventInfo(id).then(() => {
+            resolve({
+              calendarConfig: this.calendarConfig,
+              userEvents: this.userEvents
+            });
+          });
         });
       }
       else {
         resolve(this.userEvents);
-      }
-    });
-  }
-
-  public GetCalendarConfig(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (this.calendarConfig == undefined) {
-        this.retrieveUserData().then(() => {
-          resolve(this.calendarConfig);
-        });
-      }
-      else {
-        resolve(this.calendarConfig);
       }
     });
   }
