@@ -148,7 +148,7 @@ export class LinkedInUtilityProvider {
     return new Promise((resolve, reject) => {
       this.loggingUtil.alertUser("starting");
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
-        this.loggingUtil.alertUser("got usersevents");
+        this.loggingUtil.alertUser("got usersevents: " + JSON.stringify(response));
         var result = JSON.parse(response.data);
 
         this.loggingUtil.alertUser("for each");
