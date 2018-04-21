@@ -5,29 +5,8 @@
 <ion-content>
 
   <ion-grid>
-    <ion-calendar id="calendar" [(ngModel)]="date" (onChange)="onChange($event)" [type]="type" [format]="'MM-DD-YYYY'" [options]="calendarOptions">
+    <ion-calendar #calendar id="calendar" [(ngModel)]="date" (onChange)="onChange($event)" [type]="type" [format]="'MM-DD-YYYY'" [options]="calendarOptions">
     </ion-calendar>
-    <ion-row id="info">
-      <ion-col col-12>
-        <div *ngIf="displayedEvents.length != 0">
-          <div *ngFor="let event of displayedEvents" class="event">
-            <ion-card (click)="ViewOnMap()">
-              <ion-row>
-                <ion-col col-3 id="iconSection">
-                  <ion-icon name="calendar"></ion-icon>
-                </ion-col>
-                <ion-col col-9 id="cardInfo">
-                  <h2>{{event.ShortName}}</h2>
-                  <h3>{{event.Location}}</h3>
-                </ion-col>
-              </ion-row>
-            </ion-card>
-          </div>
-        </div>
-        <div *ngIf="displayedEvents.length == 0">
-          <h3>No Events For Today</h3>
-        </div>
-      </ion-col>
-    </ion-row>
+    
   </ion-grid>
 </ion-content>

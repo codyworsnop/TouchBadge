@@ -3,6 +3,7 @@ import { Storage } from '@ionic/storage';
 import { String } from 'aws-sdk/clients/cloudwatchevents';
 import { LoggingUtilityProvider } from '../logging-utility/logging-utility';
 import { HTTP } from '@ionic-native/http';
+import { Platform } from 'ionic-angular';
 
 /*
   Generated class for the UserDataUtilityProvider provider.
@@ -34,7 +35,8 @@ export class UserDataUtilityProvider {
   constructor(public storage: Storage,
     public logging: LoggingUtilityProvider,
     private http: HTTP,
-    private loggingUtil: LoggingUtilityProvider) {
+    private loggingUtil: LoggingUtilityProvider,
+    private platform: Platform) {
 
   }
 
@@ -48,7 +50,7 @@ export class UserDataUtilityProvider {
     this.numConnections = numConnections;
     this.pictureUrl = pictureUrl;
     this.emailAddress = emailAddress;
-  
+
     this.id = id;
   }
 
@@ -86,7 +88,7 @@ export class UserDataUtilityProvider {
 
           var date = event.EventDate.Start.split('-')[1] as number;
           this.calendarConfig.push({
-            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),       
+            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
             subTitle: "EVENT",
             marked: true,
           });
@@ -103,30 +105,33 @@ export class UserDataUtilityProvider {
 
   private retrieveUserData(): Promise<any> {
 
-    return new Promise((resolve, reject) => {
-      this.storage.get('userProfile').then((result) => {
-        this.firstName = result.FirstName;
-        this.lastName = result.LastName;
-        this.jobTitle = result.JobTitle;
-        this.location = result.Location;
-        this.numConnections = result.numConnections;
-        this.pictureUrl = result.pictureURL;
-        this.emailAddress = result.emailAddress;
+    if (this.platform.is('cordova')) {
+      return new Promise((resolve, reject) => {
+        this.storage.get('userProfile').then((result) => {
+          this.firstName = result.FirstName;
+          this.lastName = result.LastName;
+          this.jobTitle = result.JobTitle;
+          this.location = result.Location;
+          this.numConnections = result.numConnections;
+          this.pictureUrl = result.pictureURL;
+          this.emailAddress = result.emailAddress;
 
-        this.AWSIdentityId = result.awsID;
-        this.id = result.id;
+          this.AWSIdentityId = result.awsID;
+          this.id = result.id;
 
-        this.userEvents = result.userEvents;
-        this.calendarConfig = result.calendarConfig;
+          this.userEvents = result.userEvents;
+          this.calendarConfig = result.calendarConfig;
 
 
-        resolve();
-      }).catch((error) => {
+          resolve();
+        }).catch((error) => {
 
-        console.log("Error retrieving data: " + error);
-        reject(error);
+          console.log("Error retrieving data: " + error);
+          reject(error);
+        });
       });
-    });
+
+    }
   }
 
   public SetAWSToken(value: string) {
@@ -138,65 +143,82 @@ export class UserDataUtilityProvider {
   }
 
   public GetAWSToken(): Promise<any> {
+
     return new Promise((resolve, reject) => {
-      if (this.AWSToken == undefined) {
-        this.retrieveUserData().then(() => {
+
+      if (this.platform.is('cordova')) {
+        if (this.AWSToken == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.AWSToken);
+          });
+        }
+        else {
           resolve(this.AWSToken);
-        });
+        }
       }
       else {
-        resolve(this.AWSToken);
+        resolve('us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b');
       }
     });
   }
 
   public GetUserEvents(): Promise<any> {
+
     return new Promise((resolve, reject) => {
-      if (this.userEvents == undefined || this.calendarConfig == undefined) {
-        this.GetAWSIdentityId().then(id => {
-          this.loggingUtil.alertUser("id: " + id);
-          this.GetUserEventInfo(id).then(() => {
-            this.loggingUtil.alertUser("Resolving");
-            resolve({
-              calendarConfig: this.calendarConfig,
-              userEvents: this.userEvents
+      if (this.platform.is('cordova')) {
+        if (this.userEvents == undefined || this.calendarConfig == undefined) {
+          this.GetAWSIdentityId().then(id => {
+            this.GetUserEventInfo(id).then(() => {
+              resolve({
+                calendarConfig: this.calendarConfig,
+                userEvents: this.userEvents
+              });
             });
           });
-        });
-      }
-      else {
-        resolve({
-          calendarConfig: this.calendarConfig,
-          userEvents: this.userEvents
-        });
+        }
+        else {
+          resolve({
+            calendarConfig: this.calendarConfig,
+            userEvents: this.userEvents
+          });
+        }
       }
     });
+
   }
 
   public GetAWSIdentityId(): Promise<any> {
+
     return new Promise((resolve, reject) => {
-      if (this.AWSIdentityId == undefined) {
-        this.retrieveUserData().then(() => {
+      if (this.platform.is('cordova')) {
+        if (this.AWSIdentityId == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.AWSIdentityId);
+          });
+        }
+        else {
           resolve(this.AWSIdentityId);
-        });
-      }
-      else {
-        resolve(this.AWSIdentityId);
+        }
       }
     });
+
   }
 
   public GetEmailAddress(): Promise<any> {
+
     return new Promise((resolve, reject) => {
-      if (this.emailAddress == undefined) {
-        this.retrieveUserData().then(() => {
+      if (this.platform.is('cordova')) {
+        if (this.emailAddress == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.emailAddress);
+          });
+        }
+        else {
           resolve(this.emailAddress);
-        });
-      }
-      else { 
-        resolve(this.emailAddress);
+        }
       }
     });
+
   }
 
   public SetEmailAddress(value: string) {
@@ -204,93 +226,121 @@ export class UserDataUtilityProvider {
   }
 
   public GetPictureUrl(): Promise<any> {
+
     return new Promise((resolve, reject) => {
-      if (this.pictureUrl == undefined) {
-        this.retrieveUserData().then(() => {
+      if (this.platform.is('cordova')) {
+        if (this.pictureUrl == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.pictureUrl);
+          });
+        }
+        else {
           resolve(this.pictureUrl);
-        });
-      }
-      else {
-        resolve(this.pictureUrl);
+        }
       }
     });
+
   }
 
   public GetFirstName(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (this.firstName == undefined) {
-        this.retrieveUserData().then(() => {
+
+      if (this.platform.is('cordova')) {
+        if (this.firstName == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.firstName);
+          });
+        }
+        else {
           resolve(this.firstName);
-        });
-      }
-      else {
-        resolve(this.firstName);
+        }
       }
     });
+
   }
 
   public GetLastName(): Promise<any> {
+
     return new Promise((resolve, reject) => {
-      if (this.lastName == undefined) {
-        this.retrieveUserData().then(() => {
+      if (this.platform.is('cordova')) {
+        if (this.lastName == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.lastName);
+          });
+        }
+        else {
           resolve(this.lastName);
-        });
-      }
-      else {
-        resolve(this.lastName);
+        }
       }
     });
+
   }
 
   public GetId(): Promise<any> {
+
     return new Promise((resolve, reject) => {
-      if (this.id == undefined) {
-        this.retrieveUserData().then(() => {
+      if (this.platform.is('cordova')) {
+        if (this.id == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.id);
+          });
+        }
+        else {
           resolve(this.id);
-        });
-      }
-      else {
-        resolve(this.id);
+        }
       }
     });
+
   }
 
   public GetJobTitle(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (this.jobTitle == undefined) {
-        this.retrieveUserData().then(() => {
+
+      if (this.platform.is('cordova')) {
+        if (this.jobTitle == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.jobTitle);
+          });
+        }
+        else {
           resolve(this.jobTitle);
-        });
-      }
-      else {
-        resolve(this.jobTitle);
+        }
       }
     });
+
   }
 
   public GetLocation(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (this.location == undefined) {
-        this.retrieveUserData().then(() => {
+
+      if (this.platform.is('cordova')) {
+        if (this.location == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.location);
+          });
+        }
+        else {
           resolve(this.location);
-        });
-      }
-      else {
-        resolve(this.location);
+        }
       }
     });
+
   }
 
   public GetNumConnections(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (this.numConnections == undefined) {
-        this.retrieveUserData().then(() => {
+
+      if (this.platform.is('cordova')) {
+        if (this.numConnections == undefined) {
+          this.retrieveUserData().then(() => {
+            resolve(this.numConnections);
+          });
+        }
+        else {
           resolve(this.numConnections);
-        });
-      }
-      else {
-        resolve(this.numConnections);
+        }
       }
     });
+
   }
 }
