@@ -107,7 +107,7 @@ export class LinkedInUtilityProvider {
 
                   this.loggingUtil.alertUser("Calling events");
                   this.GetUserEvents(response).then(() => {
-
+                    this.loggingUtil.alertUser("finished get user");
                     this.userData.saveUserData(this.calendarConfig, this.userEvents).then(() => {
                       loader.dismiss();
                       resolve();
@@ -146,7 +146,9 @@ export class LinkedInUtilityProvider {
 
   private GetUserEvents(awsIdentity: any): Promise<any> {
     return new Promise((resolve, reject) => {
+      this.loggingUtil.alertUser("starting");
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
+        this.loggingUtil.alertUser("got usersevents");
         var result = JSON.parse(response.data);
 
         result.Events.forEach(event => {
