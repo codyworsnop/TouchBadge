@@ -24,6 +24,9 @@ export class UserDataUtilityProvider {
   private AWSToken: string;
   private AWSIdentityId: string;
 
+  private calendarConfig: any;
+  private userEvents: any;
+
   constructor(public storage: Storage, public logging: LoggingUtilityProvider) {
 
   }
@@ -38,11 +41,11 @@ export class UserDataUtilityProvider {
     this.numConnections = numConnections;
     this.pictureUrl = pictureUrl;
     this.emailAddress = emailAddress;
-
+  
     this.id = id;
   }
 
-  public saveUserData(): Promise<any> {
+  public saveUserData(calendarConfig: any, userEvents: any): Promise<any> {
     return new Promise((resolve, reject) => {
       var userData = {
         'FirstName': this.firstName,
@@ -54,7 +57,9 @@ export class UserDataUtilityProvider {
         'emailAddress': this.emailAddress,
         'id': this.id,
         'awsID': this.AWSIdentityId,
-        'awsToken': this.AWSToken
+        'awsToken': this.AWSToken,
+        'calendarConfig': calendarConfig,
+        'userEvents': userEvents
       };
 
       this.storage.set('userProfile', userData).then(() => {
@@ -77,6 +82,10 @@ export class UserDataUtilityProvider {
 
         this.AWSIdentityId = result.awsID;
         this.id = result.id;
+
+        this.userEvents = result.userEvents;
+        this.calendarConfig = result.calendarConfig;
+
 
         resolve();
       }).catch((error) => {
@@ -104,6 +113,32 @@ export class UserDataUtilityProvider {
       }
       else {
         resolve(this.AWSToken);
+      }
+    });
+  }
+
+  public GetUserEvents(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (this.userEvents == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.userEvents);
+        });
+      }
+      else {
+        resolve(this.userEvents);
+      }
+    });
+  }
+
+  public GetCalendarConfig(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (this.calendarConfig == undefined) {
+        this.retrieveUserData().then(() => {
+          resolve(this.calendarConfig);
+        });
+      }
+      else {
+        resolve(this.calendarConfig);
       }
     });
   }

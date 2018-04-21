@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { HTTP } from '@ionic-native/http';
 import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
 import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-utility';
+import { error } from 'util';
 
 @Component({
   selector: 'page-calendar',
@@ -35,10 +36,20 @@ export class CalendarPage {
     private userData: UserDataUtilityProvider,
     private loggingUtil: LoggingUtilityProvider) {
 
-    this.calendarConfig.push({
-      date: new Date(2018, 3, 20),
-      subTitle: "EVENT",
-      marked: true,
+    this.loggingUtil.alertUser("In constructor");
+
+    this.userData.GetUserEvents().then(events => {
+      this.userData.GetCalendarConfig().then(config => {
+
+        this.loggingUtil.alertUser("Setting events");
+        this.calendarConfig = config;
+        this.userEvents = events;
+      }, error => {
+
+      this.loggingUtil.alertUser("Error has occured: " + error);
+      });
+    }, error => {
+      this.loggingUtil.alertUser("Error has occured: " + error);
     });
 
   }
@@ -52,22 +63,12 @@ export class CalendarPage {
         result.Events.forEach(event => {
           this.userEvents.push(event);
 
-          var a = event.EventDate.Start.split('-')[1] as number;
-          this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0]);
-          this.loggingUtil.alertUser("month: " + (a - 1));
-          this.loggingUtil.alertUser("days: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
-
+          var date = event.EventDate.Start.split('-')[1] as number;
           this.calendarConfig.push({
-            date: new Date(event.EventDate.Start.split('-')[0], event.EventDate.Start.split('-')[1], event.EventDate.Start.split('-')[2].split(' ')[0]),
+            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
             subTitle: "EVENT",
             marked: true,
           });
-        });
-
-        this.calendarConfig.push({
-          date: new Date(2018, 3, 21),
-          subTitle: "PLSWRK",
-          marked: true,
         });
 
       }, error => {
