@@ -81,7 +81,7 @@ export class UserDataUtilityProvider {
         var result = JSON.parse(response.data);
 
         result.Events.forEach(event => {
-          this.loggingUtil.alertUser("Pushing event: " + event)
+          this.loggingUtil.alertUser("Pushing event: " + JSON.stringify(event));
           this.userEvents.push(event);
 
           var date = event.EventDate.Start.split('-')[1] as number;
@@ -92,6 +92,7 @@ export class UserDataUtilityProvider {
           });
         });
 
+        this.loggingUtil.alertUser("Resolving in other");
         resolve();
       }, error => {
         console.log("error: " + error);
@@ -153,7 +154,9 @@ export class UserDataUtilityProvider {
     return new Promise((resolve, reject) => {
       if (this.userEvents == undefined || this.calendarConfig == undefined) {
         this.GetAWSIdentityId().then(id => {
+          this.loggingUtil.alertUser("id: " + id);
           this.GetUserEventInfo(id).then(() => {
+            this.loggingUtil.alertUser("Resolving");
             resolve({
               calendarConfig: this.calendarConfig,
               userEvents: this.userEvents
@@ -162,7 +165,10 @@ export class UserDataUtilityProvider {
         });
       }
       else {
-        resolve(this.userEvents);
+        resolve({
+          calendarConfig: this.calendarConfig,
+          userEvents: this.userEvents
+        });
       }
     });
   }
