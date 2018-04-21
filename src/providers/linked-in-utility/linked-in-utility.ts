@@ -151,12 +151,16 @@ export class LinkedInUtilityProvider {
         this.loggingUtil.alertUser("got usersevents");
         var result = JSON.parse(response.data);
 
+        this.loggingUtil.alertUser("for each");
         result.Events.forEach(event => {
+
+          this.loggingUtil.alertUser("event: " + JSON.stringify(event));
           this.userEvents.push(event);
 
-          var date = event.EventDate.Start.split('-')[1] as number;
+          //var date = event.EventDate.Start.split('-')[1] as number;
           this.calendarConfig.push({
-            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
+            date: new Date(2018, 4, 20),
+            //event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]
             subTitle: "EVENT",
             marked: true,
           });
