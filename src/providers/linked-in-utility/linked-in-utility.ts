@@ -105,6 +105,7 @@ export class LinkedInUtilityProvider {
 
                 this.getAWSToken().then((response) => {
 
+                  this.loggingUtil.alertUser("Calling events");
                   this.GetUserEvents(response).then(() => {
 
                     this.userData.saveUserData(this.calendarConfig, this.userEvents).then(() => {
