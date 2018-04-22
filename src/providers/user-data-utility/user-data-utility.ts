@@ -80,20 +80,17 @@ export class UserDataUtilityProvider {
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
-        result.Events.forEach(element => {
-          this.loggingUtil.alertUser("event: " + element);
-        });
 
         result.Events.forEach(event => {
           this.userEvents.push(event);
 
+          this.loggingUtil.alertUser("event: " + JSON.stringify(event))
+          var date = event.EventDate.Start.split('-')[1] as number;
           this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
 
           this.loggingUtil.alertUser("date: " + (date - 1));
 
           this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
-
-          var date = event.EventDate.Start.split('-')[1] as number;
           this.calendarConfig.push({
             date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
             subTitle: "EVENT",
