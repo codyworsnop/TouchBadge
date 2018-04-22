@@ -39,6 +39,8 @@ export class HomePage {
 
   ionViewDidLoad() { 
     this.SetUserData();
+    
+    this.SetStatusText();
   }
 
   ionViewWillEnter() { 
