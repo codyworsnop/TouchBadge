@@ -47,18 +47,22 @@ export class HomePage {
 
   SetStatusText() {
     
+    this.loggingUtil.alertUser("getting contacts");
     this.userData.GetContactsToday().then(result => { 
       this.ContactsToday = result;
     });
 
+    this.loggingUtil.alertUser("getting upcoming events");
     this.userData.GetUpcomingEventCount().then(result => {
       this.UpcomingEventCount = result;
     });
 
+    this.loggingUtil.alertUser("getting seminar count");
     this.userData.GetUpcomingEventCount().then(result => { 
       this.SeminarCount = result;
     });
 
+    this.loggingUtil.alertUser("getting badge status");
     this.userData.GetBadgeStatus().then(result => {
 
     });

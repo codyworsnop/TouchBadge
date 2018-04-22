@@ -149,7 +149,7 @@ export class UserDataUtilityProvider {
 
             this.ContactsToday = result.Contacts.length;
             resolve(result.Contacts.length)
-            
+
           }, error => {
             this.loggingUtil.alertUser("Error pulling: " + JSON.stringify(error));
           });
@@ -186,11 +186,13 @@ export class UserDataUtilityProvider {
   }
 
   GetUpcomingEventCount(): Promise<any> {
-
     return new Promise((resolve, reject) => {
-
+      
+    this.loggingUtil.alertUser("user events " + this.userEvents);
       if (this.userEvents == undefined) {
         this.GetUserEvents().then(result => {
+          
+    this.loggingUtil.alertUser("got events");
           resolve(this.userEvents.length);
         });
       } else {
