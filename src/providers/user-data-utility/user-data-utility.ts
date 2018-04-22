@@ -37,9 +37,6 @@ export class UserDataUtilityProvider {
     private http: HTTP,
     private loggingUtil: LoggingUtilityProvider,
     private platform: Platform) {
-
-    this.userEvents = [];
-    this.calendarConfig = [];
   }
 
   public SetUserData(first: string, last: string, id: string, jobTitle: string, location: string, numConnections: number, pictureUrl: string, emailAddress: string) {
@@ -79,6 +76,10 @@ export class UserDataUtilityProvider {
 
   private GetUserEventInfo(awsIdentity: any): Promise<any> {
     return new Promise((resolve, reject) => {
+      
+      this.userEvents = [];
+      this.calendarConfig = [];
+
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
