@@ -171,9 +171,10 @@ export class UserDataUtilityProvider {
             this.loggingUtil.alertUser("time: " + eventDate);
             var date = new Date();
             var now = date.getTime();
-            this.loggingUtil.alertUser("nowtime: " + eventDate);
+            this.loggingUtil.alertUser("nowtime: " + now);
             var momentDif = moment.duration(eventDate - now);
   
+            this.loggingUtil.alertUser("diff: " + momentDif);
             this.loggingUtil.alertUser("lol" + momentDif.asDays());
             if (momentDif.asDays() < 31) {
               eventsInMonth++;
@@ -182,7 +183,7 @@ export class UserDataUtilityProvider {
           resolve(eventsInMonth);
         });
       } else {
-        this.loggingUtil.alertUser("event start not und" + this.userEvents)
+        this.loggingUtil.alertUser("event start not und" + this.userEvents) 
 
         this.userEvents.forEach(event => {
 
