@@ -80,24 +80,21 @@ export class UserDataUtilityProvider {
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
-
-        
-        this.loggingUtil.alertUser("event: " + JSON.stringify(result.Events))
-
         result.Events.forEach(event => {
           
-          this.loggingUtil.alertUser("event: " + JSON.stringify(event))
+          this.loggingUtil.alertUser("eventit: " + JSON.stringify(event))
           this.userEvents.push(event);
 
-          this.loggingUtil.alertUser("event: " + JSON.stringify(event))
-          var date = event.EventDate.Start.split('-')[1] as number;
-          this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
+          this.loggingUtil.alertUser("pushed");
+   //       var date = event.EventDate.Start.split('-')[1] as number;
+       //   this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
 
-          this.loggingUtil.alertUser("date: " + (date - 1));
+          //this.loggingUtil.alertUser("date: " + (date - 1));
 
-          this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
+        //  this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
           this.calendarConfig.push({
-            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
+            date: new Date(2018, 3, 21),
+            //event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]
             subTitle: "EVENT",
             marked: true,
           });
