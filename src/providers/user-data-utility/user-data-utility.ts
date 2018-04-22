@@ -26,8 +26,8 @@ export class UserDataUtilityProvider {
   private AWSToken: string;
   private AWSIdentityId: string;
 
-  private calendarConfig: any;
-  private userEvents: any;
+  private calendarConfig: any[] = [];;
+  private userEvents: any[] = [];
 
   fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
 
