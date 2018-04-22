@@ -3,7 +3,9 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingText="Refreshing"></ion-refresher-content>
+  </ion-refresher>
   <ion-grid>
     <ion-calendar #calendar id="calendar" [(ngModel)]="date" (onChange)="onChange($event)" [type]="type" [format]="'MM-DD-YYYY'" [options]="calendarOptions">
     </ion-calendar>

@@ -77,29 +77,28 @@ export class UserDataUtilityProvider {
 
   private GetUserEventInfo(awsIdentity: any): Promise<any> {
     return new Promise((resolve, reject) => {
+      if (this.platform.is('cordova')) {
+        this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
-      this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
+          var result = JSON.parse(response.data);
 
-        var result = JSON.parse(response.data);
+          result.Events.forEach(event => {
+            this.userEvents.push(event);
 
-        result.Events.forEach(event => {
-          this.loggingUtil.alertUser("Pushing event: " + JSON.stringify(event));
-          this.userEvents.push(event);
-
-          var date = event.EventDate.Start.split('-')[1] as number;
-          this.calendarConfig.push({
-            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
-            subTitle: "EVENT",
-            marked: true,
+            var date = event.EventDate.Start.split('-')[1] as number;
+            this.calendarConfig.push({
+              date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
+              subTitle: "EVENT",
+              marked: true,
+            });
           });
+          this.loggingUtil.alertUser("resolving");
+          resolve();
+        }, error => {
+          console.log("error: " + error);
+          reject();
         });
-
-        this.loggingUtil.alertUser("Resolving in other");
-        resolve();
-      }, error => {
-        console.log("error: " + error);
-        reject();
-      });
+      }
     });
   }
 

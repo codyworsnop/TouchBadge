@@ -38,6 +38,7 @@ export class CalendarPage {
 
   ionViewDidLoad() {
 
+    this.loggingUtil.alertUser("viewdidload");
     this.RefreshCalendar();
   }
 
