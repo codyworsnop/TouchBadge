@@ -57,10 +57,9 @@ export class HomePage {
       this.UpcomingEventCount = result;
     });
 
-    this.loggingUtil.alertUser("getting seminar count");
-    this.userData.GetUpcomingEventCount().then(result => { 
-      this.SeminarCount = result;
-    });
+
+    this.SeminarCount = this.UpcomingEventCount;
+
 
     this.loggingUtil.alertUser("getting badge status");
     this.userData.GetBadgeStatus().then(result => {
