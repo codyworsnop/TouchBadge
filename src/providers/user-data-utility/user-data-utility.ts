@@ -141,7 +141,7 @@ export class UserDataUtilityProvider {
   GetContactsToday(): Promise<any> {
 
     return new Promise((resolve, reject) => {
-      if (this.ContactsToday == undefined) {
+
         this.GetAWSIdentityId().then((id) => {
           this.http.get(this.userContactAPI + "?userID=" + id, {}, {}).then(response => {
 
@@ -155,9 +155,7 @@ export class UserDataUtilityProvider {
           });
 
         });
-      } else {
-        resolve(this.ContactsToday);
-      }
+      
     });
   }
 
