@@ -77,9 +77,12 @@ export class UserDataUtilityProvider {
 
   private GetUserEventInfo(awsIdentity: any): Promise<any> {
     return new Promise((resolve, reject) => {
+      this.loggingUtil.alertUser("getting user event info");
       if (this.platform.is('cordova')) {
         this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
+          
+      this.loggingUtil.alertUser("response: " + JSON.stringify(response));
           var result = JSON.parse(response.data);
 
           result.Events.forEach(event => {
@@ -175,7 +178,13 @@ export class UserDataUtilityProvider {
       if (this.platform.is('cordova')) {
         if (this.userEvents == undefined || this.calendarConfig == undefined) {
           this.GetAWSIdentityId().then(id => {
+            this.loggingUtil.alertUser("got id: " + id);
             this.GetUserEventInfo(id).then(() => {
+              
+            this.loggingUtil.alertUser("resolving: " + {
+              calendarConfig: this.calendarConfig,
+              userEvents: this.userEvents
+            });
               resolve({
                 calendarConfig: this.calendarConfig,
                 userEvents: this.userEvents
