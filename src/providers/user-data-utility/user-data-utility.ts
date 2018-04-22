@@ -85,12 +85,20 @@ export class UserDataUtilityProvider {
           result.Events.forEach(event => {
             this.userEvents.push(event);
 
+            this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
+            
+            this.loggingUtil.alertUser("date: " + (date - 1));
+            
+            this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
+
             var date = event.EventDate.Start.split('-')[1] as number;
             this.calendarConfig.push({
               date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
               subTitle: "EVENT",
               marked: true,
             });
+
+            this.loggingUtil.alertUser("Pushed");
           });
           this.loggingUtil.alertUser("resolving");
           resolve();
