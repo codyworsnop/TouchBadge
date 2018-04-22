@@ -36,7 +36,6 @@ export class ContactPage {
 
   ionViewDidLoad()
   {
-    this.loggingUtil.alertUser("getting contacts");
     this.retrieveContacts();
   }
 
@@ -46,7 +45,6 @@ export class ContactPage {
     this.groupedContacts = [];
 
     this.userData.GetAWSIdentityId().then((id) => {
-      this.loggingUtil.alertUser("aws: " + id)
       this.http.get(this.userContactAPI + "?userID=" + id, {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
@@ -57,7 +55,6 @@ export class ContactPage {
             contact.PictureURL = "assets/img/default-profile-pic.jpg";
           }
   
-          console.log("pushing contact " + contact.Last_Name);
           this.contacts.push(contact);
   
         });
@@ -76,13 +73,11 @@ export class ContactPage {
     if (contacts != null) {
       let sortedContacts = contacts.sort((a, b) => a.Last_Name < b.Last_Name ? -1 : a.Last_Name > b.Last_Name ? 1 : 0);
 
-      console.log("sorted: " + sortedContacts);
       let currentLetter: string;
       let currentContacts: any[];
 
       sortedContacts.forEach((value, index) => {
 
-        console.log("LAST NAME: " + value.Last_Name);
         if (value.Last_Name != undefined && value.Last_Name.charAt(0).toUpperCase() != currentLetter) {
 
           currentLetter = value.Last_Name.charAt(0).toUpperCase();
@@ -100,19 +95,6 @@ export class ContactPage {
       });
     }
   }
-
-  /*
-  contains(list: any[], item: any, property: any) : Boolean {
-    var found = false;
-    for (var i = 0; i < listeners.length; i++) {
-      if (list[i].property == item) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-  */
 
   addContact() {
 
@@ -135,12 +117,10 @@ export class ContactPage {
   }
 
   doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
 
     this.retrieveContacts();
 
     setTimeout(() => {
-      console.log('Async operation has ended');
       refresher.complete();
     }, 2000);
   }

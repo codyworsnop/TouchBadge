@@ -84,8 +84,6 @@ export class UserDataUtilityProvider {
 
         var result = JSON.parse(response.data);
         result.Events.forEach(event => {
-
-          this.loggingUtil.alertUser("userevents: " + this.userEvents);
           this.userEvents.push(event);
           var date = event.EventDate.Start.split('-')[1] as number;
           this.calendarConfig.push({
@@ -169,13 +167,7 @@ export class UserDataUtilityProvider {
       if (this.userEvents == undefined || this.calendarConfig == undefined) {
         if (this.platform.is('cordova')) {
           this.GetAWSIdentityId().then(id => {
-            this.loggingUtil.alertUser("got id: " + id);
             this.GetUserEventInfo(id).then(() => {
-
-              this.loggingUtil.alertUser("resolving: " + {
-                calendarConfig: this.calendarConfig,
-                userEvents: this.userEvents
-              });
               resolve({
                 calendarConfig: this.calendarConfig,
                 userEvents: this.userEvents
