@@ -163,7 +163,7 @@ export class UserDataUtilityProvider {
 
       var eventsInMonth = 0;
 
-      if (this.userEvents.length == undefined) {
+      if (this.userEvents == undefined) {
         this.GetUserEvents().then(result => {
           this.loggingUtil.alertUser("event start" + JSON.stringify(result))
 
