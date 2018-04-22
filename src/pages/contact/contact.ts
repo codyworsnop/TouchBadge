@@ -28,10 +28,6 @@ export class ContactPage {
     private loggingUtil: LoggingUtilityProvider,
     private userData: UserDataUtilityProvider,
     private http: HTTP) {
-
-    // console.log("looking for: " + this.userData.GetAWSIdentityId());
-
-
   }
 
   ionViewDidLoad()

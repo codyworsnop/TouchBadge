@@ -37,8 +37,6 @@ export class CalendarPage {
   }
 
   ionViewDidLoad() {
-
-    this.loggingUtil.alertUser("viewdidload");
     this.RefreshCalendar();
   }
 
@@ -66,8 +64,6 @@ export class CalendarPage {
       this.cal.options = {
         daysConfig: result.calendarConfig,
       }
-
-      this.loggingUtil.alertUser("events: " + JSON.stringify(result))
       this.userEvents = result.userEvents;
     }, error => {
 

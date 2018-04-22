@@ -105,8 +105,6 @@ export class DynamoDB {
     this.userData.GetAWSIdentityId().then((response) => {
       awsToken = response;
 
-      this.alertUser("AWSTOK: " + awsToken);
-
       const params = {
         'TableName': "Users",
         'Key': { UserID: awsToken },
