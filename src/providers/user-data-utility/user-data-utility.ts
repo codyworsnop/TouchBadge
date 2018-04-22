@@ -77,16 +77,14 @@ export class UserDataUtilityProvider {
 
   private GetUserEventInfo(awsIdentity: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.loggingUtil.alertUser("getting user event info");
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
-        this.loggingUtil.alertUser("response: " + JSON.stringify(result.Events));
-        response.data.Events.forEach(element => {
+        result.Events.forEach(element => {
           this.loggingUtil.alertUser("event: " + element);
         });
 
-        response.data.Events.forEach(event => {
+        result.Events.forEach(event => {
           this.userEvents.push(event);
 
           this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
