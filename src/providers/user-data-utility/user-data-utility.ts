@@ -78,43 +78,41 @@ export class UserDataUtilityProvider {
   private GetUserEventInfo(awsIdentity: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.loggingUtil.alertUser("getting user event info");
-      if (this.platform.is('cordova')) {
-        this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
+      this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
 
-          this.loggingUtil.alertUser("response: " + JSON.stringify(response.data.Events));
-
-          response.data.Events.forEach(element => {
-            this.loggingUtil.alertUser("event: " + element);
-          });          
-
-          response.data.Events.forEach(event => {
-            this.userEvents.push(event);
-
-            this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
-
-            this.loggingUtil.alertUser("date: " + (date - 1));
-
-            this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
-
-            var date = event.EventDate.Start.split('-')[1] as number;
-            this.calendarConfig.push({
-              date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
-              subTitle: "EVENT",
-              marked: true,
-            });
-
-            this.loggingUtil.alertUser("Pushed");
-          });
-          this.loggingUtil.alertUser("resolving");
-          resolve();
-        }, error => {
-          console.log("error: " + error);
-          reject();
+        this.loggingUtil.alertUser("response: " + JSON.stringify(response.data));
+        response.data.Events.forEach(element => {
+          this.loggingUtil.alertUser("event: " + element);
         });
-      } 
+
+        response.data.Events.forEach(event => {
+          this.userEvents.push(event);
+
+          this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
+
+          this.loggingUtil.alertUser("date: " + (date - 1));
+
+          this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
+
+          var date = event.EventDate.Start.split('-')[1] as number;
+          this.calendarConfig.push({
+            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
+            subTitle: "EVENT",
+            marked: true,
+          });
+
+          this.loggingUtil.alertUser("Pushed");
+        });
+        this.loggingUtil.alertUser("resolving");
+        resolve();
+      }, error => {
+        console.log("error: " + error);
+        reject();
+      });
     });
   }
+
 
   private retrieveUserData(): Promise<any> {
 
@@ -195,24 +193,10 @@ export class UserDataUtilityProvider {
             });
           });
         }
-        else {
-          this.GetUserEventInfo("us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b").then(() => {
-
-            this.loggingUtil.alertUser("resolving: " + {
-              calendarConfig: this.calendarConfig,
-              userEvents: this.userEvents
-            });
-
-            resolve({
-              calendarConfig: this.calendarConfig,
-              userEvents: this.userEvents
-            });
-          });
-        }
       }
     });
   }
-  
+
   public GetAWSIdentityId(): Promise<any> {
 
     return new Promise((resolve, reject) => {
