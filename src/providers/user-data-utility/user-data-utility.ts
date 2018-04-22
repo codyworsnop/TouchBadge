@@ -76,7 +76,7 @@ export class UserDataUtilityProvider {
 
   private GetUserEventInfo(awsIdentity: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      
+
       this.userEvents = [];
       this.calendarConfig = [];
 
@@ -84,28 +84,17 @@ export class UserDataUtilityProvider {
 
         var result = JSON.parse(response.data);
         result.Events.forEach(event => {
-          
-          this.loggingUtil.alertUser("eventit: " + JSON.stringify(event))
+
           this.loggingUtil.alertUser("userevents: " + this.userEvents);
           this.userEvents.push(event);
-
-          this.loggingUtil.alertUser("pushed");
-   //       var date = event.EventDate.Start.split('-')[1] as number;
-       //   this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
-
-          //this.loggingUtil.alertUser("date: " + (date - 1));
-
-        //  this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
+          var date = event.EventDate.Start.split('-')[1] as number;
           this.calendarConfig.push({
-            date: new Date(2018, 3, 21),
-            //event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]
+            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
             subTitle: "EVENT",
             marked: true,
           });
 
-          this.loggingUtil.alertUser("Pushed");
         });
-        this.loggingUtil.alertUser("resolving");
         resolve();
       }, error => {
         console.log("error: " + error);
