@@ -67,6 +67,7 @@ export class CalendarPage {
         daysConfig: result.calendarConfig,
       }
 
+      this.loggingUtil.alertUser("events: " + JSON.stringify(result))
       this.userEvents = result.userEvents;
     }, error => {
 
