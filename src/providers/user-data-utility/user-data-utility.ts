@@ -80,8 +80,8 @@ export class UserDataUtilityProvider {
       this.loggingUtil.alertUser("getting user event info");
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
-
-        this.loggingUtil.alertUser("response: " + JSON.stringify(response.data));
+        var result = JSON.parse(response.data);
+        this.loggingUtil.alertUser("response: " + JSON.stringify(result.Events));
         response.data.Events.forEach(element => {
           this.loggingUtil.alertUser("event: " + element);
         });
