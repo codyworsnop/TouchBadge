@@ -30,12 +30,12 @@ export class UserDataUtilityProvider {
   private userEvents: any[];
 
   private ContactsToday: string;
-  private WeeklyEvents: string;
-  private Seminars: string;
+  private SeminarCount: string;
   private BadgeStatus: string;
 
-  fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
+  private fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
 
+  private userContactAPI = "https://n04wjzhe44.execute-api.us-west-2.amazonaws.com/Release/fetchusers";
 
   constructor(public storage: Storage,
     public logging: LoggingUtilityProvider,
@@ -141,20 +141,48 @@ export class UserDataUtilityProvider {
   GetContactsToday(): Promise<any> {
 
     return new Promise((resolve, reject) => {
+      if (this.ContactsToday == undefined) {
+        this.GetAWSIdentityId().then((id) => {
+          this.http.get(this.userContactAPI + "?userID=" + id, {}, {}).then(response => {
 
+            var result = JSON.parse(response.data);
+
+            this.ContactsToday = result.Contacts.length;
+            resolve(result.Contacts.length)
+            
+          }, error => {
+            this.loggingUtil.alertUser("Error pulling: " + JSON.stringify(error));
+          });
+
+        });
+      } else {
+        resolve(this.ContactsToday);
+      }
     });
   }
 
-  GetSeminars(): Promise<any> {
+  SetContactsToday(value: string) {
+    this.ContactsToday = value;
+  }
+
+  GetSeminarsCount(): Promise<any> {
 
     return new Promise((resolve, reject) => {
+
     });
+  }
+  SetSeminarCount(value: string) {
+    this.SeminarCount = value;
   }
 
   GetBadgeStatus(): Promise<any> {
 
     return new Promise((resolve, reject) => {
     });
+  }
+
+  SetBadgeStatus(value: string) {
+    this.BadgeStatus = value;
   }
 
   GetUpcomingEventCount(): Promise<any> {
@@ -205,7 +233,7 @@ export class UserDataUtilityProvider {
       if (this.userEvents == undefined || this.calendarConfig == undefined) {
         if (this.platform.is('cordova')) {
           this.GetAWSIdentityId().then(id => {
-          
+
             this.GetUserEventInfo(id).then(() => {
 
               resolve({

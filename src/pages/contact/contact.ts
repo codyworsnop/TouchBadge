@@ -17,7 +17,6 @@ export class ContactPage {
 
   public contacts = [];
   groupedContacts = [];
-  private contactsToPull = [];
 
   private userContactAPI = "https://n04wjzhe44.execute-api.us-west-2.amazonaws.com/Release/fetchusers";
 

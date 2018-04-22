@@ -21,7 +21,7 @@ export class HomePage {
 
   ContactsToday: string;
   UpcomingEventCount: string;
-  Seminars: string;
+  SeminarCount: string;
   BadgeStatus: string; 
 
   constructor(public navCtrl: NavController,
@@ -39,8 +39,6 @@ export class HomePage {
 
   ionViewDidLoad() { 
     this.SetUserData();
-    
-    this.SetStatusText();
   }
 
   ionViewWillEnter() { 
@@ -49,13 +47,21 @@ export class HomePage {
 
   SetStatusText() {
     
-    this.ContactsToday = "hello";
+    this.userData.GetContactsToday().then(result => { 
+      this.ContactsToday = result;
+    });
+
     this.userData.GetUpcomingEventCount().then(result => {
-      this.loggingUtil.alertUser("returned: " + result);
       this.UpcomingEventCount = result;
     });
-    this.Seminars = "today";
-    this.BadgeStatus = "is a good day"; 
+
+    this.userData.GetUpcomingEventCount().then(result => { 
+      this.SeminarCount = result;
+    });
+
+    this.userData.GetBadgeStatus().then(result => {
+
+    });
   }
 
   SetUserData() { 
