@@ -238,8 +238,12 @@ export class UserDataUtilityProvider {
     return new Promise((resolve, reject) => {
       if (this.userEvents == undefined || this.calendarConfig == undefined) {
         if (this.platform.is('cordova')) {
+          this.loggingUtil.alertUser("getuserevents");
           this.GetAWSIdentityId().then(id => {
+            
+          this.loggingUtil.alertUser("id: " + id);
             this.GetUserEventInfo(id).then(() => {
+              this.loggingUtil.alertUser("got info");
 
               resolve({
                 calendarConfig: this.calendarConfig,
