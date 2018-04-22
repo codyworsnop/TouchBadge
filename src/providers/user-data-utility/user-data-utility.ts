@@ -157,49 +157,16 @@ export class UserDataUtilityProvider {
     });
   }
 
-  GetMonthlyEvents(): Promise<any> {
+  GetUpcomingEventCount(): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
-      var eventsInMonth = 0;
-
       if (this.userEvents == undefined) {
         this.GetUserEvents().then(result => {
-          result.UserEvents.forEach(event => {
-
-            var eventDate = moment(result.EventDate.StartDate).toDate().getTime();
-            this.loggingUtil.alertUser("time: " + eventDate);
-            var date = new Date();
-            var now = date.getTime();
-            this.loggingUtil.alertUser("nowtime: " + now);
-            var momentDif = moment.duration(eventDate - now);
-  
-            this.loggingUtil.alertUser("diff: " + momentDif);
-            this.loggingUtil.alertUser("lol" + momentDif.asDays());
-            if (momentDif.asDays() < 31) {
-              eventsInMonth++;
-            }
-          });
-          resolve(eventsInMonth);
+          resolve(this.userEvents.length);
         });
       } else {
-        this.loggingUtil.alertUser("event start not und" + this.userEvents) 
-
-        this.userEvents.forEach(event => {
-
-          var eventDate = moment(event.EventDate.StartDate).toDate().getTime();
-          this.loggingUtil.alertUser("time: " + eventDate);
-          var date = new Date();
-          var now = date.getTime();
-          this.loggingUtil.alertUser("nowtime: " + eventDate);
-          var momentDif = moment.duration(eventDate - now);
-
-          this.loggingUtil.alertUser("lol" + momentDif.asDays());
-          if (momentDif.asDays() < 31) {
-            eventsInMonth++;
-          }
-        });
-        resolve(eventsInMonth);
+        resolve(this.userEvents.length);
       }
     });
   }

@@ -20,7 +20,7 @@ export class HomePage {
   pictureUrl: string;
 
   ContactsToday: string;
-  MonthlyEvents: string;
+  UpcomingEventCount: string;
   Seminars: string;
   BadgeStatus: string; 
 
@@ -50,9 +50,9 @@ export class HomePage {
   SetStatusText() {
     
     this.ContactsToday = "hello";
-    this.userData.GetMonthlyEvents().then(result => {
+    this.userData.GetUpcomingEventCount().then(result => {
       this.loggingUtil.alertUser("returned: " + result);
-      this.MonthlyEvents = result;
+      this.UpcomingEventCount = result;
     });
     this.Seminars = "today";
     this.BadgeStatus = "is a good day"; 
