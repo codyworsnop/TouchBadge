@@ -81,16 +81,16 @@ export class UserDataUtilityProvider {
       if (this.platform.is('cordova')) {
         this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
-          
-      this.loggingUtil.alertUser("response: " + JSON.stringify(response.data));
 
-      response.data.Events.forEach(event => {
+          this.loggingUtil.alertUser("response: " + JSON.stringify(response.data));
+
+          response.data.Events.forEach(event => {
             this.userEvents.push(event);
 
             this.loggingUtil.alertUser("year: " + event.EventDate.Start.split('-')[0])
-            
+
             this.loggingUtil.alertUser("date: " + (date - 1));
-            
+
             this.loggingUtil.alertUser("month: " + event.EventDate.Start.split('-')[2].split(' ')[0]);
 
             var date = event.EventDate.Start.split('-')[1] as number;
@@ -108,7 +108,7 @@ export class UserDataUtilityProvider {
           console.log("error: " + error);
           reject();
         });
-      }
+      } 
     });
   }
 
@@ -174,16 +174,16 @@ export class UserDataUtilityProvider {
   public GetUserEvents(): Promise<any> {
 
     return new Promise((resolve, reject) => {
-      if (this.platform.is('cordova')) {
-        if (this.userEvents == undefined || this.calendarConfig == undefined) {
+      if (this.userEvents == undefined || this.calendarConfig == undefined) {
+        if (this.platform.is('cordova')) {
           this.GetAWSIdentityId().then(id => {
             this.loggingUtil.alertUser("got id: " + id);
             this.GetUserEventInfo(id).then(() => {
-              
-            this.loggingUtil.alertUser("resolving: " + {
-              calendarConfig: this.calendarConfig,
-              userEvents: this.userEvents
-            });
+
+              this.loggingUtil.alertUser("resolving: " + {
+                calendarConfig: this.calendarConfig,
+                userEvents: this.userEvents
+              });
               resolve({
                 calendarConfig: this.calendarConfig,
                 userEvents: this.userEvents
@@ -192,16 +192,23 @@ export class UserDataUtilityProvider {
           });
         }
         else {
-          resolve({
-            calendarConfig: this.calendarConfig,
-            userEvents: this.userEvents
+          this.GetUserEventInfo("us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b").then(() => {
+
+            this.loggingUtil.alertUser("resolving: " + {
+              calendarConfig: this.calendarConfig,
+              userEvents: this.userEvents
+            });
+
+            resolve({
+              calendarConfig: this.calendarConfig,
+              userEvents: this.userEvents
+            });
           });
         }
       }
     });
-
   }
-
+  
   public GetAWSIdentityId(): Promise<any> {
 
     return new Promise((resolve, reject) => {
