@@ -19,6 +19,11 @@ export class HomePage {
   location: string; 
   pictureUrl: string;
 
+  ContactsToday: string;
+  MonthlyEvents: string;
+  Seminars: string;
+  BadgeStatus: string; 
+
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
     public ln: LinkedInUtilityProvider,
@@ -36,6 +41,20 @@ export class HomePage {
     this.SetUserData();
   }
 
+  ionViewWillEnter() { 
+    this.SetStatusText();
+  }
+
+  SetStatusText() {
+    
+    this.ContactsToday = "hello";
+    this.userData.GetMonthlyEvents().then(result => {
+      this.loggingUtil.alertUser("returned: " + result);
+      this.MonthlyEvents = result;
+    });
+    this.Seminars = "today";
+    this.BadgeStatus = "is a good day"; 
+  }
 
   SetUserData() { 
     this.userData.GetFirstName().then((response) => 

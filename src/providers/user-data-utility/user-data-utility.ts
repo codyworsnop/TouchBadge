@@ -4,7 +4,7 @@ import { String } from 'aws-sdk/clients/cloudwatchevents';
 import { LoggingUtilityProvider } from '../logging-utility/logging-utility';
 import { HTTP } from '@ionic-native/http';
 import { Platform } from 'ionic-angular';
-
+import * as moment from 'moment';
 /*
   Generated class for the UserDataUtilityProvider provider.
 
@@ -28,6 +28,11 @@ export class UserDataUtilityProvider {
 
   private calendarConfig: any[];
   private userEvents: any[];
+
+  private ContactsToday: string;
+  private WeeklyEvents: string;
+  private Seminars: string;
+  private BadgeStatus: string;
 
   fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
 
@@ -133,6 +138,57 @@ export class UserDataUtilityProvider {
     }
   }
 
+  GetContactsToday(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+
+    });
+  }
+
+  GetSeminars(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+    });
+  }
+
+  GetBadgeStatus(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+    });
+  }
+
+  GetMonthlyEvents(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+
+      var eventsInMonth = 0;
+
+      if (this.userEvents.length == undefined) {
+        this.GetUserEvents().then(result => {
+          this.loggingUtil.alertUser("event start" + JSON.stringify(result))
+
+          result.UserEvents.forEach(event => {
+
+            var eventDate = moment(result.EventDate.StartDate).toDate().getTime();
+            this.loggingUtil.alertUser("time: " + eventDate);
+            var date = new Date();
+            var now = date.getTime();
+            this.loggingUtil.alertUser("nowtime: " + eventDate);
+            var momentDif = moment.duration(eventDate - now);
+  
+            this.loggingUtil.alertUser("lol" + momentDif.asDays());
+            if (momentDif.asDays() < 31) {
+              eventsInMonth++;
+            }
+          });
+
+        });
+      } else {
+        resolve(this.userEvents.length);
+      }
+    });
+  }
+
   public SetAWSToken(value: string) {
     this.AWSToken = value;
   }
@@ -168,6 +224,7 @@ export class UserDataUtilityProvider {
         if (this.platform.is('cordova')) {
           this.GetAWSIdentityId().then(id => {
             this.GetUserEventInfo(id).then(() => {
+
               resolve({
                 calendarConfig: this.calendarConfig,
                 userEvents: this.userEvents
