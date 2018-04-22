@@ -81,6 +81,9 @@ export class UserDataUtilityProvider {
 
         var result = JSON.parse(response.data);
 
+        
+        this.loggingUtil.alertUser("event: " + JSON.stringify(result.Events))
+
         result.Events.forEach(event => {
           
           this.loggingUtil.alertUser("event: " + JSON.stringify(event))
