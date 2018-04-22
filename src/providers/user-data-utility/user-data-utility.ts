@@ -83,6 +83,7 @@ export class UserDataUtilityProvider {
         result.Events.forEach(event => {
           
           this.loggingUtil.alertUser("eventit: " + JSON.stringify(event))
+          this.loggingUtil.alertUser("userevents: " + this.userEvents);
           this.userEvents.push(event);
 
           this.loggingUtil.alertUser("pushed");
