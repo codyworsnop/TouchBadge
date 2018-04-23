@@ -1,9 +1,5 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Detail
-    </ion-title>
-
+  <ion-navbar transparent>
   </ion-navbar>
 </ion-header>
 
@@ -15,41 +11,29 @@
         <ion-img src={{contact.PictureURL}}></ion-img>
         <h2>{{contact.First_Name}} {{contact.Last_Name}}</h2>
         <h4>{{contact.JobTitle}}</h4>
+        <h4>{{contact.Email}}</h4>
       </ion-col>
     </ion-row>
 
     <ion-row id="body">
       <ion-col col-12>
-        <ion-row>
-          <ion-col col-3 class="information">
-            <ion-icon name="call"></ion-icon>
-          </ion-col>
+        <ion-row id="messaging">
+          <ion-col col-12>
 
-          <ion-col col-9>
-            (775) 224-7230
+            <div class="container">
+              <img src={{contact.PictureURL}}>
+              <p>Hey, it was really nice meeting you today!</p>
+              <span class="time-right">11:07</span>
+            </div>
+            
+            <div class="container self">
+              <img src={{myPictureUrl}} class="right">
+              <p>Thanks {{contact.First_Name}}, it was great meeting you too!</p>
+              <span class="time-left">11:24</span>
+            </div>        
           </ion-col>
         </ion-row>
-
-        <ion-row>
-          <ion-col col-3 class="information">
-            <ion-icon name="mail"></ion-icon>
-          </ion-col>
-          <ion-col col-9>
-            cody@worsnop.com
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col col-3 class="information">
-            <ion-icon name="checkmark"></ion-icon>
-          </ion-col>
-          <ion-col col-9>
-            You became friends at CES!
-          </ion-col>
-        </ion-row>
-
-
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-content>ß
+</ion-content>

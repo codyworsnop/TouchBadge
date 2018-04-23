@@ -33,14 +33,14 @@ export class MyApp {
 
     platform.ready().then(() => {
 
-      this.presentIntro();
-
       statusBar.styleDefault();
 
       //setup shake gesture
       const watch = this.shake.startWatch().subscribe(() => {
         this.shakeGestureHandler();
       });   
+
+      this.presentIntro();
     });
   }
 
@@ -82,13 +82,14 @@ export class MyApp {
       console.log("Has seen intro?: " + result);
       if (result) {
         this.rootPage = IntroPage;
-        this.splashScreen.hide();
+
       }
       else {
         this.rootPage = IntroPage;
         this.storage.set('introShown', true);
-        this.splashScreen.hide();
       }
+
+      this.splashScreen.hide();
     });
   }
 
