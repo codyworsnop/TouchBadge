@@ -19,7 +19,7 @@ export class MyApp {
   rootPage: any = TabsPage;
   loader: any;
 
-  bumpAPIEndpoint = "https://8fis1kghzf.execute-api.us-west-2.amazonaws.com/NewBumpEventProduction/WriteBump";
+  bumpAPIEndpoint = "https://8fis1kghzf.execute-api.us-west-2.amazonaws.com/Release/WriteBump";
 
   constructor(private platform: Platform,
     private statusBar: StatusBar,
@@ -43,13 +43,13 @@ export class MyApp {
 
       //setup shake gesture
       const watch = this.shake.startWatch().subscribe(() => {
-        console.log("shaked! from home :D");
+        this.shakeGestureHandler();
       });   
     });
   }
 
   shakeGestureHandler() {
-
+    console.log("shaked! from home :D");
 
     this.userData.GetAWSIdentityId().then((AWSID) => {
       this.GetLocation().then((coordinates) => {

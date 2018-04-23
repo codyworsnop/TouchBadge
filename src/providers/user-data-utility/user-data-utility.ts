@@ -87,7 +87,6 @@ export class UserDataUtilityProvider {
 
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
-        console.log("response: " + JSON.stringify(response));
         var result = JSON.parse(response.data);
         result.Events.forEach(event => {
 
