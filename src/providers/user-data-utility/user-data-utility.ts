@@ -92,7 +92,9 @@ export class UserDataUtilityProvider {
         result.Events.forEach(event => {
 
           this.userEvents.push(event);
+
           var eventDate = new Date(event.EventDate.Start);
+          eventDate.setDate(eventDate.getDate() + 1);
 
           this.calendarConfig.push({
             date: eventDate,
@@ -167,7 +169,6 @@ export class UserDataUtilityProvider {
   }
 
   GetSeminarsCount(): Promise<any> {
-
     return new Promise((resolve, reject) => {
 
     });
@@ -177,8 +178,8 @@ export class UserDataUtilityProvider {
   }
 
   GetBadgeStatus(): Promise<any> {
-
     return new Promise((resolve, reject) => {
+      resolve(false);
     });
   }
 
@@ -244,6 +245,11 @@ export class UserDataUtilityProvider {
             });
           });
         }
+      } else {
+        resolve({
+          calendarConfig: this.calendarConfig,
+          userEvents: this.userEvents
+        });
       }
     });
   }

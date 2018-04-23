@@ -52,14 +52,15 @@ export class HomePage {
     });
     this.userData.GetUpcomingEventCount().then(result => {
       this.UpcomingEventCount = result;
+      this.SeminarCount = result;
     });
 
-
-    this.SeminarCount = this.UpcomingEventCount;
-
-
     this.userData.GetBadgeStatus().then(result => {
-
+      if (result) {
+        this.BadgeStatus = "Connected"
+      } else { 
+        this.BadgeStatus = "Disconnected";
+      }
     });
   }
 

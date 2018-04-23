@@ -42,17 +42,15 @@ export class CalendarPage {
 
   onChange($event) {
 
-    console.log("event: " + $event);
-    console.log("user events: " + JSON.stringify(this.userEvents));
     this.displayedEvents = [];
     this.daySelected = moment($event).format("LL");
 
     //collect events for the day
     this.userEvents.forEach(event => {
-      var startDate = new Date(event.EventDate.StartDate);
+      var startDate = new Date(event.EventDate.Start);
       var dateSelected = new Date($event);
-
-      if (startDate.getDate() == dateSelected.getDate()) {
+      
+      if (startDate.getDate() + 1 == dateSelected.getDate()) {
         this.displayedEvents.push(event);
       }
     });
