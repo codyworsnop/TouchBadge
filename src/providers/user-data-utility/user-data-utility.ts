@@ -87,6 +87,7 @@ export class UserDataUtilityProvider {
 
       this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
 
+        console.log("response: " + JSON.stringify(response));
         var result = JSON.parse(response.data);
         result.Events.forEach(event => {
 
@@ -188,11 +189,9 @@ export class UserDataUtilityProvider {
   GetUpcomingEventCount(): Promise<any> {
     return new Promise((resolve, reject) => {
       
-    this.loggingUtil.alertUser("user events " + this.userEvents);
       if (this.userEvents == undefined) {
         this.GetUserEvents().then(result => {
           
-    this.loggingUtil.alertUser("got events");
           resolve(this.userEvents.length);
         });
       } else {

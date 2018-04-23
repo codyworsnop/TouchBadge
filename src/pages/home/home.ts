@@ -47,12 +47,9 @@ export class HomePage {
 
   SetStatusText() {
     
-    this.loggingUtil.alertUser("getting contacts");
     this.userData.GetContactsToday().then(result => { 
       this.ContactsToday = result;
     });
-
-    this.loggingUtil.alertUser("getting upcoming events");
     this.userData.GetUpcomingEventCount().then(result => {
       this.UpcomingEventCount = result;
     });
@@ -61,7 +58,6 @@ export class HomePage {
     this.SeminarCount = this.UpcomingEventCount;
 
 
-    this.loggingUtil.alertUser("getting badge status");
     this.userData.GetBadgeStatus().then(result => {
 
     });

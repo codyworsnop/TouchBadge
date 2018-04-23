@@ -42,6 +42,8 @@ export class CalendarPage {
 
   onChange($event) {
 
+    console.log("event: " + $event);
+    console.log("user events: " + JSON.stringify(this.userEvents));
     this.displayedEvents = [];
     this.daySelected = moment($event).format("LL");
 
@@ -49,9 +51,6 @@ export class CalendarPage {
     this.userEvents.forEach(event => {
       var startDate = new Date(event.EventDate.StartDate);
       var dateSelected = new Date($event);
-
-      this.loggingUtil.alertUser("start date: " + startDate.toString());
-      this.loggingUtil.alertUser("date selected: " + dateSelected.toString());
 
       if (startDate.getDate() == dateSelected.getDate()) {
         this.displayedEvents.push(event);

@@ -125,9 +125,6 @@ The native map view is faster, use less network usage, display 3D views, and eve
             https://github.com/mapsplugin/cordova-plugin-googlemaps-doc/blob/master/v2.0.0/README.md
         </info>
 
-        <js-module name="CordovaGoogleMaps" src="www/googlemaps-cdv-plugin.js">
-          <clobbers target="plugin.google.maps" />
-        </js-module>
 
         <config-file target="config.xml" parent="/*">
           <!-- for Crosswalk -->
