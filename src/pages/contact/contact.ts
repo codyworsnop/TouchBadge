@@ -16,7 +16,9 @@ import { HTTP } from '@ionic-native/http';
 export class ContactPage {
 
   public contacts = [];
-  groupedContacts = [];
+  public groupedContacts = [];
+  private currentContacts: any[] = [];
+  private contactsHaveLoaded: boolean = false;
 
   private userContactAPI = "https://n04wjzhe44.execute-api.us-west-2.amazonaws.com/Release/fetchusers";
 
@@ -35,9 +37,8 @@ export class ContactPage {
 
   retrieveContacts() {
 
-    // this.contacts = [];
-    //  this.groupedContacts = [];
-
+    this.contacts = [];
+    var found = false;
     this.userData.GetAWSIdentityId().then((id) => {
       this.http.get(this.userContactAPI + "?userID=" + id, {}, {}).then(response => {
 
@@ -45,14 +46,10 @@ export class ContactPage {
 
         result.Contacts.forEach(contact => {
 
-          if (this.contacts.indexOf(contact) != -1) {
-            if (contact.PictureURL == 'null') {
-              contact.PictureURL = "assets/img/default-profile-pic.jpg";
-
-              this.contacts.push(contact);
-            }
-
+          if (contact.PictureURL == 'null') {
+            contact.PictureURL = "assets/img/default-profile-pic.jpg";
           }
+          this.contacts.push(contact);
         });
 
         this.groupContacts(this.contacts);
@@ -64,30 +61,85 @@ export class ContactPage {
     });
   }
 
+  RemoveUnexisting() {
+    for (var i = 0; i < this.groupedContacts.length; i++) {
+      for (var j = 0; j < this.groupedContacts[i].contacts.length; j++) {
+        if (this.contacts.findIndex(element => {
+          return (element.First_Name == this.groupedContacts[i].contacts[j].First_Name &&
+            element.Last_Name == this.groupedContacts[i].contacts[j].Last_Name);
+        }) == -1) {
+          console.log("deleting at indexes: " + i + ", " + j);
+          this.groupedContacts[i].contacts.splice(j, 1);
+
+          if (this.groupedContacts[i].contacts.length == 0) {
+            this.groupedContacts.splice(i, 1);
+          }
+        }
+      }
+    }
+  }
+
+
   groupContacts(contacts) {
 
-    if (contacts != null) {
-      let sortedContacts = contacts.sort((a, b) => a.Last_Name < b.Last_Name ? -1 : a.Last_Name > b.Last_Name ? 1 : 0);
+    let currentLetter: string;
+    var found = false;
+    var contactExists = false;
 
-      let currentLetter: string;
-      let currentContacts: any[];
+    if (contacts != null) {
+
+      let sortedContacts = contacts.sort((a, b) => a.Last_Name < b.Last_Name ? -1 : a.Last_Name > b.Last_Name ? 1 : 0);
+      this.RemoveUnexisting();
 
       sortedContacts.forEach((value, index) => {
+
+        if (this.contactsHaveLoaded) {
+          found = false;
+          var lastnameIndex = 0
+          for (var i = 0; i < this.groupedContacts.length; i++) {
+            if (this.groupedContacts[i].letter == value.Last_Name.charAt(0).toUpperCase()) {
+              lastnameIndex = i;
+              break;
+            }
+          }
+
+          if (lastnameIndex != -1) {
+            for (var j = 0; j < this.groupedContacts[lastnameIndex].contacts.length; j++) {
+
+              if (this.groupedContacts[lastnameIndex].contacts[j].First_Name == value.First_Name &&
+                this.groupedContacts[lastnameIndex].contacts[j].Last_Name == value.Last_Name) {
+                found = true;
+              }
+            }
+          }
+        }
 
         if (value.Last_Name != undefined && value.Last_Name.charAt(0).toUpperCase() != currentLetter) {
           currentLetter = value.Last_Name.charAt(0).toUpperCase();
 
-          let newGroup = {
-            letter: currentLetter,
-            contacts: []
-          };
+          if (!found) {
+            let newGroup = {
+              letter: currentLetter,
+              contacts: []
+            };
 
-          currentContacts = newGroup.contacts;
-          this.groupedContacts.push(newGroup);
+            this.currentContacts = newGroup.contacts;
+            this.groupedContacts.push(newGroup);
+          }
         }
 
-        currentContacts.push(value);
+        if (!found) {
+          if (this.contactsHaveLoaded) {
+            this.groupedContacts[lastnameIndex].contacts.push(value);
+          }
+          else {
+            this.currentContacts.push(value);
+          }
+        }
       });
+
+      this.contactsHaveLoaded = true;
+      this.groupedContacts.sort((a, b) => a.letter < b.letter ? -1 : a.letter > b.letter ? 1 : 0);
     }
   }
 
