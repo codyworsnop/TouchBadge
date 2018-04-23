@@ -36,10 +36,6 @@ export class MyApp {
       this.presentIntro();
 
       statusBar.styleDefault();
-      splashScreen.hide();
-
-      console.log("Hello world");
-      console.log("shake:" + this.shake);
 
       //setup shake gesture
       const watch = this.shake.startWatch().subscribe(() => {
@@ -86,10 +82,12 @@ export class MyApp {
       console.log("Has seen intro?: " + result);
       if (result) {
         this.rootPage = IntroPage;
+        this.splashScreen.hide();
       }
       else {
         this.rootPage = IntroPage;
         this.storage.set('introShown', true);
+        this.splashScreen.hide();
       }
     });
   }

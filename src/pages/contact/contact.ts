@@ -62,17 +62,25 @@ export class ContactPage {
   }
 
   RemoveUnexisting() {
+
+  //  console.log("Contact list: " + JSON.stringify(this.contacts));
+
     for (var i = 0; i < this.groupedContacts.length; i++) {
       for (var j = 0; j < this.groupedContacts[i].contacts.length; j++) {
+
+        console.log("groupedcontacts:" + JSON.stringify(this.groupedContacts[i]));
         if (this.contacts.findIndex(element => {
+          console.log("group firstname: " + this.groupedContacts[i].contacts[j].First_Name + ", contact firstname: " + element.First_Name)
           return (element.First_Name == this.groupedContacts[i].contacts[j].First_Name &&
             element.Last_Name == this.groupedContacts[i].contacts[j].Last_Name);
         }) == -1) {
           console.log("deleting at indexes: " + i + ", " + j);
           this.groupedContacts[i].contacts.splice(j, 1);
+          j--;
 
           if (this.groupedContacts[i].contacts.length == 0) {
             this.groupedContacts.splice(i, 1);
+            i--;
           }
         }
       }
@@ -85,7 +93,8 @@ export class ContactPage {
     let currentLetter: string;
     var found = false;
     var contactExists = false;
-
+    var groupIndex = -1
+    
     if (contacts != null) {
 
       let sortedContacts = contacts.sort((a, b) => a.Last_Name < b.Last_Name ? -1 : a.Last_Name > b.Last_Name ? 1 : 0);
@@ -93,31 +102,33 @@ export class ContactPage {
 
       sortedContacts.forEach((value, index) => {
 
+        groupIndex = -1;
         if (this.contactsHaveLoaded) {
           found = false;
-          var lastnameIndex = 0
           for (var i = 0; i < this.groupedContacts.length; i++) {
             if (this.groupedContacts[i].letter == value.Last_Name.charAt(0).toUpperCase()) {
-              lastnameIndex = i;
+              groupIndex = i;
               break;
             }
           }
 
-          if (lastnameIndex != -1) {
-            for (var j = 0; j < this.groupedContacts[lastnameIndex].contacts.length; j++) {
+          //console.log("group index: " + groupIndex + "contact: " + value.First_Name)
 
-              if (this.groupedContacts[lastnameIndex].contacts[j].First_Name == value.First_Name &&
-                this.groupedContacts[lastnameIndex].contacts[j].Last_Name == value.Last_Name) {
+          if (groupIndex != -1) {
+            for (var j = 0; j < this.groupedContacts[groupIndex].contacts.length; j++) {
+              if (this.groupedContacts[groupIndex].contacts[j].First_Name == value.First_Name &&
+                this.groupedContacts[groupIndex].contacts[j].Last_Name == value.Last_Name) {
                 found = true;
               }
             }
           }
         }
 
-        if (value.Last_Name != undefined && value.Last_Name.charAt(0).toUpperCase() != currentLetter) {
+        if (value.Last_Name != undefined && value.Last_Name.charAt(0).toUpperCase() != currentLetter && groupIndex == -1) {
           currentLetter = value.Last_Name.charAt(0).toUpperCase();
 
           if (!found) {
+          //  console.log("creating new group: " + currentLetter);
             let newGroup = {
               letter: currentLetter,
               contacts: []
@@ -127,10 +138,11 @@ export class ContactPage {
             this.groupedContacts.push(newGroup);
           }
         }
+      //  console.log("found: " + found + ", groupIndex: " + groupIndex + ", contactloaded: " + this.contactsHaveLoaded + ", contact: " + value.First_Name);
 
         if (!found) {
-          if (this.contactsHaveLoaded) {
-            this.groupedContacts[lastnameIndex].contacts.push(value);
+          if (groupIndex != -1 && this.contactsHaveLoaded) {
+            this.groupedContacts[groupIndex].contacts.push(value);
           }
           else {
             this.currentContacts.push(value);
