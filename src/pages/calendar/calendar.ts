@@ -47,7 +47,13 @@ export class CalendarPage {
 
     //collect events for the day
     this.userEvents.forEach(event => {
-      if (event.EventDate.Start.split(' ')[0] == JSON.stringify($event).split('"')[1].split('T')[0]) {
+      var startDate = new Date(event.EventDate.StartDate);
+      var dateSelected = new Date($event);
+
+      this.loggingUtil.alertUser("start date: " + startDate.toString());
+      this.loggingUtil.alertUser("date selected: " + dateSelected.toString());
+
+      if (startDate.getDate() == dateSelected.getDate()) {
         this.displayedEvents.push(event);
       }
     });

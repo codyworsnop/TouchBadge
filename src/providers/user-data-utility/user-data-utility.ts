@@ -89,10 +89,12 @@ export class UserDataUtilityProvider {
 
         var result = JSON.parse(response.data);
         result.Events.forEach(event => {
+
           this.userEvents.push(event);
-          var date = event.EventDate.Start.split('-')[1] as number;
+          var eventDate = new Date(event.EventDate.Start);
+
           this.calendarConfig.push({
-            date: new Date(event.EventDate.Start.split('-')[0], date - 1, event.EventDate.Start.split('-')[2].split(' ')[0]),
+            date: eventDate,
             subTitle: "EVENT",
             marked: true,
           });
