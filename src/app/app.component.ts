@@ -38,15 +38,18 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
+      console.log("Hello world");
+      console.log("shake:" + this.shake);
+
       //setup shake gesture
       const watch = this.shake.startWatch().subscribe(() => {
-         this.shakeGestureHandler();
-      });
+        console.log("shaked! from home :D");
+      });   
     });
   }
 
   shakeGestureHandler() {
-    console.log("shaked! from home :D");
+
 
     this.userData.GetAWSIdentityId().then((AWSID) => {
       this.GetLocation().then((coordinates) => {
