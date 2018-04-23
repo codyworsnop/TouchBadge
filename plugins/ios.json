@@ -20,20 +20,11 @@
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.mojangles.touchbadge"
     },
-    "cordova-plugin-googlemaps": {
-      "API_KEY_FOR_IOS": "AIzaSyBDEJapc8DLmcXKoBQ4asT4VtTtgE-ana4",
-      "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
-      "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background.",
-      "PACKAGE_NAME": "com.mojangles.touchbadge"
-    },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.mojangles.touchbadge"
     }
   },
   "dependent_plugins": {
-    "com.googlemaps.ios": {
-      "PACKAGE_NAME": "com.mojangles.touchbadge"
-    },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "com.mojangles.touchbadge"
     },
