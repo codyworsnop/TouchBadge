@@ -29,37 +29,38 @@ export class ContactPage {
     private http: HTTP) {
   }
 
-  ionViewDidLoad()
-  {
+  ionViewDidLoad() {
     this.retrieveContacts();
   }
 
   retrieveContacts() {
 
-    this.contacts = [];
-    this.groupedContacts = [];
+    // this.contacts = [];
+    //  this.groupedContacts = [];
 
     this.userData.GetAWSIdentityId().then((id) => {
       this.http.get(this.userContactAPI + "?userID=" + id, {}, {}).then(response => {
 
         var result = JSON.parse(response.data);
-  
+
         result.Contacts.forEach(contact => {
-  
-          if (contact.PictureURL == 'null') {
-            contact.PictureURL = "assets/img/default-profile-pic.jpg";
+
+          if (this.contacts.indexOf(contact) != -1) {
+            if (contact.PictureURL == 'null') {
+              contact.PictureURL = "assets/img/default-profile-pic.jpg";
+
+              this.contacts.push(contact);
+            }
+
           }
-  
-          this.contacts.push(contact);
-  
         });
 
         this.groupContacts(this.contacts);
-        
+
       }, error => {
         this.loggingUtil.alertUser("Error pulling: " + JSON.stringify(error));
       });
-  
+
     });
   }
 
@@ -74,7 +75,6 @@ export class ContactPage {
       sortedContacts.forEach((value, index) => {
 
         if (value.Last_Name != undefined && value.Last_Name.charAt(0).toUpperCase() != currentLetter) {
-
           currentLetter = value.Last_Name.charAt(0).toUpperCase();
 
           let newGroup = {
