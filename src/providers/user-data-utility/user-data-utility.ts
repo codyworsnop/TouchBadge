@@ -6,6 +6,7 @@ import { HTTP } from '@ionic-native/http';
 import { Platform } from 'ionic-angular';
 import * as moment from 'moment';
 import { HttpClient } from '@angular/common/http';
+import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 /*
   Generated class for the UserDataUtilityProvider provider.
 
@@ -91,10 +92,9 @@ export class UserDataUtilityProvider {
          (response as any).Events.forEach(event => {
 
           this.userEvents.push(event);
-          var eventDate = new Date(event.EventDate.Start);
 
           this.calendarConfig.push({
-            date: eventDate,
+            date: new Date(event.EventDate.Start.split('T')[0].split('-')[0], event.EventDate.Start.split('T')[0].split('-')[1] - 1, event.EventDate.Start.split('T')[0].split('-')[2]),
             subTitle: "EVENT",
             marked: true,
           });

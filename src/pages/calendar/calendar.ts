@@ -47,10 +47,11 @@ export class CalendarPage {
 
     //collect events for the day
     this.userEvents.forEach(event => {
-      var startDate = new Date(event.EventDate.Start);
+
+      var startDate = new Date(event.EventDate.Start.split('T')[0].split('-')[0], event.EventDate.Start.split('T')[0].split('-')[1] - 1, event.EventDate.Start.split('T')[0].split('-')[2]);
       var dateSelected = new Date($event);
-      
-      if (startDate.getDate() == dateSelected.getDate()) {
+      console.log("selected: " + startDate.getDate())
+      if (startDate.getDate() == dateSelected.getDate() && startDate.getFullYear() == dateSelected.getFullYear() && startDate.getMonth() == dateSelected.getMonth()) {
         this.displayedEvents.push(event);
       }
     });
@@ -63,9 +64,7 @@ export class CalendarPage {
 
   RefreshCalendar()
   {
-    console.log("getting")
     this.userData.GetUserEvents().then(result => {
-      console.log("returned")
       this.cal.options = {
         daysConfig: result.calendarConfig,
       }
