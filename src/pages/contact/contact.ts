@@ -42,7 +42,7 @@ export class ContactPage {
     this.contacts = [];
     var found = false;
     this.userData.GetAWSIdentityId().then((id) => {
-      this.anghttp.get(this.userContactAPI + "?userID=" + "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b", {}).subscribe((response) => {
+      this.anghttp.get(this.userContactAPI + "?userID=" + id, {}).subscribe((response) => {
         
         (response as any).Contacts.forEach(contact => {
 

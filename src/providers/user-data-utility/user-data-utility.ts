@@ -5,6 +5,7 @@ import { LoggingUtilityProvider } from '../logging-utility/logging-utility';
 import { HTTP } from '@ionic-native/http';
 import { Platform } from 'ionic-angular';
 import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
 /*
   Generated class for the UserDataUtilityProvider provider.
 
@@ -41,7 +42,8 @@ export class UserDataUtilityProvider {
     public logging: LoggingUtilityProvider,
     private http: HTTP,
     private loggingUtil: LoggingUtilityProvider,
-    private platform: Platform) {
+    private platform: Platform,
+    private anghttp: HttpClient) {
   }
 
   public SetUserData(first: string, last: string, id: string, jobTitle: string, location: string, numConnections: number, pictureUrl: string, emailAddress: string) {
@@ -81,19 +83,15 @@ export class UserDataUtilityProvider {
 
   private GetUserEventInfo(awsIdentity: any): Promise<any> {
     return new Promise((resolve, reject) => {
-
       this.userEvents = [];
       this.calendarConfig = [];
 
-      this.http.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}, {}).then(response => {
+      this.anghttp.get(this.fetchEventsAPI + "?userID=" + awsIdentity, {}).subscribe(response => {
 
-        var result = JSON.parse(response.data);
-        result.Events.forEach(event => {
+         (response as any).Events.forEach(event => {
 
           this.userEvents.push(event);
-
           var eventDate = new Date(event.EventDate.Start);
-          eventDate.setDate(eventDate.getDate() + 1);
 
           this.calendarConfig.push({
             date: eventDate,
@@ -232,9 +230,7 @@ export class UserDataUtilityProvider {
 
     return new Promise((resolve, reject) => {
       if (this.userEvents == undefined || this.calendarConfig == undefined) {
-        if (this.platform.is('cordova')) {
           this.GetAWSIdentityId().then(id => {
-
             this.GetUserEventInfo(id).then(() => {
 
               resolve({
@@ -243,7 +239,6 @@ export class UserDataUtilityProvider {
               });
             });
           });
-        }
       } else {
         resolve({
           calendarConfig: this.calendarConfig,

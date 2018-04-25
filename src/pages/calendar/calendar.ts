@@ -50,7 +50,7 @@ export class CalendarPage {
       var startDate = new Date(event.EventDate.Start);
       var dateSelected = new Date($event);
       
-      if (startDate.getDate() + 1 == dateSelected.getDate()) {
+      if (startDate.getDate() == dateSelected.getDate()) {
         this.displayedEvents.push(event);
       }
     });
@@ -63,7 +63,9 @@ export class CalendarPage {
 
   RefreshCalendar()
   {
+    console.log("getting")
     this.userData.GetUserEvents().then(result => {
+      console.log("returned")
       this.cal.options = {
         daysConfig: result.calendarConfig,
       }
