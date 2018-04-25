@@ -6,7 +6,7 @@
         }
     
         ion-list ion-item { 
-            margin-left: 5vw;
+            //margin-left: 5vw;
             min-height: 10vh;
         }
 
@@ -37,6 +37,10 @@
 
         .toolbarButton {
             color: #FFFFFF;
+        }
+
+        ion-item-options button { 
+            width: 20vw;
         }
     }
 }

@@ -25,11 +25,7 @@
           <h2>{{contact.First_Name}} {{contact.Last_Name}}</h2>
           <p>{{contact.JobTitle}}</p>
         </ion-item>
-        <ion-item-options>
-          <button ion-button color="primary" (click)="editContact(contact)">
-            <ion-icon name="menu"></ion-icon>
-            Edit
-          </button>
+        <ion-item-options side="right">
           <button ion-button color="danger" (click)="deleteContact(contact)">
             <ion-icon name="trash"></ion-icon>
             Delete

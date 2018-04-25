@@ -35,6 +35,7 @@ import { BluetoothUtilityProvider } from '../providers/bluetooth-utility/bluetoo
 import { Geolocation } from '@ionic-native/geolocation';
 import { Shake } from '@ionic-native/shake';
 import { Vibration } from '@ionic-native/vibration';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { Vibration } from '@ionic-native/vibration';
     IonicModule.forRoot(MyApp, new AwsConfig().load()),
     IonicStorageModule.forRoot(),
     CalendarModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

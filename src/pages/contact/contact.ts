@@ -8,6 +8,7 @@ import { DynamoDB } from '../../providers/providers';
 import { LoggingUtilityProvider } from '../../providers/logging-utility/logging-utility';
 import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
 import { HTTP } from '@ionic-native/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'page-contact',
@@ -28,7 +29,8 @@ export class ContactPage {
     public db: DynamoDB,
     private loggingUtil: LoggingUtilityProvider,
     private userData: UserDataUtilityProvider,
-    private http: HTTP) {
+    private http: HTTP,
+    private anghttp: HttpClient) {
   }
 
   ionViewDidLoad() {
@@ -40,11 +42,9 @@ export class ContactPage {
     this.contacts = [];
     var found = false;
     this.userData.GetAWSIdentityId().then((id) => {
-      this.http.get(this.userContactAPI + "?userID=" + id, {}, {}).then(response => {
-
-        var result = JSON.parse(response.data);
-
-        result.Contacts.forEach(contact => {
+      this.anghttp.get(this.userContactAPI + "?userID=" + "us-west-2:f3b94a53-7ee6-4f06-b927-9ac4940ebc8b", {}).subscribe((response) => {
+        
+        (response as any).Contacts.forEach(contact => {
 
           if (contact.PictureURL == 'null') {
             contact.PictureURL = "assets/img/default-profile-pic.jpg";
@@ -52,12 +52,11 @@ export class ContactPage {
           this.contacts.push(contact);
         });
 
-        this.groupContacts(this.contacts);
+       this.groupContacts(this.contacts);
 
       }, error => {
         this.loggingUtil.alertUser("Error pulling: " + JSON.stringify(error));
       });
-
     });
   }
 
@@ -68,13 +67,10 @@ export class ContactPage {
     for (var i = 0; i < this.groupedContacts.length; i++) {
       for (var j = 0; j < this.groupedContacts[i].contacts.length; j++) {
 
-        console.log("groupedcontacts:" + JSON.stringify(this.groupedContacts[i]));
         if (this.contacts.findIndex(element => {
-          console.log("group firstname: " + this.groupedContacts[i].contacts[j].First_Name + ", contact firstname: " + element.First_Name)
           return (element.First_Name == this.groupedContacts[i].contacts[j].First_Name &&
             element.Last_Name == this.groupedContacts[i].contacts[j].Last_Name);
         }) == -1) {
-          console.log("deleting at indexes: " + i + ", " + j);
           this.groupedContacts[i].contacts.splice(j, 1);
           j--;
 
@@ -112,8 +108,6 @@ export class ContactPage {
             }
           }
 
-          //console.log("group index: " + groupIndex + "contact: " + value.First_Name)
-
           if (groupIndex != -1) {
             for (var j = 0; j < this.groupedContacts[groupIndex].contacts.length; j++) {
               if (this.groupedContacts[groupIndex].contacts[j].First_Name == value.First_Name &&
@@ -128,7 +122,6 @@ export class ContactPage {
           currentLetter = value.Last_Name.charAt(0).toUpperCase();
 
           if (!found) {
-          //  console.log("creating new group: " + currentLetter);
             let newGroup = {
               letter: currentLetter,
               contacts: []
@@ -138,7 +131,6 @@ export class ContactPage {
             this.groupedContacts.push(newGroup);
           }
         }
-      //  console.log("found: " + found + ", groupIndex: " + groupIndex + ", contactloaded: " + this.contactsHaveLoaded + ", contact: " + value.First_Name);
 
         if (!found) {
           if (groupIndex != -1 && this.contactsHaveLoaded) {
@@ -163,10 +155,20 @@ export class ContactPage {
 
   deleteContact(contact) {
 
-    let index = this.contacts.indexOf(contact);
+    for (var i = 0; i < this.groupedContacts.length; i++) {
+      for (var j = 0; j < this.groupedContacts[i].contacts.length; j++) {
+        if (this.groupedContacts[i].contacts[j].First_Name == contact.First_Name &&
+        this.groupedContacts[i].contacts[j].Last_Name == contact.Last_Name)
+        {
+          this.groupedContacts[i].contacts.splice(j, 1);
+         
+          if (this.groupedContacts[i].contacts.length == 0) {
+            this.groupedContacts.splice(i, 1);
+          }
 
-    if (index > -1) {
-      this.contacts.splice(index, 1);
+          return;
+        }
+      }
     }
   }
 
