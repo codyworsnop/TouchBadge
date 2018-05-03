@@ -1,8 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { BLE } from '@ionic-native/ble';
 import { ToastController } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
+import { UserDataUtilityProvider } from '../../providers/user-data-utility/user-data-utility';
 
 @Component({
   selector: 'page-configure',
@@ -10,32 +9,38 @@ import { Geolocation } from '@ionic-native/geolocation';
 })
 
 export class ConfigurePage {
-  lat: number;
-  long: number;
-  statusMessage: string;
+
+  bumpAllowed: boolean = true;
+  AppVersion: string;
+  BadgeStatus: string;
+  BadgeVersion: string;
+  BadgeModel: string;
 
   constructor(
-    private ngZone: NgZone,
-    private geolocation: Geolocation) {
+    private ngZone: NgZone, private userData: UserDataUtilityProvider) {
   }
 
-  GetLocation() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log("Lat: " + resp.coords.latitude + " Long: " + resp.coords.longitude);
-      this.lat = resp.coords.latitude;
-      this.long = resp.coords.longitude;
-      // resp.coords.latitude
-      // resp.coords.longitude
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
+  updateBumpAllowed(value: any)
+  {
+    this.userData.SetBumpAllowed(value);
   }
 
-  setStatus(message) {
-    console.log(message);
-    this.ngZone.run(() => {
-      this.statusMessage = message;
+  ionViewDidLoad() {
+    this.AppVersion = '1.0';
+    this.BadgeModel = 'TouchBadge m103';
+    this.BadgeVersion = 'TB1.0';
+
+    this.userData.GetBumpAllowed().then(result => {
+      this.bumpAllowed = result;
     });
-  }
 
+    this.userData.GetBadgeStatus().then(result => {
+      if (result) {
+        this.BadgeStatus = "Connected"
+      } else { 
+        this.BadgeStatus = "Disconnected";
+      }
+    });
+    
+  }
 }

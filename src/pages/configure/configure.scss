@@ -1,6 +1,26 @@
+.ios, .md {
+    page-configure {
+        
+        ion-item-divider { 
+            background-color: #FFFFFF !important;
+        }
+    
+        ion-list ion-item { 
+            //margin-left: 5vw;
+            min-height: 5vh;
+            opacity: .5;
+            font-size: 12px;
+        }
+    }
+}
+
 page-configure {
     .toolbar-content p {
         margin-left: 10px;
+    }
+
+    .toolbar-background {
+        background-color: map-get($colors, dark);
     }
 }
     

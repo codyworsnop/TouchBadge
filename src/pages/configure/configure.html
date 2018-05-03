@@ -1,22 +1,30 @@
-
-  <ion-content padding>
-    <button ion-button (click)="GetLocation()">GetLocation</button>
-    <p>lat: {{lat}}</p>
-    <p>long: {{long}}</p>
-    <button ion-button (click)="scan()">Scan</button>
-    
-    <button ion-button (click)="send()">Send</button>
-    <ion-input [(ngModel)]="input"></ion-input>
-    <ion-list> 
-      <button ion-item *ngFor="let device of devices" (click)="connect(device)">
-        <h2>{{device.advertising.kCBAdvDataLocalName}}</h2>
-        <p>{{device.id}}</p>
-        <p>RSSI: {{device.rssi}}</p>
-      </button>  
-     </ion-list> 
-  </ion-content>
-  <ion-footer>
-    <ion-toolbar>
-      <p>{{ statusMessage }}</p>
-    </ion-toolbar>
-  </ion-footer>
+<ion-content>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addContact()" class="toolbarButton">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <h2 padding>
+    Settings
+  </h2>
+  <ion-list>
+    <ion-item>
+      <ion-label>Use Bump</ion-label>
+      <ion-toggle [(ngModel)]="bumpAllowed" (ngModelChange)="updateBumpAllowed($event)"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      App Version:  {{AppVersion}}
+    </ion-item>
+    <ion-item>
+      Badge Status: {{BadgeStatus}}
+    </ion-item>
+    <ion-item>
+      Badge Version: {{BadgeVersion}}
+    </ion-item>
+    <ion-item>
+      Badge Model: {{BadgeModel}}
+    </ion-item>
+  </ion-list>
+</ion-content>

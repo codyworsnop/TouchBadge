@@ -47,18 +47,23 @@ export class MyApp {
   shakeGestureHandler() {
     console.log("shaked! from home :D");
 
-    this.userData.GetAWSIdentityId().then((AWSID) => {
-      this.GetLocation().then((coordinates) => {
-
-        this.vibration.vibrate(1000);
-        console.log("ID: " + AWSID + "lat, long: " + coordinates.latitude + ", " + coordinates.longitude);
-        this.http.get(this.bumpAPIEndpoint + "?userID=" + AWSID + "&lat=" + coordinates.latitude + "&long=" + coordinates.longitude, {}, {}).then((response) => {
-          console.log("api bump call: " + JSON.stringify(response));
-          //this.vibration.vibrate(1000);
-        }).catch((error) => {
-          console.log("error sending: " + JSON.stringify(error));
+    this.userData.GetBumpAllowed().then(allowed => {
+      if (allowed)
+      {
+        this.userData.GetAWSIdentityId().then((AWSID) => {
+          this.GetLocation().then((coordinates) => {
+    
+            this.vibration.vibrate(1000);
+            console.log("ID: " + AWSID + "lat, long: " + coordinates.latitude + ", " + coordinates.longitude);
+            this.http.get(this.bumpAPIEndpoint + "?userID=" + AWSID + "&lat=" + coordinates.latitude + "&long=" + coordinates.longitude, {}, {}).then((response) => {
+              console.log("api bump call: " + JSON.stringify(response));
+              //this.vibration.vibrate(1000);
+            }).catch((error) => {
+              console.log("error sending: " + JSON.stringify(error));
+            });
+          });
         });
-      });
+      }
     });
   }
 

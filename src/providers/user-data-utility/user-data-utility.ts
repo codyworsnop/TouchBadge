@@ -16,6 +16,11 @@ import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 @Injectable()
 export class UserDataUtilityProvider {
 
+  private BumpAllowed: boolean = true;
+  private AppVersion: string; 
+  private BadgeVersion: string; 
+  private BadgeModel: string;
+
   private firstName: string;
   private lastName: string;
   private id: string;
@@ -158,6 +163,26 @@ export class UserDataUtilityProvider {
 
         });
       
+    });
+  }
+
+  SetBumpAllowed(value: boolean)
+  {
+    this.BumpAllowed = value; 
+  }
+
+  GetBumpAllowed() : Promise<any> { 
+    return new Promise((resolve, reject) => {
+      if (this.BumpAllowed)
+      {
+        resolve(true);
+      }
+      else
+      {
+        resolve(false);
+      }
+
+      resolve(false);
     });
   }
 
