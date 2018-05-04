@@ -87,6 +87,8 @@ export class IntroPage {
 
     this.bluetoothUtility.connect(device).then(() => {
 
+      this.userData.SetBadgeStatus(true);
+
       this.searchingVis = false;
       this.deviceConnected = true;
 

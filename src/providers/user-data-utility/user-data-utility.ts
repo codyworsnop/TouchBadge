@@ -38,7 +38,7 @@ export class UserDataUtilityProvider {
 
   private ContactsToday: string;
   private SeminarCount: string;
-  private BadgeStatus: string;
+  private BadgeStatus: boolean = false;
 
   private fetchEventsAPI = "https://e1hhlariwa.execute-api.us-west-2.amazonaws.com/Release/fetchuserevents";
 
@@ -201,11 +201,18 @@ export class UserDataUtilityProvider {
 
   GetBadgeStatus(): Promise<any> {
     return new Promise((resolve, reject) => {
-      resolve(false);
+      if (this.BadgeStatus)
+      {
+        resolve(true);
+      }
+      else
+      {
+        resolve(false);
+      }
     });
   }
 
-  SetBadgeStatus(value: string) {
+  SetBadgeStatus(value: boolean) {
     this.BadgeStatus = value;
   }
 

@@ -50,7 +50,7 @@ export class CalendarPage {
 
       var startDate = new Date(event.EventDate.Start.split('T')[0].split('-')[0], event.EventDate.Start.split('T')[0].split('-')[1] - 1, event.EventDate.Start.split('T')[0].split('-')[2]);
       var dateSelected = new Date($event);
-      console.log("selected: " + startDate.getDate())
+
       if (startDate.getDate() == dateSelected.getDate() && startDate.getFullYear() == dateSelected.getFullYear() && startDate.getMonth() == dateSelected.getMonth()) {
         this.displayedEvents.push(event);
       }

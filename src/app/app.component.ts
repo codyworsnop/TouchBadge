@@ -48,6 +48,8 @@ export class MyApp {
     console.log("shaked! from home :D");
 
     this.userData.GetBumpAllowed().then(allowed => {
+
+      console.log("result: " + allowed);
       if (allowed)
       {
         this.userData.GetAWSIdentityId().then((AWSID) => {
